@@ -1,0 +1,45 @@
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local PhysicsService = game:GetService('PhysicsService')
+local Modules = ReplicatedStorage:WaitForChild('Modules')
+local logger = require(Modules.src.utils.Logger)
+
+local GhostAbility = {}
+local GHOST_GROUP = 'Ghost'
+
+function GhostAbility:initCollisionGroup()
+	logger.d('Initializing Ghost collision group')
+	PhysicsService:CreateCollisionGroup(GHOST_GROUP)
+	PhysicsService:CollisionGroupSetCollidable('Default', GHOST_GROUP, false)
+end
+
+function GhostAbility:getGhostCollisionGroupId()
+	local ok, groupId = pcall(PhysicsService.GetCollisionGroupId, PhysicsService, GHOST_GROUP)
+	return ok and groupId or nil
+end
+
+function GhostAbility:setCollisionGroupRecursive(object)
+	if object:IsA('BasePart') then
+		PhysicsService:SetPartCollisionGroup(object, GHOST_GROUP)
+	end
+	for _, child in ipairs(object:GetChildren()) do
+		GhostAbility:setCollisionGroupRecursive(child)
+	end
+end
+
+function GhostAbility:makeGhostLike(char)
+	for i, v in pairs(char:GetDescendants()) do
+		if v:IsA('BasePart') and v.Name ~= 'HumanoidRootPart' then
+			v.Transparency = 0.5
+		elseif v:IsA('Decal') then
+			v.Transparency = 0.5
+		end
+	end
+end
+
+function GhostAbility:addGhostAbility(char)
+	logger:i('Adding Ghost ability to player')
+	GhostAbility:makeGhostLike(char)
+	GhostAbility:setCollisionGroupRecursive(char)
+end
+
+return GhostAbility

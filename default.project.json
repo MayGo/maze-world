@@ -1,0 +1,82 @@
+{
+    "name": "rdc-project",
+    "servePort": 8004,
+    "tree": {
+        "$className": "DataModel",
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+            "StarterPlayerScripts": {
+                "$className": "StarterPlayerScripts",
+                "$ignoreUnknownInstances": true,
+                "clientSrc": {
+                    "$path": "src/client"
+                }
+            }
+        },
+        "Players": {
+            "$className": "Players",
+            "$properties": {
+                "CharacterAutoLoads": false
+            }
+        },
+        "HttpService": {
+            "$className": "HttpService",
+            "$properties": {
+                "HttpEnabled": true
+            }
+        },
+
+        "ServerStorage": {
+            "$className": "ServerStorage",
+            "serverStorageSrc": {
+                "$path": "src/serverStorage"
+            }
+        },
+        "ServerScriptService": {
+            "$className": "ServerScriptService",
+            "serverSrc": {
+                "$path": "src/server"
+            }
+        },
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "Modules": {
+                "$className": "Folder",
+                "$ignoreUnknownInstances": true,
+                "src": {
+                    "$path": "src/common"
+                },
+                "Roact": {
+                    "$path": "modules/roact/src"
+                },
+                "M": {
+                    "$path": "modules/moses/moses_min.lua"
+                },
+                "Rodux": {
+                    "$path": "modules/rodux/src"
+                },
+                "DataStore2": {
+                    "$path": "modules/datastore2/DataStore2"
+                },
+                "RoactRodux": {
+                    "$path": "modules/roact-rodux/src"
+                },
+                "Promise": {
+                    "$path": "modules/promise2/lib"
+                },
+                "RoactMaterial": {
+                    "$path": "modules/roact-material/src"
+                },
+                "RoactAnimate": {
+                    "$path": "modules/roact-animate/src"
+                }
+            },
+            "HotReloadServer": {
+                "$path": "src/HotReloadServer.lua"
+            },
+            "HotReloadClient": {
+                "$path": "src/HotReloadClient.lua"
+            }
+        }
+    }
+}
