@@ -5,7 +5,7 @@ Project tries to cover most of the aspects of Roblox games.
 
 ### Roblox Rojo Roact boilerplate
 
-Code is written so it can be used boilerplate project. If some important model is removed then warnings are outputted in ROblox Studio, but game still runs.
+Code is written so it can be used boilerplate project. If some important model is removed then warnings are outputted in Roblox Studio, but game still runs.
 
 ### Note
 
