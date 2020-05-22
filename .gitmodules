@@ -1,0 +1,24 @@
+[submodule "modules/datastore2"]
+	path = modules/datastore2
+	url = https://github.com/Kampfkarren/Roblox/
+[submodule "modules/moses"]
+	path = modules/moses
+	url = https://github.com/Yonaba/Moses
+[submodule "modules/promise2"]
+	path = modules/promise2
+	url = https://github.com/evaera/roblox-lua-promise
+[submodule "modules/roact"]
+	path = modules/roact
+	url = https://github.com/Roblox/roact.git
+[submodule "modules/roact-animate"]
+	path = modules/roact-animate
+	url = https://github.com/AmaranthineCodices/roact-animate
+[submodule "modules/roact-material"]
+	path = modules/roact-material
+	url = https://github.com/MayGo/roact-material
+[submodule "modules/roact-rodux"]
+	path = modules/roact-rodux
+	url = https://github.com/Roblox/roact-rodux.git
+[submodule "modules/rodux"]
+	path = modules/rodux
+	url = https://github.com/Roblox/rodux.git
