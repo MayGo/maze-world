@@ -37,6 +37,7 @@ local function DynamicTable(props)
 		BackgroundTransparency = 0,
 		LayoutOrder = 100,
 		SortOrder = props.SortOrder,
+		ElasticBehavior = Enum.ElasticBehavior.Always,
 		[Roact.Children] = ListItems,
 	})
 end
