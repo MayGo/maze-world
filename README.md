@@ -11,6 +11,22 @@ Code is written so it can be used boilerplate project. If some important model i
 
 - Project was started with https://github.com/LPGhatguy/rdc-project taken as base
 
+# Game Description
+
+You can play this game by running this project (need to publish also) or open in in Roblox: [Maze World](https://www.roblox.com/games/3376915546/Maze-World-Dynamic).
+
+## Screenshots
+
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-1.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-2.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-3.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-4.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-5.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-6.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-7.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-8.png "Maze World")
+![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-9.png "Maze World")
+
 # Used libraries
 
 - [Datastore2](https://github.com/Kampfkarren/Roblox/)
