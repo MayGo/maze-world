@@ -74,8 +74,11 @@ From there each face is saved as png and imported to Roblox assets from RobloxSt
 # Assets/Meshes
 
 Meshes are created with [Blender](https://www.blender.org/).
-Coin object project file is `coin.blend`. From there coin is exported as `Wavefront .obj` and imported to Roblox assets from RobloxStudio's Game Explorer window. And then that model/mesh can be used by right clicking and selecting Insert. Added
-Cherry object project file is `cherry.blend`. It is texture painted that using ([tutorial](https://www.youtube.com/watch?v=lmbAs9jE1vI)). Exported model as `fbx`. Added as MeshPart to Roblox. Added textureId to uploaded `Cherry_correct.png`
+
+Coin object project file is `coin.blend`. From there coin is exported as `Wavefront .obj` and imported to Roblox assets from RobloxStudio's Game Explorer window. And then that model/mesh can be used by right clicking and selecting Insert.
+
+Added Cherry object project file is `cherry.blend`. It is texture painted that using ([tutorial](https://www.youtube.com/watch?v=lmbAs9jE1vI)). Exported model as `fbx`. Added as MeshPart to Roblox. Added textureId to uploaded `Cherry_correct.png`
+
 There is also unfinished chest model `box.blend`.
 
 # Other games that have sources available
