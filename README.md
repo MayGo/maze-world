@@ -1,4 +1,4 @@
-## ![Maze World](https://github.com/MayGo/maze-world/raw/master/assets/logo.png "Maze World")
+## ![Maze World](https://github.com/MayGo/maze-world/raw/master/assets/logo.png 'Maze World')
 
 This is a Roblox project where all the code is version controlled and synced to Roblox Studio with Rojo.
 Project tries to cover most of the aspects of Roblox games.
@@ -9,57 +9,62 @@ Code is written so it can be used boilerplate project. If some important model i
 
 ### Note
 
-- Project was started with https://github.com/LPGhatguy/rdc-project taken as base
+-   Project was started with https://github.com/LPGhatguy/rdc-project taken as base
 
 # Game Description
 
 You can play this game by running this project (need to publish also) or open in in Roblox: [Maze World](https://www.roblox.com/games/3376915546/Maze-World-Dynamic).
+You can select from easy, medium or hard maze to play. All mazes are dynamically created, so every time you play it is new. For easier maze solving you can buy trail or speed pets. You earn coins by finishing mazes. Bigger mazes gives more coins and placement matters, when playing with other players.
 
 ## Screenshots
 
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-1.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-2.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-3.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-4.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-5.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-6.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-7.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-8.png "Maze World")
-![Maze World](https://github.com/MayGo/tockler/raw/master/screenshots/maze-world-9.png "Maze World")
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-1.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-2.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-3.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-4.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-5.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-6.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-7.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-8.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-9.png 'Maze World')
 
 # Used libraries
 
-- [Datastore2](https://github.com/Kampfkarren/Roblox/)
-- - NOTE: Make sure you enabled: “Enabled Studio Access to API Services” and insert a boolvalue called
-- [Moses](https://github.com/Yonaba/Moses/blob/master/doc/tutorial.md) for filtering and mapping (and more)
-- [Roact-Animate](https://github.com/AmaranthineCodices/roact-animate)
-- [Roact-Material](https://github.com/MayGo/roact-material)
-- [Roact](https://github.com/Roblox/roact)
-- [Rodux](https://github.com/Roblox/rodux)
-  SaveInStudio in ServerStorage to true to test if your datastore saves!
-- [Roact-Rodux](https://github.com/Roblox/roact-rodux.git)
-- [Rojo](https://github.com/rojo-rbx/rojo)
-- [GameAnalytics](https://gameanalytics.com/docs/item/roblox-sdk)
-- Algoritm for labyrinth generation taken from https://github.com/shironecko/LuaMaze
+-   [Datastore2](https://github.com/Kampfkarren/Roblox/)
+-   -   NOTE: Make sure you enabled: “Enabled Studio Access to API Services” and insert a boolvalue called
+-   [Moses](https://github.com/Yonaba/Moses/blob/master/doc/tutorial.md) for filtering and mapping (and more)
+-   [Roact-Animate](https://github.com/AmaranthineCodices/roact-animate)
+-   [Roact-Material](https://github.com/MayGo/roact-material)
+-   [Roact](https://github.com/Roblox/roact)
+-   [Rodux](https://github.com/Roblox/rodux)
+    SaveInStudio in ServerStorage to true to test if your datastore saves!
+-   [Roact-Rodux](https://github.com/Roblox/roact-rodux.git)
+-   [Rojo](https://github.com/rojo-rbx/rojo)
+-   [GameAnalytics](https://gameanalytics.com/docs/item/roblox-sdk)
+-   Algoritm for labyrinth generation taken from https://github.com/shironecko/LuaMaze
 
 # Game functionality
 
-- [x] Money system - money is saved to server. Earn by winning.
-- [x] Shop system. Spend earned money on pets with abilities.
-- [x] Statistics system. Top money earned. Top times visited. Top games won.
-- [x] Pet system. Equipped pets and maximum pet slots are saved on server. Pets give abilities.
-- [x] Dynamically generated labyrinths.
-- [x] Waiting rooms with waiting and playing lists.
-- [x] Awards system. eg: Daily visit bonus, 10 times visit bonus
-- [x] Collectable Coins
-- [x] Inventory, collectable items. eg: Cherries
+-   [x] Money system - money is saved to server. Earn by winning.
+-   [x] Shop system. Spend earned money on pets with abilities.
+-   [x] Game Pass shop item
+-   [x] Statistics system. Top money earned. Top times visited. Top games won.
+-   [x] Pet system. Equipped pets and maximum pet slots are saved on server. Pets give abilities.
+-   [x] Dynamically generated labyrinths.
+-   [x] Waiting rooms with waiting and playing lists.
+-   [x] Awards system. eg: Daily visit bonus, 10 times visit bonus
+-   [x] Collectable Coins
+-   [x] Inventory, collectable items. eg: Cherries
+-   [x] GameAnalytics scripts (gameKey and secretKey in GameAnalyticsServerInit.server.lua)
 
 # TODO
 
-- [ ] Add tabs to inventory and shop
-- [ ] Add more collectable item: eggs
-- [ ] Add Chests, Treasures (more coins)
-- [ ] Notifications system
+-   [ ] Add tabs to inventory and shop
+-   [ ] Add more collectable item: eggs
+-   [ ] Add Chests, Treasures (more coins)
+-   [ ] Notifications system
+-   [ ] Developer Product to shop items (eg: buy coins for Robux)
+-   [ ] Add Badges, reward when completing some milestone
 
 # Assets/Images
 
@@ -75,32 +80,32 @@ There is also unfinished chest model `box.blend`.
 
 # Other games that have sources available
 
-- [Minershaven](https://github.com/berezaa/minershaven)
-- [Roblox World](https://github.com/gtraines/roblox-world)
-- [Outyards]https://github.com/Nimblz/outyards
-- [VintageCube]https://github.com/VintageCube/VintageCube
+-   [Minershaven](https://github.com/berezaa/minershaven)
+-   [Roblox World](https://github.com/gtraines/roblox-world)
+-   [Outyards]https://github.com/Nimblz/outyards
+-   [VintageCube]https://github.com/VintageCube/VintageCube
 
 # Code checkout with Sourcetree app
 
 When checking out this repo, submodules should also downloaded.
 
-- Download and install [Sourctree](https://www.sourcetreeapp.com/)
-- Check "Perform submodule actions recursively" from Preferences->Git window
-- Checkout code (now it should also download submodules into modules folder)
+-   Download and install [Sourctree](https://www.sourcetreeapp.com/)
+-   Check "Perform submodule actions recursively" from Preferences->Git window
+-   Checkout code (now it should also download submodules into modules folder)
 
 # How do I get set up?
 
-- `npm i` - to load prettier and prettier-lua (needed for VS Code)
-- Open laburinthRunner2020.rbxl
-- Configure VS Code and start Rojo (from VS Code footer)
-- From Roblox Studio->Plugins->Rojo click connect
+-   `npm i` - to load prettier and prettier-lua (needed for VS Code)
+-   Open laburinthRunner2020.rbxl
+-   Configure VS Code and start Rojo (from VS Code footer)
+-   From Roblox Studio->Plugins->Rojo click connect
 
 # VS Code Configuration
 
-- [VS Code Rojo plugin](https://marketplace.visualstudio.com/items?itemName=evaera.vscode-rojo)
-- - note macOS needs cargo installed
-- - let Rojo Manage Roblox Studio plugin
-- - VS Code restart might be needed so Rojo to start properly
-- - enable Allow HTTP requests from Roblox studio Game Settings->Options
-- [VS Code Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [VS Code Lua plugin](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
+-   [VS Code Rojo plugin](https://marketplace.visualstudio.com/items?itemName=evaera.vscode-rojo)
+-   -   note macOS needs cargo installed
+-   -   let Rojo Manage Roblox Studio plugin
+-   -   VS Code restart might be needed so Rojo to start properly
+-   -   enable Allow HTTP requests from Roblox studio Game Settings->Options
+-   [VS Code Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+-   [VS Code Lua plugin](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
