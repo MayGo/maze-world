@@ -82,8 +82,8 @@ There is also unfinished chest model `box.blend`.
 
 -   [Minershaven](https://github.com/berezaa/minershaven)
 -   [Roblox World](https://github.com/gtraines/roblox-world)
--   [Outyards]https://github.com/Nimblz/outyards
--   [VintageCube]https://github.com/VintageCube/VintageCube
+-   [Outyards](https://github.com/Nimblz/outyards)
+-   [VintageCube](https://github.com/VintageCube/VintageCube)
 
 # Code checkout with Sourcetree app
 
