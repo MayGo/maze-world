@@ -18,15 +18,15 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 
 ## Screenshots
 
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-1.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-2.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-3.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-4.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-5.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-6.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-7.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-8.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-wordl/raw/master/screenshots/maze-world-9.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-1.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-2.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-3.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-4.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-5.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-6.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-7.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-8.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-9.png 'Maze World')
 
 # Used libraries
 
