@@ -28,7 +28,7 @@ local function SurfaceBillboard(props)
 				Face = Enum.NormalId.Front,
 				CanvasSize = 15 * size,
 			},
-			{ TextListWithHeader = createElement(TextListWithHeader, props) }
+			createElement(TextListWithHeader, props)
 		) }
 	)
 end

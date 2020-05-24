@@ -15,7 +15,7 @@ local getApiFromComponent = require(clientSrc.getApiFromComponent)
 local TextList = require(clientSrc.Components.common.TextList)
 local SurfaceBillboard = require(clientSrc.Components.common.SurfaceBillboard)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
-local LeaderboardTableRow = require(clientSrc.Components.LeaderboardTableRow)
+local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
 
 local createElement = Roact.createElement
 
@@ -44,7 +44,7 @@ function LeaderboardsConnect:render()
 		title = 'Most Games Finished',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.mostPlayed,
-			rowComponent = LeaderboardTableRow,
+			rowComponent = NameValueTableRow,
 		}),
 	})
 
@@ -53,7 +53,7 @@ function LeaderboardsConnect:render()
 		title = 'Top Visitors',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.mostVisited,
-			rowComponent = LeaderboardTableRow,
+			rowComponent = NameValueTableRow,
 		}),
 	})
 
@@ -62,7 +62,7 @@ function LeaderboardsConnect:render()
 		title = 'Top Coins',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.mostCoins,
-			rowComponent = LeaderboardTableRow,
+			rowComponent = NameValueTableRow,
 		}),
 	})
 	return createElement('Folder', nil, children)

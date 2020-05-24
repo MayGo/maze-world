@@ -15,6 +15,7 @@ local RoomTimer = require(clientSrc.Components.RoomTimer)
 local TextList = require(clientSrc.Components.common.TextList)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableRow)
+local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
 
 local createElement = Roact.createElement
 
@@ -49,7 +50,13 @@ function Room:render()
 	children['waitingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = waitingPlaceholder,
 		title = 'Waiting',
-		[Roact.Children] = createElement(TextList, { items = self.props.playersWaiting }),
+		[Roact.Children] = createElement(DynamicTable, {
+			items = self.props.playersWaiting,
+			startTime = self.props.startTime,
+			nameField = 'name',
+			noValueField = true,
+			rowComponent = NameValueTableRow,
+		}),
 	})
 	children['playingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = playingPlaceholder,

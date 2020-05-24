@@ -28,7 +28,7 @@ local function DynamicTable(props)
 	return createElement(ScrollingFrame, {
 		Layout = 'Table',
 		LayoutDirection = 'Vertical',
-		CanvasSize = UDim2.new(1, 0, 1, 0),
+		CanvasSize = 'WRAP_CONTENT',
 		Size = UDim2.new(1, 0, 1, 0),
 		ScrollBarThickness = 4,
 		ScrollBarImageTransparency = 0.6,
