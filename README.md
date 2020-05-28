@@ -99,7 +99,7 @@ When checking out this repo, submodules should also downloaded.
 # How do I get set up?
 
 -   `npm i` - to load prettier and prettier-lua (needed for VS Code)
--   Open laburinthRunner2020.rbxl
+-   Open maze-world.rbxl
 -   Configure VS Code and start Rojo (from VS Code footer)
 -   From Roblox Studio->Plugins->Rojo click connect
 
