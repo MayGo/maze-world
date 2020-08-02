@@ -10,6 +10,8 @@ local Transporter = require(Modules.src.Transporter)
 local Leaderboards = require(Modules.src.Leaderboards)
 local GameDatastore = require(Modules.src.GameDatastore)
 
+local Place = game.Workspace:WaitForChild('Place')
+
 local function calulatePrize(prizeCoins, playersPlaying)
 	local function isPlayerFinished(player)
 		return player.finishTime ~= nil
@@ -44,7 +46,7 @@ local function playerFinishedRoom(player, roomId)
 			local coins = calulatePrize(config.prizeCoins, room.playersPlaying)
 			logger:d('Player finished room: ' .. player.Name .. '. Transport to lobby. Give money: ' .. coins .. ' coins.')
 
-			local house = game.workspace:findFirstChild('House')
+			local house = Place:findFirstChild('House')
 
 			if house then
 				local LobbySpawn = house:findFirstChild('placeholders') and house.placeholders:findFirstChild('SpawnPlaceholder')

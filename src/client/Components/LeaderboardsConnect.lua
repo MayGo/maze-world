@@ -21,7 +21,8 @@ local createElement = Roact.createElement
 
 local LeaderboardsConnect = Roact.Component:extend('LeaderboardsConnect')
 
-local leaderboards = game.workspace:findFirstChild('Leaderboards')
+local Place = game.Workspace:WaitForChild('Place')
+local leaderboards = Place:findFirstChild('Leaderboards')
 
 function LeaderboardsConnect:init()
 	self.api = getApiFromComponent(self)

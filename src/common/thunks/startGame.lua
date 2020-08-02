@@ -13,7 +13,9 @@ local Player = require(Modules.src.Player)
 local M = require(Modules.M)
 local TouchItem = require(Modules.src.TouchItem)
 local MazeGenerator = require(Modules.src.MazeGenerator)
-local MapsFolder = game.workspace:findFirstChild('Maps')
+
+local Place = game.Workspace:WaitForChild('Place')
+local MapsFolder = Place:findFirstChild('Maps')
 
 local function startGame(roomId)
 	return function(store)

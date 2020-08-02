@@ -2,6 +2,8 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 
+local Place = game.Workspace:WaitForChild('Place')
+
 local Portal = {}
 
 Portal.__index = Portal
@@ -9,7 +11,7 @@ Portal.__index = Portal
 function Portal.new(teleportTo, portalFrom)
 	local portalTo = teleportTo
 	if type(teleportTo) == 'string' then
-		local portalTo = workspace.Lobby.Portals:FindFirstChild(teleportTo)
+		local portalTo = Place.Lobby.Portals:FindFirstChild(teleportTo)
 		if not portalTo then
 			logger:e('Portal' .. teleportTo .. ' not found')
 		end

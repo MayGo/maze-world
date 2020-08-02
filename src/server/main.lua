@@ -40,8 +40,10 @@ local GhostAbility = require(Modules.src.GhostAbility)
 
 GhostAbility:initCollisionGroup()
 
-local MapsFolder = game.workspace:findFirstChild('Maps')
-local RoomsFolder = game.workspace:findFirstChild('Rooms')
+local Place = game.Workspace:WaitForChild('Place')
+
+local MapsFolder = Place:findFirstChild('Maps')
+local RoomsFolder = Place:findFirstChild('Rooms')
 
 return function(context)
 	local reducer = Rodux.combineReducers(Dict.join(commonReducers, serverReducers))

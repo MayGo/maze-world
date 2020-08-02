@@ -112,3 +112,7 @@ When checking out this repo, submodules should also downloaded.
 -   -   enable Allow HTTP requests from Roblox studio Game Settings->Options
 -   [VS Code Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 -   [VS Code Lua plugin](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
+-   [Roblox Lua Autocompletes](https://marketplace.visualstudio.com/items?itemName=Kampfkarren.roblox-lua-autofills)
+-   [RBX lua plugin](https://marketplace.visualstudio.com/items?itemName=AmaranthineCodices.vscode-rbxlua)
+
+There is nice tutorial in medium also: [Roblox Development in Visual Studio Code](https://medium.com/@OverHash/roblox-development-in-visual-studio-code-b3010c3d0181)

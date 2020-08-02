@@ -21,7 +21,8 @@ local createElement = Roact.createElement
 
 local Room = Roact.Component:extend('Room')
 
-local RoomsFolder = game.workspace:findFirstChild('Rooms')
+local Place = game.Workspace:WaitForChild('Place')
+local RoomsFolder = Place:findFirstChild('Rooms')
 
 function Room:init()
 	self.api = getApiFromComponent(self)
