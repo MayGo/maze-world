@@ -1,0 +1,137 @@
+<roblox version="4">
+  <Item class="MeshPart" referent="0">
+    <Properties>
+      <string name="Name">Coin</string>
+      <bool name="Anchored">true</bool>
+      <BinaryString name="AttributesSerialize">
+      </BinaryString>
+      <float name="BackParamA">-0.5</float>
+      <float name="BackParamB">0.5</float>
+      <token name="BackSurface">0</token>
+      <token name="BackSurfaceInput">0</token>
+      <float name="BottomParamA">-0.5</float>
+      <float name="BottomParamB">0.5</float>
+      <token name="BottomSurface">0</token>
+      <token name="BottomSurfaceInput">0</token>
+      <CoordinateFrame name="CFrame">
+        <X>0.911523</X>
+        <Y>-2</Y>
+        <Z>-10</Z>
+        <R00>1</R00>
+        <R01>0</R01>
+        <R02>0</R02>
+        <R10>0</R10>
+        <R11>1</R11>
+        <R12>0</R12>
+        <R20>0</R20>
+        <R21>0</R21>
+        <R22>1</R22>
+      </CoordinateFrame>
+      <bool name="CanCollide">false</bool>
+      <bool name="CastShadow">true</bool>
+      <int name="CollisionGroupId">0</int>
+      <Color3uint8 name="Color3uint8">15710264</Color3uint8>
+      <PhysicalProperties name="CustomPhysicalProperties">
+        <CustomPhysics>false</CustomPhysics>
+      </PhysicalProperties>
+      <float name="FrontParamA">-0.5</float>
+      <float name="FrontParamB">0.5</float>
+      <token name="FrontSurface">0</token>
+      <token name="FrontSurfaceInput">0</token>
+      <bool name="HasJointOffset">false</bool>
+      <bool name="HasSkinnedMesh">false</bool>
+      <Vector3 name="InitialSize">
+        <X>0.1769540011882782</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Vector3>
+      <Vector3 name="JointOffset">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Vector3>
+      <BinaryString name="LODData">
+      </BinaryString>
+      <float name="LeftParamA">-0.5</float>
+      <float name="LeftParamB">0.5</float>
+      <token name="LeftSurface">0</token>
+      <token name="LeftSurfaceInput">0</token>
+      <bool name="Locked">false</bool>
+      <bool name="Massless">false</bool>
+      <token name="Material">1088</token>
+      <Content name="MeshID">
+        <url>rbxassetid://4970807658</url>
+      </Content>
+      <Content name="MeshId">
+        <url>rbxassetid://4970807658</url>
+      </Content>
+      <SharedString name="PhysicalConfigData">+KXn2PVkmG8K5+S8Au8qxA==</SharedString>
+      <BinaryString name="PhysicsData">
+      </BinaryString>
+      <float name="Reflectance">0</float>
+      <token name="RenderFidelity">1</token>
+      <float name="RightParamA">-0.5</float>
+      <float name="RightParamB">0.5</float>
+      <token name="RightSurface">0</token>
+      <token name="RightSurfaceInput">0</token>
+      <int name="RootPriority">0</int>
+      <Vector3 name="RotVelocity">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Vector3>
+      <Vector3 name="size">
+        <X>0.1769540011882782</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Vector3>
+      <BinaryString name="Tags"><![CDATA[Q29pbkJyaWNr]]></BinaryString>
+      <Content name="TextureID">
+        <null>
+        </null>
+      </Content>
+      <float name="TopParamA">-0.5</float>
+      <float name="TopParamB">0.5</float>
+      <token name="TopSurface">0</token>
+      <token name="TopSurfaceInput">0</token>
+      <float name="Transparency">0</float>
+      <Vector3 name="Velocity">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Vector3>
+    </Properties>
+    <Item class="Script" referent="1">
+      <Properties>
+        <string name="Name">rotate</string>
+        <BinaryString name="AttributesSerialize">
+        </BinaryString>
+        <bool name="Disabled">false</bool>
+        <Content name="LinkedSource">
+          <null>
+          </null>
+        </Content>
+        <string name="ScriptGuid">{dc9fa695-2a3d-4d1c-ac04-13929795397d}</string>
+        <string name="Source"><![CDATA[
+while true do wait()
+		script.Parent.CFrame= script.Parent.CFrame* CFrame.fromEulerAnglesXYZ(0,0.1,0)
+end]]></string>
+        <BinaryString name="Tags">
+        </BinaryString>
+      </Properties>
+    </Item>
+    <Item class="NumberValue" referent="2">
+      <Properties>
+        <string name="Name">itemId</string>
+        <BinaryString name="AttributesSerialize">
+        </BinaryString>
+        <BinaryString name="Tags">
+        </BinaryString>
+        <double name="Value">9000001</double>
+      </Properties>
+    </Item>
+  </Item>
+  <SharedStrings>
+    <SharedString md5="+KXn2PVkmG8K5+S8Au8qxA==">Q1NHUEhTAAAAAEJMT0NL</SharedString>
+  </SharedStrings>
+</roblox>

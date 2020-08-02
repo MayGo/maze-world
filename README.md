@@ -103,6 +103,32 @@ When checking out this repo, submodules should also downloaded.
 -   Configure VS Code and start Rojo (from VS Code footer)
 -   From Roblox Studio->Plugins->Rojo click connect
 
+# Tools
+
+-   [Rojo](https://github.com/Roblox/rojo), a build system
+-   [Foreman](https://github.com/Roblox/foreman), a toolchain manager
+-   [Remodel](https://github.com/Roblox/remodel), a deployment manager and multitool
+-   [Tarmac](https://github.com/Roblox/tarmac), an asset manager
+
+installed using cargo. See each repo Readme
+
+## Building and Testing
+
+(Not using this atm)
+Requires [Foreman](https://github.com/Roblox/foreman) 1.0.0 or newer.
+
+```bash
+
+# Build place
+rojo build --output Game.rbxlx
+
+open Game.rbxlx
+
+publish
+
+Start rojo sync. Start Rojo server in VS Code and in Roblox Studio
+```
+
 # VS Code Configuration
 
 -   [VS Code Rojo plugin](https://marketplace.visualstudio.com/items?itemName=evaera.vscode-rojo)

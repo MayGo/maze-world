@@ -1,0 +1,6 @@
+[tools]
+rojo = { source = "Roblox/rojo", version = "6.0.0-rc.1" }
+remodel = {source = "rojo-rbx/remodel", version = "0.7.0"}
+testez = {source = "Roblox/testez", version = "0.2"}
+tarmac = { source = "Roblox/tarmac", version = "0.4.0" }
+

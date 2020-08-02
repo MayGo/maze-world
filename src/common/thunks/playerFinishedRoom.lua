@@ -46,18 +46,8 @@ local function playerFinishedRoom(player, roomId)
 			local coins = calulatePrize(config.prizeCoins, room.playersPlaying)
 			logger:d('Player finished room: ' .. player.Name .. '. Transport to lobby. Give money: ' .. coins .. ' coins.')
 
-			local house = Place:findFirstChild('House')
-
-			if house then
-				local LobbySpawn = house:findFirstChild('placeholders') and house.placeholders:findFirstChild('SpawnPlaceholder')
-				if LobbySpawn then
-					Transporter:transportPlayers({ player }, LobbySpawn)
-				else
-					logger:w('LobbySpawn object not found. Nowhere to respawn.')
-				end
-			else
-				logger:w('House object not found. Nowhere to respawn.')
-			end
+			Transporter:placePlayersToHomeSpawn({ player })
+	
 
 			store:dispatch(addPlayerFinishToRoom(player, roomId, tick(), coins))
 			store:dispatch(clientFinishGame(player, roomId, tick(), coins))

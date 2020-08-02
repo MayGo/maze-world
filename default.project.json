@@ -1,82 +1,139 @@
 {
-  "name": "rdc-project",
-  "servePort": 8005,
-  "tree": {
-    "$className": "DataModel",
-    "StarterPlayer": {
-      "$className": "StarterPlayer",
-      "StarterPlayerScripts": {
-        "$className": "StarterPlayerScripts",
-        "$ignoreUnknownInstances": true,
-        "clientSrc": {
-          "$path": "src/client"
-        }
-      }
-    },
-    "Players": {
-      "$className": "Players",
-      "$properties": {
-        "CharacterAutoLoads": false
-      }
-    },
-    "HttpService": {
-      "$className": "HttpService",
-      "$properties": {
-        "HttpEnabled": true
-      }
-    },
+    "name": "maze-runner",
+    "servePort": 8005,
+    "tree": {
+        "$className": "DataModel",
+        "Workspace": {
+            "$className": "Workspace",
+            "Place": {
+                "$path": "Place.rbxmx"
+            }
+        },
+        "Lighting": {
+            "$className": "Lighting",
+            "$properties": {
+                "GlobalShadows": true,
+                "Technology": "ShadowMap",
+                "ShadowSoftness": 0.5,
+                "TimeOfDay": "14:00:00",
+                "GeographicLatitude": 45,
+                "Brightness": 2
+            },
+            "Bloom": {
+                "$className": "BloomEffect",
+                "$properties": {
+                    "Enabled": true,
+                    "Intensity": 0.400000006,
+                    "Name": "Bloom",
+                    "Size": 24,
+                    "Threshold": 0.800000012
+                }
+            },
+            "Blur": {
+                "$className": "BlurEffect",
+                "$properties": {
+                    "Enabled": true,
+                    "Name": "Blur",
+                    "Size": 3
+                }
+            },
+            "ColorCorrection": {
+                "$className": "ColorCorrectionEffect",
+                "$properties": {
+                    "Enabled": true,
+                    "Name": "ColorCorrection",
+                    "Brightness": 0.119999997,
+                    "Contrast": 0.200000003,
+                    "Saturation": 0.600000024
+                }
+            },
+            "SunRays": {
+                "$className": "SunRaysEffect",
+                "$properties": {
+                    "Enabled": true,
+                    "Name": "SunRays",
+                    "Intensity": 0.0579999983,
+                    "Spread": 0.463
+                }
+            }
+        },
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+            "StarterPlayerScripts": {
+                "$className": "StarterPlayerScripts",
+                "$ignoreUnknownInstances": true,
+                "clientSrc": {
+                    "$path": "src/client"
+                }
+            }
+        },
+        "Players": {
+            "$className": "Players",
+            "$properties": {
+                "CharacterAutoLoads": false
+            }
+        },
+        "HttpService": {
+            "$className": "HttpService",
+            "$properties": {
+                "HttpEnabled": true
+            }
+        },
 
-    "ServerStorage": {
-      "$className": "ServerStorage",
-      "serverStorageSrc": {
-        "$path": "src/serverStorage"
-      }
-    },
-    "ServerScriptService": {
-      "$className": "ServerScriptService",
-      "serverSrc": {
-        "$path": "src/server"
-      }
-    },
-    "ReplicatedStorage": {
-      "$className": "ReplicatedStorage",
-      "Modules": {
-        "$className": "Folder",
-        "$ignoreUnknownInstances": true,
-        "src": {
-          "$path": "src/common"
+        "ServerStorage": {
+            "$className": "ServerStorage",
+            "serverStorageSrc": {
+                "$path": "src/serverStorage"
+            }
         },
-        "Roact": {
-          "$path": "modules/roact/src"
+        "ServerScriptService": {
+            "$className": "ServerScriptService",
+            "serverSrc": {
+                "$path": "src/server"
+            }
         },
-        "M": {
-          "$path": "modules/moses/moses_min.lua"
-        },
-        "Rodux": {
-          "$path": "modules/rodux/src"
-        },
-        "DataStore2": {
-          "$path": "modules/datastore2/DataStore2"
-        },
-        "RoactRodux": {
-          "$path": "modules/roact-rodux/src"
-        },
-        "Promise": {
-          "$path": "modules/promise2/lib"
-        },
-        "RoactMaterial": {
-          "$path": "modules/roact-material/src"
-        },
-        "RoactAnimate": {
-          "$path": "modules/roact-animate/src"
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "Models": {
+                "$path": "models"
+            },
+            "Modules": {
+                "$className": "Folder",
+                "$ignoreUnknownInstances": true,
+                "src": {
+                    "$path": "src/common"
+                },
+                "Roact": {
+                    "$path": "modules/roact/src"
+                },
+                "M": {
+                    "$path": "modules/moses/moses_min.lua"
+                },
+                "Rodux": {
+                    "$path": "modules/rodux/src"
+                },
+                "DataStore2": {
+                    "$path": "modules/datastore2/DataStore2"
+                },
+                "RoactRodux": {
+                    "$path": "modules/roact-rodux/src"
+                },
+                "Promise": {
+                    "$path": "modules/promise2/lib"
+                },
+                "RoactMaterial": {
+                    "$path": "modules/roact-material/src"
+                },
+                "RoactAnimate": {
+                    "$path": "modules/roact-animate/src"
+                }
+            },
+            "HotReloadServer": {
+                "$path": "src/HotReloadServer.lua"
+            },
+            "HotReloadClient": {
+                "$path": "src/HotReloadClient.lua"
+            }
         }
-      },
-      "HotReloadServer": {
-        "$path": "src/HotReloadServer.lua"
-      },
-      "HotReloadClient": {
-        "$path": "src/HotReloadClient.lua"
-      }
     }
-  }
 }

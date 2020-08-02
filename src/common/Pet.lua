@@ -3,6 +3,8 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local GhostAbility = require(Modules.src.GhostAbility)
 
+local Models = ReplicatedStorage:WaitForChild('Models')
+
 local Pet = {}
 
 Pet.__index = Pet
@@ -51,7 +53,7 @@ function Pet:addToCharacter()
 
 	-- self:removeCurrentPet()
 
-	local petModel = game.ServerStorage.Pets[self.petName]:Clone()
+	local petModel = Models.Pets[self.petName]:Clone()
 
 	if petModel == nil then
 		logger:w('No Pet')

@@ -3,7 +3,9 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 
 local Maze = require(script.Parent.Maze)
-local prefabs = game.ServerStorage.Prefabs
+local Models = ReplicatedStorage:WaitForChild('Models')
+local Prefabs = Models.Prefabs
+local Walls = Models.Walls
 local recursive_backtracker = require(script.Parent.MazeBacktrace)
 
 function DrawBlock(x, y, z, location, vertical, wallsFolder)
@@ -31,7 +33,7 @@ end
 
 function DrawFloor(x, y, z, location, width, height)
 	local block = 'Wall'
-	local newBlock = prefabs[block]:Clone()
+	local newBlock = Prefabs[block]:Clone()
 	newBlock.Parent = location
 	newBlock.Size = Vector3.new(width, 1, height)
 
@@ -41,7 +43,7 @@ end
 
 function DrawStart(x, y, z, location, width, height)
 	local block = 'SpawnPlaceholder'
-	local newBlock = prefabs[block]:Clone()
+	local newBlock = Prefabs[block]:Clone()
 	newBlock.Parent = location
 	newBlock.Size = Vector3.new(width, 1, height)
 
@@ -51,7 +53,7 @@ end
 
 function DrawFinish(x, y, z, location, width, height)
 	local block = 'FinishPlaceholder'
-	local newBlock = prefabs[block]:Clone()
+	local newBlock = Prefabs[block]:Clone()
 	newBlock.Parent = location
 	newBlock.Size = Vector3.new(width, 1, height)
 
@@ -135,8 +137,8 @@ function MazeGenerator:generate(map, width, height)
 	mazeFolder.Name = mazeFolderName
 
 	local primaryPart = map.PrimaryPart
-	local wallFolder = game.ServerStorage.Walls_1
-	local wallKillbrickFolder = game.ServerStorage.Walls_1_killbrick
+	local wallFolder = Walls.Walls_1
+	local wallKillbrickFolder = Walls.Walls_1_killbrick
 	draw_maze(maze, blockWidth, blockDepth, mazeFolder, primaryPart, wallFolder, wallKillbrickFolder)
 end
 

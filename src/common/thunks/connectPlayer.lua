@@ -2,6 +2,7 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local M = require(Modules.M)
+local Transporter = require(Modules.src.Transporter)
 
 local initializePlayerInventory = require(Modules.src.actions.inventory.initializePlayerInventory)
 local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderboardItems)
@@ -90,6 +91,7 @@ local function connectPlayer(player)
 		--------------------------------
 
 		logger:d('Loading character for player:' .. player.Name)
+		Transporter:placePlayerToHomeSpawn(player)
 		player:LoadCharacter()
 	end
 end
