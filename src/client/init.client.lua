@@ -6,7 +6,14 @@
 ]]
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local Modules = ReplicatedStorage:WaitForChild('Modules')
 local StarterPlayer = game:GetService('StarterPlayer')
+
+local loadingScreen = require(Modules.src.gui.LoadingScreen)
+local Players = game:GetService('Players')
+local localPlayer = Players.LocalPlayer
+
+loadingScreen:show(localPlayer)
 
 local HotReloadClient = require(ReplicatedStorage.HotReloadClient)
 
@@ -48,3 +55,7 @@ HotReloadClient.start({
 
 local main = require(script.main)
 main(context)
+
+local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+
+loadingScreen:hide(character)
