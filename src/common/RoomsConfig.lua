@@ -1,7 +1,7 @@
 local RoomsConfig = {
-	EASY = 'EasyBlocks',
-	MEDIUM = 'EasyBlocks2',
-	HARD = 'EasyBlocks3',
+	EASY = 'EasyRoom',
+	MEDIUM = 'MediumRoom',
+	HARD = 'HardRoom',
 }
 
 return RoomsConfig
