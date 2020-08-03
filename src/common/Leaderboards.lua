@@ -17,7 +17,7 @@ local GameDatastore = require(Modules.src.GameDatastore)
 
 local Leaderboards = {}
 
-local LEADERBOARD_SIZE = 10
+local LEADERBOARD_SIZE = 50
 
 local REWARD_10TIMES = 1000
 local REWARD_DAILY = 100
@@ -33,12 +33,21 @@ function Leaderboards:connectPlayerVisits(player)
 	local hours = (tick() - lastLogin) / 60 / 60
 
 	if hours >= 24 then
-		logger:d('Player ' .. player.Name .. ' last login was ' .. tostring(hours) .. ' ago. Give reward.', lastLogin)
+		logger:d(
+			'Player ' .. player.Name .. ' last login was ' .. tostring(
+				hours
+			) .. ' ago. Give reward.',
+			lastLogin
+		)
 		GameDatastore:incrementCoins(player, REWARD_DAILY)
 	end
 
 	if success and visits == 10 then
-		logger:d('Player ' .. player.Name .. ' has visited  ' .. tostring(visits) .. ' times. Give reward.')
+		logger:d(
+			'Player ' .. player.Name .. ' has visited  ' .. tostring(
+				visits
+			) .. ' times. Give reward.'
+		)
 		GameDatastore:incrementCoins(player, REWARD_10TIMES)
 	end
 
@@ -52,7 +61,8 @@ local function updateMostCoins(player, playerData)
 		local playerKey = player.Name
 
 		logger:d('DataStore Leaderboard: Update player ' .. player.Name .. ' most coins')
-		local success, response = pcall(mostCoinsStore.SetAsync, mostCoinsStore, playerKey, playerData.coins)
+		local success, response =
+			pcall(mostCoinsStore.SetAsync, mostCoinsStore, playerKey, playerData.coins)
 
 		if not success then
 			logger:e('Failure during updating top coins: ' .. response)
@@ -71,7 +81,10 @@ function Leaderboards:connectMostCoins(player)
 	
 					return newValue
 				end)]]
-		logger:d('DataStore Leaderboard: Player ' .. player.Name .. ' earned ' .. playerData.coins .. ' coins.', playerData)
+		logger:d(
+			'DataStore Leaderboard: Player ' .. player.Name .. ' earned ' .. playerData.coins .. ' coins.',
+			playerData
+		)
 
 		updateMostCoins(player, playerData):andThen(function(body)
 			logger:d('DataStore Leaderboard: Saved top coins', body)
@@ -88,7 +101,10 @@ function Leaderboards:updateMostPlayed(player, roomId)
 	local mostPlayedStore = datastore:GetOrderedDataStore(STORE_MOST_PLAYED .. key)
 	local playerKey = player.Name
 
-	logger:d('DataStore Leaderboard: Update Player ' .. player.Name .. ' Most Played for room:', roomId)
+	logger:d(
+		'DataStore Leaderboard: Update Player ' .. player.Name .. ' Most Played for room:',
+		roomId
+	)
 
 	mostPlayedStore:IncrementAsync(playerKey, 1)
 end

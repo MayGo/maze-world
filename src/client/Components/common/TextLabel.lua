@@ -4,9 +4,10 @@ local logger = require(Modules.src.utils.Logger)
 
 local Roact = require(Modules.Roact)
 local Dict = require(Modules.src.utils.Dict)
+local createElement = Roact.createElement
 
 local function TextLabel(props)
-	return Roact.createElement(
+	return createElement(
 		'TextLabel',
 		Dict.join(
 			{

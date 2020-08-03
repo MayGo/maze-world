@@ -1,8 +1,10 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
+-- local logger = require(Modules.src.utils.Logger)
 
 local Roact = require(Modules.Roact)
+local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
+local TextLabel = require(clientSrc.Components.common.TextLabel)
 
 local createElement = Roact.createElement
 
@@ -30,7 +32,7 @@ local function TextList(props)
 	children.Layout = createElement('UIListLayout', { SortOrder = Enum.SortOrder.LayoutOrder })
 
 	for index, item in ipairs(itemList) do
-		local playerName = Roact.createElement('TextLabel', {
+		local playerName = createElement(TextLabel, {
 			Text = item.name,
 			TextColor3 = Color3.new(0.9, 0.9, 0.9),
 			TextSize = 32,

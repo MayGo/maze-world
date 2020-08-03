@@ -9,10 +9,7 @@ local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerSc
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
 
-local Print = require(Modules.src.utils.Print)
-
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
-local TextList = require(clientSrc.Components.common.TextList)
 local SurfaceBillboard = require(clientSrc.Components.common.SurfaceBillboard)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
@@ -22,7 +19,7 @@ local createElement = Roact.createElement
 local LeaderboardsConnect = Roact.Component:extend('LeaderboardsConnect')
 
 local Place = game.Workspace:WaitForChild('Place')
-local leaderboards = Place:findFirstChild('Leaderboards')
+local leaderboards = Place.Leaderboards
 
 function LeaderboardsConnect:init()
 	self.api = getApiFromComponent(self)
@@ -36,6 +33,7 @@ function LeaderboardsConnect:render()
 		logger:w('Leaderboards folder with placeholders does not exists!')
 		return
 	end
+
 	local visitorsPlaceholder = leaderboards.placeholders.VisitorsPlaceholder
 	local coinsPlaceholder = leaderboards.placeholders.CoinsPlaceholder
 	local playedPlaceholder = leaderboards.placeholders.PlayedPlaceholder
@@ -46,6 +44,7 @@ function LeaderboardsConnect:render()
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.mostPlayed,
 			rowComponent = NameValueTableRow,
+			rowProps = { TextColor3 = Color3.fromRGB(255, 255, 255) },
 		}),
 	})
 
@@ -55,6 +54,7 @@ function LeaderboardsConnect:render()
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.mostVisited,
 			rowComponent = NameValueTableRow,
+			rowProps = { TextColor3 = Color3.fromRGB(255, 255, 255) },
 		}),
 	})
 
@@ -64,12 +64,13 @@ function LeaderboardsConnect:render()
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.mostCoins,
 			rowComponent = NameValueTableRow,
+			rowProps = { TextColor3 = Color3.fromRGB(255, 255, 255) },
 		}),
 	})
 	return createElement('Folder', nil, children)
 end
 
-LeaderboardsConnect = RoactRodux.connect(function(state, props)
+LeaderboardsConnect = RoactRodux.connect(function(state)
 	return {
 		mostVisited = state.leaderboards.mostVisited,
 		mostCoins = state.leaderboards.mostCoins,

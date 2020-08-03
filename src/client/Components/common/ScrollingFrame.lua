@@ -131,8 +131,12 @@ function ScrollingFrame:GetSize(ContentSize)
 
 	-- Calculate size based on content if dynamic
 	return UDim2.new(
-		(ContentSize and DynamicWidth) and UDim.new(0, ContentSize.X) or (typeof(props.Width) == 'UDim' and props.Width or props.Size.X),
-		(ContentSize and DynamicHeight) and UDim.new(0, ContentSize.Y) or (typeof(props.Height) == 'UDim' and props.Height or props.Size.Y)
+		(ContentSize and DynamicWidth) and UDim.new(0, ContentSize.X) or (typeof(
+			props.Width
+		) == 'UDim' and props.Width or props.Size.X),
+		(ContentSize and DynamicHeight) and UDim.new(0, ContentSize.Y) or (typeof(
+			props.Height
+		) == 'UDim' and props.Height or props.Size.Y)
 	)
 end
 

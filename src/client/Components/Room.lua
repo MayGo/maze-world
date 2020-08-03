@@ -53,19 +53,27 @@ function Room:render()
 		title = 'Waiting',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.playersWaiting,
-			startTime = self.props.startTime,
-			nameField = 'name',
-			noValueField = true,
 			rowComponent = NameValueTableRow,
+			rowProps = {
+				startTime = self.props.startTime,
+				nameField = 'name',
+				noValueField = true,
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+			},
 		}),
 	})
+
 	children['playingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = playingPlaceholder,
-		title = 'Playing',
+		title = 'PLAYERS',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.playersPlaying,
-			startTime = self.props.startTime,
 			rowComponent = PlayersPlayingTableRow,
+			rowProps = {
+				startTime = self.props.startTime,
+				endTime = self.props.endTime,
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+			},
 		}),
 	})
 

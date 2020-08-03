@@ -1,12 +1,11 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
+-- local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 
 local Roact = require(Modules.Roact)
 
 local Support = require(Modules.src.utils.SupportLibrary)
-local Print = require(Modules.src.utils.Print)
 
 local ScrollingFrame = require(clientSrc.Components.common.ScrollingFrame)
 
@@ -22,7 +21,7 @@ local function DynamicTable(props)
 
 	for i = 1, #orderedItems do
 		local item = orderedItems[i]
-		ListItems[i] = createElement(rowComponent, Support.Merge({ item = item }, props or {}))
+		ListItems[i] = createElement(rowComponent, Support.Merge({ item = item }, props.rowProps or {}))
 	end
 
 	return createElement(ScrollingFrame, {
@@ -34,7 +33,9 @@ local function DynamicTable(props)
 		ScrollBarImageTransparency = 0.6,
 		VerticalScrollBarInset = 'ScrollBar',
 		BackgroundColor3 = Color3.new(1, 1, 1),
-		BackgroundTransparency = 0,
+		BackgroundTransparency = 1,
+		BorderSizePixel = 8,
+		BorderMode = Enum.BorderMode.Inset,
 		LayoutOrder = 100,
 		SortOrder = props.SortOrder,
 		ElasticBehavior = Enum.ElasticBehavior.Always,

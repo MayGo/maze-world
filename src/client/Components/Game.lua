@@ -124,7 +124,11 @@ function Game:render(props)
 					{ target = Workspace },
 					{ Room = createElement(Room, { roomId = RoomsConfig.HARD }) }
 				),
-				LeaderboardsA = createElement(Roact.Portal, { target = Workspace }, { Leaderboards = createElement(LeaderboardsConnect) }),
+				LeaderboardsA = createElement(
+					Roact.Portal,
+					{ target = Workspace },
+					{ Leaderboards = createElement(LeaderboardsConnect) }
+				),
 			}
 		) }
 	)
