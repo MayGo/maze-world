@@ -4,10 +4,12 @@ local logger = require(Modules.src.utils.Logger)
 local Players = game:GetService('Players')
 local setRoomCountDown = require(Modules.src.actions.rooms.setRoomCountDown)
 local setRoomStartTime = require(Modules.src.actions.rooms.setRoomStartTime)
+local setRoomEndTime = require(Modules.src.actions.rooms.setRoomEndTime)
 local clientStartGame = require(Modules.src.actions.toClient.clientStartGame)
 local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
-local RoomsConfig = require(Modules.src.RoomsConfig)
-local GlobalConfig = require(Modules.src.GlobalConfig)
+local addPlayerFinishToRoom = require(Modules.src.actions.rooms.addPlayerFinishToRoom)
+local clientFinishGame = require(Modules.src.actions.toClient.clientFinishGame)
+
 local Transporter = require(Modules.src.Transporter)
 local Player = require(Modules.src.Player)
 local M = require(Modules.M)
@@ -16,6 +18,18 @@ local MazeGenerator = require(Modules.src.MazeGenerator)
 
 local Place = game.Workspace:WaitForChild('Place')
 local MapsFolder = Place:findFirstChild('Maps')
+
+local function isPlayerPlaying(player)
+	return player.finishTime == nil
+end
+local function addPlayerDiedListener(store, roomId, player)
+	player.Character:WaitForChild('Humanoid').Died:Connect(function()
+		logger:i(player.Name .. ' has died in room!')
+
+		store:dispatch(addPlayerFinishToRoom(player, roomId, os.time(), 0, true))
+		store:dispatch(clientFinishGame(player, roomId, os.time(), 0, true))
+	end)
+end
 
 local function startGame(roomId)
 	return function(store)
@@ -54,8 +68,8 @@ local function startGame(roomId)
 		end
 
 		local playersWaiting = room.playersWaiting
-		store:dispatch(setRoomCountDown(roomId, room.playTime))
-		store:dispatch(setRoomStartTime(roomId, tick(), playersWaiting))
+
+		store:dispatch(setRoomStartTime(roomId, os.time(), playersWaiting))
 
 		local function getPlayerInstance(player)
 			return Players:GetPlayerByUserId(player.id)
@@ -73,38 +87,50 @@ local function startGame(roomId)
 			M.each(playersWaitingInstances, sendToClient)
 
 			Transporter:transportPlayers(playersWaitingInstances, LevelEasySpawn)
+			--[[	M.each(playersWaitingInstances, function(player)
+				addPlayerDiedListener(store, roomId, player)
+			end)]]
 		else
 			logger:w('SpawnPlaceholder is missing from ' .. roomId .. ' map object!')
 		end
 
 		spawn(function()
-			while true do
+			local gameEndedEvent = Instance.new('BindableEvent')
+			store:dispatch(setRoomCountDown(roomId, room.playTime, 'Find exit'))
+
+			delay(room.playTime, function()
+				gameEndedEvent:Fire(true)
+			end)
+
+			spawn(function()
+				while true do
+					wait(0.1)
+
+					local room = store:getState().rooms[roomId]
+					local playersPlaying = M.select(room.playersPlaying, isPlayerPlaying)
+
+					if M.count(playersPlaying) == 0 then
+						gameEndedEvent:Fire(false)
+						break
+					end
+				end
+			end)
+
+			local gameWillEnd = gameEndedEvent.event:Wait()
+
+			if gameWillEnd then
+				logger:d('Game will ended with timer for room ' .. roomId)
 				local state = store:getState()
 				local room = state.rooms[roomId]
-				local countDown = room.countDown
-
-				wait(1)
-
-				local newCountDown = countDown - 1
-				store:dispatch(setRoomCountDown(roomId, newCountDown))
-
-				local function isPlayerPlaying(player)
-					return player.finishTime == nil
-				end
-
 				local playersPlaying = M.select(room.playersPlaying, isPlayerPlaying)
+				local playersPlayingInstances = M.map(playersPlaying, getPlayerInstance)
 
-				-- ending game if time expires or players have finished
-				if newCountDown <= 0 or M.count(playersPlaying) == 0 then
-					-- ending game and transporting players who are still playing
-					-- not transporting already finished players
-
-					local playersPlayingInstances = M.map(playersPlaying, getPlayerInstance)
-					store:dispatch(setRoomCountDown(roomId, GlobalConfig.WAIT_TIME))
-					Transporter:transportByKillingPlayers(playersPlayingInstances)
-					break
-				end
+				Transporter:transportByKillingPlayers(playersPlayingInstances)
+			else
+				logger:d('Game will ended with  all player finished for room ' .. roomId)
 			end
+
+			store:dispatch(setRoomEndTime(roomId, os.time()))
 		end)
 	end
 end

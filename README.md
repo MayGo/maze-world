@@ -109,6 +109,7 @@ When checking out this repo, submodules should also downloaded.
 -   [Foreman](https://github.com/Roblox/foreman), a toolchain manager
 -   [Remodel](https://github.com/Roblox/remodel), a deployment manager and multitool
 -   [Tarmac](https://github.com/Roblox/tarmac), an asset manager
+-   -   `tarmac sync --target roblox --auth ROBLOSECURITY`
 
 installed using cargo. See each repo Readme
 

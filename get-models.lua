@@ -1,9 +1,9 @@
-local game = remodel.readPlaceFile('raw-assets/game-models.rbxlx')
+local game = remodel.readPlaceFile('raw-assets/game-models-and-place.rbxlx')
 
 -- If the directory does not exist yet, we'll create it.
 remodel.createDirAll('models')
 
-local folders = { 'Money', 'Pets', 'Prefabs','Walls', 'Collectables' }
+local folders = { 'Money', 'Pets', 'Prefabs', 'Walls', 'Collectables' }
 
 for _, folder in ipairs(folders) do
 	for _, model in ipairs(game.Workspace[folder]:GetChildren()) do

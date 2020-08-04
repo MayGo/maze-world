@@ -35,8 +35,10 @@ local function rooms(state, action)
                     name = "trimatech3"
                 }]] --
             },
+            endTime =  nil,
             --  startTime = 1577984537.9199,
-            countDown = GlobalConfig.WAIT_TIME,
+            countDownTime = nil,
+            countDownText = nil,
             playTime = GlobalConfig.PLAY_TIME_EASY,
         },
         [RoomsConfig.MEDIUM] = {
@@ -47,7 +49,8 @@ local function rooms(state, action)
             },
             playersWaiting = {},
             playersPlaying = {},
-            countDown = GlobalConfig.WAIT_TIME,
+            countDownTime = nil,
+            countDownText = nil,
             playTime = GlobalConfig.PLAY_TIME_MEDIUM,
         },
         [RoomsConfig.HARD] = {
@@ -58,7 +61,8 @@ local function rooms(state, action)
             },
             playersWaiting = {},
             playersPlaying = {},
-            countDown = GlobalConfig.WAIT_TIME,
+            countDownTime = nil,
+            countDownText = nil,
             playTime = GlobalConfig.PLAY_TIME_HARD,
         }
     }
@@ -73,7 +77,7 @@ local function rooms(state, action)
             local playersPlaying = state[rId].playersPlaying
             local existingPlayer = playersPlaying[action.playerId]
     
-            if existingPlayer then
+            if existingPlayer and not existingPlayer.finishTime then
                 roomId = rId
             end
         end
@@ -88,7 +92,8 @@ local function rooms(state, action)
                 [action.playerId] = {
                     id = action.playerId,
                     name = action.playerName,
-                    finishTime = -1
+                    finishTime = os.time(),
+                    isKilled = true,
                 }
             })
 
@@ -131,6 +136,7 @@ local function rooms(state, action)
                 name = action.playerName,
                 finishTime = action.finishTime,
                 coins = action.coins,
+
             }
         })
         local newRoom = Dict.join(state[roomId], {playersPlaying = newPlayers})
@@ -155,7 +161,7 @@ local function rooms(state, action)
     elseif action.type == "setRoomCountDown" then
         local roomId = action.roomId
 
-        local newRoom = Dict.join(state[roomId], {countDown = action.countDown})
+        local newRoom = Dict.join(state[roomId], {countDownTime = action.countDownTime,countDownText=action.text})
 
         return Dict.join(state, {[roomId] = newRoom})
     elseif action.type == "setRoomStartTime" then
@@ -164,6 +170,7 @@ local function rooms(state, action)
 
         local newRoom = Dict.join(state[roomId], {
             startTime = action.startTime,
+            endTime = None,
             playersPlaying = playersStarting
         })
 

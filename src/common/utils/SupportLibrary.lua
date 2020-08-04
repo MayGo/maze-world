@@ -463,7 +463,7 @@ function SupportLibrary.AddUserInputListener(InputState, InputTypeFilter, CatchA
 	end
 
 	-- Create a UserInputService listener based on the given `InputState`
-	return Game:GetService('UserInputService')['Input' .. InputState]:Connect(function(Input, GameProcessedEvent)
+	return Game:GetService('UserInputService')['Input' .. InputState]:Connect(function(
 
 	-- Make sure this input was not captured by the client (unless `CatchAll` is enabled)
 
@@ -472,11 +472,16 @@ function SupportLibrary.AddUserInputListener(InputState, InputTypeFilter, CatchA
 	-- Make sure any key input did not occur while typing into a UI
 
 	-- Call back upon passing all conditions
+	Input,
+		GameProcessedEvent
+	)
 		if GameProcessedEvent and not CatchAll then return end
 
 		if not InputTypes[Input.UserInputType.Name] then return end
 
-		if InputType == Enum.UserInputType.Keyboard and Game:GetService('UserInputService'):GetFocusedTextBox() then return end
+		if InputType == Enum.UserInputType.Keyboard and Game:GetService(
+			'UserInputService'
+		):GetFocusedTextBox() then return end
 
 		Callback(Input)
 	end)
@@ -515,7 +520,11 @@ function SupportLibrary.AreKeysPressed(...)
 	local RequestedKeysPressed = 0
 
 	-- Get currently pressed keys
-	local PressedKeys = SupportLibrary.GetListMembers(Game:GetService('UserInputService'):GetKeysPressed(), 'KeyCode')
+	local PressedKeys =
+		SupportLibrary.GetListMembers(
+			Game:GetService('UserInputService'):GetKeysPressed(),
+			'KeyCode'
+		)
 
 	-- Go through each requested key
 	for _, Key in pairs({ ... }) do
@@ -745,7 +754,7 @@ function SupportLibrary.CreateConsecutiveCallDeferrer(MaxInterval)
 	local LastCallTime
 	local function ShouldExecuteCall()
 		-- Mark latest call time
-		local CallTime = tick()
+		local CallTime = os.time()
 		LastCallTime = CallTime
 
 		-- Indicate whether call still latest

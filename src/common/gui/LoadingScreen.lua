@@ -3,6 +3,7 @@ local TweenService = game:GetService('TweenService')
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
+local assets = require(Modules.src.assets)
 local logger = require(Modules.src.utils.Logger)
 local rotateCamera = require(Modules.src.gui.RotateCamera)
 
@@ -14,16 +15,21 @@ game.ReplicatedFirst:RemoveDefaultLoadingScreen()
 coroutine.wrap(function()
 	local timeout = 1
 	local t = tick()
-	while not pcall(game.StarterGui.SetCore, game.StarterGui, 'TopbarEnabled', false) and tick() - t < timeout do
+	while not pcall(
+		game.StarterGui.SetCore,
+		game.StarterGui,
+		'TopbarEnabled',
+		false
+	) and tick() - t < timeout do
 		wait()
 	end
 	logger:i('Disabled TopBar and Backpack')
 	game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 end)()
+local loadingLogo = assets.brand['loading-logo']
+local preloadAssets = { 'rbxassetid://5357049486' }
 
-local assets = { 'rbxassetid://5357049486' }
-
-local LoadingScreen = {}
+local LoadingScreen = { loadingLogo }
 
 LoadingScreen.__index = LoadingScreen
 
@@ -40,14 +46,14 @@ function LoadingScreen:show(localPlayer)
 	self.screen = screen
 	local logoImage
 
-	ContentProvider:PreloadAsync(assets, function()
+	ContentProvider:PreloadAsync(preloadAssets, function()
 		logoImage = Instance.new('ImageLabel')
 
 		logoImage.Size = UDim2.new(0, imgW / 10 * 5, 0, imgH / 10 * 5)
 		logoImage.BackgroundTransparency = 1
 		logoImage.AnchorPoint = Vector2.new(.5, .5)
 		logoImage.Position = UDim2.new(.5, 0, .5, 0)
-		logoImage.Image = 'rbxassetid://5357049486'
+		logoImage.Image = loadingLogo
 
 		logoImage.Parent = screen
 		self.logoImage = logoImage

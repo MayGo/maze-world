@@ -9,13 +9,13 @@ local createElement = Roact.createElement
 
 local function RoomTimer(props)
 	local item = props.item
-	local countDown = props.countDown
+	local countDownTime = props.countDownTime
 	local size = Vector2.new(item.Size.X, item.Size.Y)
 
 	local countDownTextLabel = createElement('TextLabel', {
 		Font = Enum.Font.Arcade,
 		Position = UDim2.new(0, 0, 0, 0),
-		Text = Time.FormatTime(countDown),
+		Text = Time.FormatTime(countDownTime),
 		BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 		BorderColor3 = Color3.fromRGB(27, 42, 53),
 		TextColor3 = Color3.fromRGB(66, 255, 83),

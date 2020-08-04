@@ -77,7 +77,7 @@ function FinishScreen:render()
 end
 
 local FinishScreenConnected = RoactRodux.connect(function(state)
-	local roomId = state.player.roomId
+	local roomId = state.player.lastFinishedRoomId
 	if roomId == nil then
 		return {}
 	end

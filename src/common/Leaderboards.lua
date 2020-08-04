@@ -30,7 +30,7 @@ function Leaderboards:connectPlayerVisits(player)
 	end)
 
 	local lastLogin = GameDatastore:getLastLogin(player)
-	local hours = (tick() - lastLogin) / 60 / 60
+	local hours = (os.time() - lastLogin) / 60 / 60
 
 	if hours >= 24 then
 		logger:d(
@@ -128,7 +128,7 @@ end
 function Leaderboards:getMostCoins()
 	local pages = mostCoinsStore:GetSortedAsync(false, LEADERBOARD_SIZE)
 	local data = pages:GetCurrentPage()
-	logger:d('DataStore Leaderboard: Get  Most COins')
+	logger:d('DataStore Leaderboard: Get  Most Coins')
 	return data
 end
 

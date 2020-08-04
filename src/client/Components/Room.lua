@@ -79,7 +79,7 @@ function Room:render()
 
 	children['timer'] = createElement(RoomTimer, {
 		item = timerPlaceholder,
-		countDown = self.props.countDown,
+		countDownTime = self.props.countDownTime,
 	})
 
 	return createElement('Folder', nil, children)
@@ -92,7 +92,7 @@ Room = RoactRodux.connect(function(state, props)
 		startTime = state.rooms[roomId].startTime,
 		playersWaiting = state.rooms[roomId].playersWaiting,
 		playersPlaying = state.rooms[roomId].playersPlaying,
-		countDown = state.rooms[roomId].countDown,
+		countDownTime = state.rooms[roomId].countDownTime,
 	}
 end)(Room)
 

@@ -15,6 +15,8 @@ local function player(state, action)
 
 		return Dict.join(state, {
 			isPlaying = false,
+			roomId = None,
+			lastFinishedRoomId = state.roomId,
 			isFinishScreenOpen = true,
 		})
 	elseif action.type == 'clientStartGame' then
@@ -24,6 +26,7 @@ local function player(state, action)
 	elseif action.type == 'clientSetRoom' then
 		return Dict.join(state, {
 			roomId = action.roomId,
+			lastFinishedRoomId = None,
 			isFinishScreenOpen = false,
 		})
 	elseif action.type == 'clientSetGhosting' then
@@ -33,6 +36,7 @@ local function player(state, action)
 		logger:w('clientReset.')
 		return Dict.join(state, {
 			roomId = None,
+			lastFinishedRoomId = None,
 			isGhosting = false,
 			isPlaying = false,
 			isFinishScreenOpen = false,

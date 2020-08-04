@@ -14,6 +14,9 @@ local Timer = require(clientSrc.Components.Timer)
 local createElement = Roact.createElement
 local ClockScreen = Roact.Component:extend('ClockScreen')
 
+local Players = game:GetService('Players')
+local localPlayer = Players.LocalPlayer
+
 function ClockScreen:render()
 	local props = self.props
 
@@ -21,13 +24,13 @@ function ClockScreen:render()
 		return nil
 	end
 
-	--[[
-	local hasPlayer = props.playersPlaying[tostring(player.UserId)]
+	local uid = tostring(localPlayer.UserId)
+	local hasPlayer = props.playersWaiting[uid] or props.playersPlaying[uid]
 
 	if hasPlayer == nil then
 		return nil
 	end
-]]
+
 	local text = createElement(
 		TextLabel,
 		{
@@ -44,10 +47,10 @@ function ClockScreen:render()
 		},
 		{ UICorner = createElement(UICorner) }
 	)
-	local label = createElement(
+	local time = createElement(
 		Timer,
 		{
-			key = props.countDownText,
+			key = props.countDownTime,
 			increment = false,
 			initialTime = props.countDownTime,
 			TextColor3 = props.TextColor3,
@@ -75,7 +78,7 @@ function ClockScreen:render()
 		},
 		{
 			text = text,
-			label = label,
+			time = time,
 		}
 	)
 end
@@ -90,8 +93,10 @@ local ClockScreenConnected = RoactRodux.connect(function(state)
 
 	return {
 		isFinishScreenOpen = state.player.isFinishScreenOpen,
-		countDownTime = room.countDown,
-		playersPlaying = state.gameState.playersPlaying,
+		countDownTime = room.countDownTime,
+		countDownText = room.countDownText,
+		playersPlaying = room.playersPlaying,
+		playersWaiting = room.playersWaiting,
 	}
 end)(ClockScreen)
 

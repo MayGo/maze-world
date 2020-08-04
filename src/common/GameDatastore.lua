@@ -48,7 +48,11 @@ function GameDatastore:decrementCoins(player, coinsToSubtract)
 	end
 
 	if GameDatastore:getCoins(player) >= coinsToSubtract then
-		logger:d('DataStore: Player ' .. player.Name .. ' wallet subtracted ' .. tostring(coinsToSubtract))
+		logger:d(
+			'DataStore: Player ' .. player.Name .. ' wallet subtracted ' .. tostring(
+				coinsToSubtract
+			)
+		)
 		datastore:Increment(-coinsToSubtract)
 		return true
 	else
@@ -119,7 +123,7 @@ end
 
 function GameDatastore:getLastLogin(player)
 	local datastore = DataStore2(STORE_LAST_LOGIN, player)
-	local lastLogin = datastore:Get(tick())
+	local lastLogin = datastore:Get(os.time())
 
 	logger:d('DataStore: player ' .. player.Name .. ' Last login', lastLogin)
 	return lastLogin
@@ -129,7 +133,7 @@ function GameDatastore:setLastLogin(player, id)
 	local datastore = DataStore2(STORE_LAST_LOGIN, player)
 	logger:d('DataStore: set player ' .. player.Name .. ' Last login')
 
-	datastore:Set(tick())
+	datastore:Set(os.time())
 end
 
 -- INVENTORY

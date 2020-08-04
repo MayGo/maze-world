@@ -44,13 +44,14 @@ local function playerFinishedRoom(player, roomId)
 			logger:d('Player  already finished room:' .. player.Name)
 		else
 			local coins = calulatePrize(config.prizeCoins, room.playersPlaying)
-			logger:d('Player finished room: ' .. player.Name .. '. Transport to lobby. Give money: ' .. coins .. ' coins.')
+			logger:d(
+				'Player finished room: ' .. player.Name .. '. Transport to lobby. Give money: ' .. coins .. ' coins.'
+			)
 
 			Transporter:placePlayersToHomeSpawn({ player })
-	
 
-			store:dispatch(addPlayerFinishToRoom(player, roomId, tick(), coins))
-			store:dispatch(clientFinishGame(player, roomId, tick(), coins))
+			store:dispatch(addPlayerFinishToRoom(player, roomId, os.time(), coins))
+			store:dispatch(clientFinishGame(player, roomId, os.time(), coins))
 
 			GameDatastore:incrementCoins(player, coins)
 			Leaderboards:updateMostPlayed(player)

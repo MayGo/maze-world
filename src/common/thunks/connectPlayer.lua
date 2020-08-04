@@ -61,6 +61,7 @@ local function connectPlayer(player)
 
 			character:WaitForChild('Humanoid').Died:Connect(function()
 				logger:i(player.Name .. ' has died!')
+
 				store:dispatch(playerDied(player))
 				store:dispatch(clientReset(player))
 				player:LoadCharacter()
