@@ -1,0 +1,109 @@
+<roblox version="4">
+  <Item class="MeshPart" referent="0">
+    <Properties>
+      <string name="Name">rock01</string>
+      <bool name="Anchored">true</bool>
+      <BinaryString name="AttributesSerialize">
+      </BinaryString>
+      <float name="BackParamA">-0.5</float>
+      <float name="BackParamB">0.5</float>
+      <token name="BackSurface">0</token>
+      <token name="BackSurfaceInput">0</token>
+      <float name="BottomParamA">-0.5</float>
+      <float name="BottomParamB">0.5</float>
+      <token name="BottomSurface">0</token>
+      <token name="BottomSurfaceInput">0</token>
+      <CoordinateFrame name="CFrame">
+        <X>6.269264</X>
+        <Y>0.8343276</Y>
+        <Z>0.9411206</Z>
+        <R00>1</R00>
+        <R01>0</R01>
+        <R02>0</R02>
+        <R10>0</R10>
+        <R11>1</R11>
+        <R12>0</R12>
+        <R20>0</R20>
+        <R21>0</R21>
+        <R22>1</R22>
+      </CoordinateFrame>
+      <bool name="CanCollide">true</bool>
+      <bool name="CastShadow">true</bool>
+      <int name="CollisionGroupId">0</int>
+      <Color3uint8 name="Color3uint8">10724005</Color3uint8>
+      <PhysicalProperties name="CustomPhysicalProperties">
+        <CustomPhysics>false</CustomPhysics>
+      </PhysicalProperties>
+      <float name="FrontParamA">-0.5</float>
+      <float name="FrontParamB">0.5</float>
+      <token name="FrontSurface">0</token>
+      <token name="FrontSurfaceInput">0</token>
+      <bool name="HasJointOffset">false</bool>
+      <bool name="HasSkinnedMesh">false</bool>
+      <Vector3 name="InitialSize">
+        <X>2.437732696533203</X>
+        <Y>2.9153740406036377</Y>
+        <Z>3.1155753135681152</Z>
+      </Vector3>
+      <Vector3 name="JointOffset">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Vector3>
+      <BinaryString name="LODData">
+      </BinaryString>
+      <float name="LeftParamA">-0.5</float>
+      <float name="LeftParamB">0.5</float>
+      <token name="LeftSurface">0</token>
+      <token name="LeftSurfaceInput">0</token>
+      <bool name="Locked">false</bool>
+      <bool name="Massless">false</bool>
+      <token name="Material">800</token>
+      <Content name="MeshID">
+        <url>rbxassetid://5498135840</url>
+      </Content>
+      <Content name="MeshId">
+        <url>rbxassetid://5498135840</url>
+      </Content>
+      <SharedString name="PhysicalConfigData">1AGo5KJPpGqtziT6sDf9Ew==</SharedString>
+      <BinaryString name="PhysicsData">
+      </BinaryString>
+      <float name="Reflectance">0</float>
+      <token name="RenderFidelity">1</token>
+      <float name="RightParamA">-0.5</float>
+      <float name="RightParamB">0.5</float>
+      <token name="RightSurface">0</token>
+      <token name="RightSurfaceInput">0</token>
+      <int name="RootPriority">0</int>
+      <Vector3 name="RotVelocity">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Vector3>
+      <Vector3 name="size">
+        <X>5.0377326011657715</X>
+        <Y>3.4153740406036377</Y>
+        <Z>6.515575408935547</Z>
+      </Vector3>
+      <BinaryString name="Tags">
+      </BinaryString>
+      <Content name="TextureID">
+        <null>
+        </null>
+      </Content>
+      <float name="TopParamA">-0.5</float>
+      <float name="TopParamB">0.5</float>
+      <token name="TopSurface">0</token>
+      <token name="TopSurfaceInput">0</token>
+      <float name="Transparency">0</float>
+      <Vector3 name="Velocity">
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Vector3>
+    </Properties>
+  </Item>
+  <SharedStrings>
+    <SharedString md5="1AGo5KJPpGqtziT6sDf9Ew==">Q1NHUEhTBwAAAAIUfQ9BrqsuPYJsBj2IxH68L87kQGrp571JE2Q9sse9QEu0HT5DTrJAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAACAPzAAAAAEAAAA5WqVPn2Vur9OoDc9PPidvv+6sr+a8Ri/H6MpP8X2/r5RLaa/0AOcP+gmF7+qFPs91xmjPjez7L5Y/MI/8GnxvQtQhr/Mz5c/9kIkv+K81L3+pLO/sZGRv6/YD78zECE/j4hOPwu6ej9cd2u/oLkCP/jolT6VZce/0FCMPxFDDz+H9yQ/2e0vPCHG3D6VZcc/0AOcv7t/cD6K4yS963Rnv9Ooij/ovj8+HMu1vTiZqT9R7GW/NpG/Pn2Vuj+1ihI/VAAAAAAAAAABAAAAAgAAAAAAAAACAAAAAwAAAAAAAAADAAAABAAAAAAAAAAEAAAABQAAAAAAAAAFAAAAAQAAAAEAAAAGAAAAAgAAAAEAAAAFAAAABwAAAAEAAAAHAAAABgAAAAIAAAAIAAAAAwAAAAIAAAAGAAAACQAAAAIAAAAJAAAACAAAAAMAAAAKAAAABAAAAAMAAAAIAAAACgAAAAQAAAALAAAABQAAAAQAAAAKAAAACwAAAAUAAAALAAAABwAAAAYAAAAHAAAADAAAAAYAAAAMAAAADQAAAAYAAAANAAAADgAAAAYAAAAOAAAACQAAAAcAAAALAAAADQAAAAcAAAANAAAADAAAAAgAAAAJAAAADgAAAAgAAAAOAAAADwAAAAgAAAAPAAAACgAAAAoAAAAPAAAACwAAAAsAAAAPAAAADQAAAA0AAAAPAAAADgAAAA==</SharedString>
+  </SharedStrings>
+</roblox>

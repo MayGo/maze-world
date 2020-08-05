@@ -23,7 +23,7 @@ RotateCamera.__index = RotateCamera
 function RotateCamera:blur()
 	local blurEffect = Instance.new('BlurEffect')
 	blurEffect.Parent = camera
-	blurEffect.Size = 32
+	blurEffect.Size = 16
 	self.blurEffect = blurEffect
 end
 function RotateCamera:unblur()
@@ -45,7 +45,12 @@ function RotateCamera:start()
 	self:blur()
 	-- Set up and start rotation tween
 	local tweenInfo =
-		TweenInfo.new(rotationTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, rotationRepeatCount)
+		TweenInfo.new(
+			rotationTime,
+			Enum.EasingStyle.Linear,
+			Enum.EasingDirection.InOut,
+			rotationRepeatCount
+		)
 	local tween = TweenService:Create(rotationAngle, tweenInfo, { Value = rotationDegrees })
 
 	tween.Completed:Connect(function()

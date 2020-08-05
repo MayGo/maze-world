@@ -23,7 +23,8 @@ local playerEnteredRoom = require(Modules.src.thunks.playerEnteredRoom)
 local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
 local removePlayerFromRoom = require(Modules.src.actions.rooms.removePlayerFromRoom)
 local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItemsToPlayerInventory)
-local removeItemFromPlayerInventory = require(Modules.src.actions.inventory.removeItemFromPlayerInventory)
+local removeItemFromPlayerInventory =
+	require(Modules.src.actions.inventory.removeItemFromPlayerInventory)
 
 local TouchItem = require(Modules.src.TouchItem)
 
@@ -269,7 +270,9 @@ return function(context)
 				GameDatastore:setEquippedPet(player, product.id)
 				GameDatastore:setInventoryItem(player, productId)
 
-				store:dispatch(addItemsToPlayerInventory(tostring(player.UserId), { [productId] = product }))
+				store:dispatch(
+					addItemsToPlayerInventory(tostring(player.UserId), { [productId] = product })
+				)
 			else
 				logger:w('Not enough money')
 			end
@@ -335,28 +338,29 @@ return function(context)
 				logger:i('Initializing room ', roomId, room)
 
 				local mapObj = MapsFolder:findFirstChild(roomId)
+				spawn(function()
+					if mapObj then
+						MazeGenerator:generate(mapObj, room.config.width, room.config.height)
 
-				if mapObj then
-					MazeGenerator:generate(mapObj, room.config.width, room.config.height)
-
-					local roomObj = RoomsFolder:findFirstChild(roomId)
-					if roomObj then
-						local roomPlaceholder = roomObj.placeholders.RoomPlaceholder
-						TouchItem.create(
-							roomPlaceholder,
-							function(player)
-								store:dispatch(playerEnteredRoom(player, roomId))
-							end,
-							function(player)
-								store:dispatch(removePlayerFromRoom(player, roomId))
-							end
-						)
+						local roomObj = RoomsFolder:findFirstChild(roomId)
+						if roomObj then
+							local roomPlaceholder = roomObj.placeholders.RoomPlaceholder
+							TouchItem.create(
+								roomPlaceholder,
+								function(player)
+									store:dispatch(playerEnteredRoom(player, roomId))
+								end,
+								function(player)
+									store:dispatch(removePlayerFromRoom(player, roomId))
+								end
+							)
+						else
+							logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
+						end
 					else
-						logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
+						logger:w('Maps folder is missing ' .. roomId .. ' object!!')
 					end
-				else
-					logger:w('Maps folder is missing ' .. roomId .. ' object!!')
-				end
+				end)
 			end
 		else
 			logger:w('Rooms Folder does not exists!!')
@@ -371,7 +375,12 @@ return function(context)
 			logger:i(player.Name .. ' purchased the game pass with ID ' .. productId)
 			GamePasses:addAbility(player, productId)
 
-			store:dispatch(addItemsToPlayerInventory(tostring(player.UserId), { [productId] = InventoryObjects.AllObjects[productId] }))
+			store:dispatch(
+				addItemsToPlayerInventory(
+					tostring(player.UserId),
+					{ [productId] = InventoryObjects.AllObjects[productId] }
+				)
+			)
 		else
 			logger:d(player.Name .. ' did not purchase game pass with ID ' .. productId)
 		end
