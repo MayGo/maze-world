@@ -17,8 +17,8 @@ function DrawBlock(x, y, z, location, vertical, wallsFolder)
 	-- newBlock.Size = Vector3.new(3,3,3)
 	-- newBlock.Orientation = Vector3.new(0, 0, 90)
 
-	local halfWidth = newBlock.Size.Z / 2
-	local halfHeight = newBlock.Size.Y / 2
+	local halfWidth = newBlock.PrimaryPart.Size.Z / 2
+	local halfHeight = newBlock.PrimaryPart.Size.Y / 2
 	local position = CFrame.new(x, z + halfHeight, y + halfWidth)
 
 	if vertical then
@@ -28,7 +28,7 @@ function DrawBlock(x, y, z, location, vertical, wallsFolder)
 
 	-- we are flipping y an z here, using x and y for Maze is simpler to read, z is height
 	-- x, y, z is correct order
-	newBlock.CFrame = position
+	newBlock:SetPrimaryPartCFrame(position)
 end
 
 function DrawFloor(x, y, z, location, width, height)
@@ -61,7 +61,7 @@ function DrawFinish(x, y, z, location, width, height)
 	newBlock.CFrame = position
 end
 
-local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wallFolder, wallKillbrickFolder)
+local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wallFolder)
 	local halfWidth = primaryPart.Size.X / 2
 	local halfDepth = primaryPart.Size.Z / 2
 	local halfHeight = primaryPart.Size.Y / 2
@@ -70,7 +70,6 @@ local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wa
 	local x = primaryPart.Position.X - halfWidth
 	local y = primaryPart.Position.Z - halfDepth
 	local z = primaryPart.Position.Y + halfHeight
-	local zKill = z + blockHeight
 
 	logger:d('Positioning Maze: ' .. x .. ' ' .. y)
 	local maze_width = (blockWidth + blockDepth) * #maze[1] + blockDepth
@@ -80,7 +79,14 @@ local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wa
 	DrawStart(x, y, z + 1, location, blockWidth, blockWidth)
 
 	local finisWidth = blockWidth - 2
-	DrawFinish(x + maze_width - finisWidth, y + maze_height - finisWidth, z + 1, location, finisWidth, finisWidth)
+	DrawFinish(
+		x + maze_width - finisWidth,
+		y + maze_height - finisWidth,
+		z + 1,
+		location,
+		finisWidth,
+		finisWidth
+	)
 
 	for yi = 1, #maze do
 		for xi = 1, #maze[1] do
@@ -91,22 +97,18 @@ local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wa
 
 			if not cell.north:IsOpened() then
 				DrawBlock(pos_x, pos_y - blockDepth, z, location, true, wallFolder)
-				DrawBlock(pos_x, pos_y - blockDepth, zKill, location, true, wallKillbrickFolder)
 			end
 
 			if not cell.east:IsOpened() then
 				DrawBlock(pos_x + blockWidth, pos_y, z, location, false, wallFolder)
-				DrawBlock(pos_x + blockWidth, pos_y, zKill, location, false, wallKillbrickFolder)
 			end
 
 			if not cell.south:IsOpened() then
 				DrawBlock(pos_x, pos_y + blockWidth, z, location, true, wallFolder)
-				DrawBlock(pos_x, pos_y + blockWidth, zKill, location, true, wallKillbrickFolder)
 			end
 
 			if not cell.west:IsOpened() then
 				DrawBlock(pos_x - blockDepth, pos_y, z, location, false, wallFolder)
-				DrawBlock(pos_x - blockDepth, pos_y, zKill, location, false, wallKillbrickFolder)
 			end
 		end
 	end
@@ -138,8 +140,7 @@ function MazeGenerator:generate(map, width, height)
 
 	local primaryPart = map.PrimaryPart
 	local wallFolder = Walls.Walls_1
-	local wallKillbrickFolder = Walls.Walls_1_killbrick
-	draw_maze(maze, blockWidth, blockDepth, mazeFolder, primaryPart, wallFolder, wallKillbrickFolder)
+	draw_maze(maze, blockWidth, blockDepth, mazeFolder, primaryPart, wallFolder)
 end
 
 return MazeGenerator
