@@ -121,21 +121,19 @@ end
 function DrawStart(x, y, z, location, width, height)
 	local block = 'SpawnPlaceholder'
 	local newBlock = Prefabs[block]:Clone()
-	newBlock.Parent = location
-	newBlock.Size = Vector3.new(width, 3, height)
 
-	local position = CFrame.new(x + width / 2, z, y + height / 2)
-	newBlock.CFrame = position
+	local position = Vector3.new(x + width / 2, z, y + height / 2)
+	newBlock.Position = position
+	newBlock.Parent = location
 end
 
 function DrawFinish(x, y, z, location, width, height)
 	local block = 'FinishPlaceholder'
 	local newBlock = Prefabs[block]:Clone()
-	newBlock.Parent = location
-	newBlock.Size = Vector3.new(width, 3, height)
 
-	local position = CFrame.new(x + width / 2, z, y + height / 2)
-	newBlock.CFrame = position
+	local position = Vector3.new(x + width / 2, z, y + height / 2)
+	newBlock.Position = position
+	newBlock.Parent = location
 end
 
 local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wallFolder)

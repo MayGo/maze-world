@@ -17,20 +17,20 @@
         <X>59.37567</X>
         <Y>-1.3823082</Y>
         <Z>-198.26971</Z>
-        <R00>0.9999989</R00>
-        <R01>0</R01>
+        <R00>-0.000000043711342</R00>
+        <R01>-0.9999989</R01>
         <R02>0</R02>
-        <R10>0</R10>
-        <R11>0.9999989</R11>
+        <R10>0.9999989</R10>
+        <R11>-0.000000043711342</R11>
         <R12>0</R12>
         <R20>0</R20>
         <R21>0</R21>
-        <R22>1</R22>
+        <R22>0.99999994</R22>
       </CoordinateFrame>
       <bool name="CanCollide">false</bool>
       <bool name="CastShadow">true</bool>
       <int name="CollisionGroupId">0</int>
-      <Color3uint8 name="Color3uint8">16711680</Color3uint8>
+      <Color3uint8 name="Color3uint8">307180</Color3uint8>
       <PhysicalProperties name="CustomPhysicalProperties">
         <CustomPhysics>false</CustomPhysics>
       </PhysicalProperties>
@@ -57,11 +57,11 @@
         <Y>0</Y>
         <Z>0</Z>
       </Vector3>
-      <token name="shape">1</token>
+      <token name="shape">2</token>
       <Vector3 name="size">
-        <X>11.086803436279297</X>
-        <Y>6.503032684326172</Y>
-        <Z>7.4361371994018555</Z>
+        <X>2</X>
+        <Y>16</Y>
+        <Z>16</Z>
       </Vector3>
       <BinaryString name="Tags">
       </BinaryString>
@@ -69,26 +69,48 @@
       <float name="TopParamB">0.5</float>
       <token name="TopSurface">0</token>
       <token name="TopSurfaceInput">0</token>
-      <float name="Transparency">0.8500000238418579</float>
+      <float name="Transparency">1</float>
       <Vector3 name="Velocity">
         <X>0</X>
         <Y>0</Y>
         <Z>0</Z>
       </Vector3>
     </Properties>
-    <Item class="Sparkles" referent="1">
+    <Item class="ParticleEmitter" referent="1">
       <Properties>
-        <string name="Name">Sparkles</string>
+        <string name="Name">ParticleEmitter</string>
+        <Vector3 name="Acceleration">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+        </Vector3>
         <BinaryString name="AttributesSerialize">
         </BinaryString>
+        <ColorSequence name="Color">0 0.0588235 0.34902 0.658824 0 1 0.309804 1 0.898039 0 </ColorSequence>
+        <float name="Drag">0</float>
+        <token name="EmissionDirection">0</token>
         <bool name="Enabled">true</bool>
-        <Color3 name="SparkleColor">
-          <R>1</R>
-          <G>0.017499983310699463</G>
-          <B>0.017499983310699463</B>
-        </Color3>
+        <NumberRange name="Lifetime">10 10 </NumberRange>
+        <float name="LightEmission">0.800000011920929</float>
+        <float name="LightInfluence">0</float>
+        <bool name="LockedToPart">false</bool>
+        <float name="Rate">20</float>
+        <NumberRange name="RotSpeed">0 0 </NumberRange>
+        <NumberRange name="Rotation">0 0 </NumberRange>
+        <NumberSequence name="Size">0 1 0 1 0 0 </NumberSequence>
+        <NumberRange name="Speed">2 2 </NumberRange>
+        <Vector2 name="SpreadAngle">
+          <X>10</X>
+          <Y>10</Y>
+        </Vector2>
         <BinaryString name="Tags">
         </BinaryString>
+        <Content name="Texture">
+          <url>http://www.roblox.com/asset/?id=241650934</url>
+        </Content>
+        <NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+        <float name="VelocityInheritance">0</float>
+        <float name="ZOffset">0</float>
       </Properties>
     </Item>
   </Item>
