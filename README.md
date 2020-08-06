@@ -14,7 +14,7 @@ Code is written so it can be used boilerplate project. If some important model i
 # Game Description
 
 You can play this game by running this project (need to publish also) or open in in Roblox: [Maze World](https://www.roblox.com/games/3376915546/Maze-World-Dynamic).
-You can select from easy, medium or hard maze to play. All mazes are dynamically created, so every time you play it is new. For easier maze solving you can buy trail or speed pets. You earn coins by finishing mazes. Bigger mazes gives more coins and placement matters, when playing with other players.
+You can select from easy, medium or hard maze to play. All mazes are dynamically created, so every time you play it is new. For easier maze solving you can buy trail or speed pets. You earn coins by finishing mazes. Bigger mazes and better place in finishing gives more coins.
 
 ## Screenshots
 
@@ -26,7 +26,6 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-6.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-7.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-8.png 'Maze World')
-![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-9.png 'Maze World')
 
 # Used libraries
 
@@ -99,7 +98,7 @@ When checking out this repo, submodules should also downloaded.
 # How do I get set up?
 
 -   `npm i` - to load prettier and prettier-lua (needed for VS Code)
--   Open maze-world.rbxl
+-   run script `./script/build-and-open.sh`. Game.rbxlx is built using rojo. Currently every model is inside `raw-assets/game-models-and-place.rbxlx`. And after editing and saving you need to run `remodel run get-models.lua`, that saves every model to separate file. And rojo syncs it to your running Game.rblx.
 -   Configure VS Code and start Rojo (from VS Code footer)
 -   From Roblox Studio->Plugins->Rojo click connect
 
@@ -111,24 +110,7 @@ When checking out this repo, submodules should also downloaded.
 -   [Tarmac](https://github.com/Roblox/tarmac), an asset manager
 -   -   `tarmac sync --target roblox --auth ROBLOSECURITY`
 
-installed using cargo. See each repo Readme
-
-## Building and Testing
-
-(Not using this atm)
-Requires [Foreman](https://github.com/Roblox/foreman) 1.0.0 or newer.
-
-```bash
-
-# Build place
-rojo build --output Game.rbxlx
-
-open Game.rbxlx
-
-publish
-
-Start rojo sync. Start Rojo server in VS Code and in Roblox Studio
-```
+Tools installed using cargo. See each repo Readme for details.
 
 # VS Code Configuration
 
