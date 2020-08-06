@@ -1,4 +1,4 @@
-## ![Maze World](https://github.com/MayGo/maze-world/raw/master/raw-assets/logo.png 'Maze World')
+## ![Maze World](https://github.com/MayGo/maze-world/raw/master/raw-assets/brans/logo.png 'Maze World')
 
 This is a Roblox project where all the code is version controlled and synced to Roblox Studio with Rojo.
 Project tries to cover most of the aspects of Roblox games.
