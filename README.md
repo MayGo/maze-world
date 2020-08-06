@@ -9,7 +9,7 @@ Code is written so it can be used boilerplate project. If some important model i
 
 ### Note
 
--   Project was started with https://github.com/LPGhatguy/rdc-project taken as base
+-   Project was started with https://github.com/LPGhatguy/rdc-project taken as base and refactored later with https://github.com/Roblox/desert-bus-2077 taken as an example.
 
 # Game Description
 
