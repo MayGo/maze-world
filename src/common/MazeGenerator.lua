@@ -122,7 +122,7 @@ function DrawStart(x, y, z, location, width, height)
 	local block = 'SpawnPlaceholder'
 	local newBlock = Prefabs[block]:Clone()
 
-	local position = Vector3.new(x + width / 2, z, y + height / 2)
+	local position = Vector3.new(x + width / 2, z + 4, y + height / 2)
 	newBlock.Position = position
 	newBlock.Parent = location
 end

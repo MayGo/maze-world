@@ -75,9 +75,9 @@ local function startGame(roomId)
 			return Players:GetPlayerByUserId(player.id)
 		end
 
-		local LevelEasySpawn = mapObj:findFirstChild('SpawnPlaceholder', true)
+		local LevelSpawn = mapObj:findFirstChild('SpawnPlaceholder', true)
 
-		if LevelEasySpawn then
+		if LevelSpawn then
 			local playersWaitingInstances = M.map(playersWaiting, getPlayerInstance)
 
 			local function sendToClient(player)
@@ -86,7 +86,7 @@ local function startGame(roomId)
 
 			M.each(playersWaitingInstances, sendToClient)
 
-			Transporter:transportPlayers(playersWaitingInstances, LevelEasySpawn)
+			Transporter:transportPlayers(playersWaitingInstances, LevelSpawn)
 			--[[	M.each(playersWaitingInstances, function(player)
 				addPlayerDiedListener(store, roomId, player)
 			end)]]

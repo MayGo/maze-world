@@ -86,6 +86,7 @@ There is also unfinished chest model `box.blend`.
 -   [Roblox World](https://github.com/gtraines/roblox-world)
 -   [Outyards](https://github.com/Nimblz/outyards)
 -   [VintageCube](https://github.com/VintageCube/VintageCube)
+-   [World Messages](https://github.com/two-moons/world-messages/blob/master/src/Components/Thumbnail.lua) Nice user thunbnails
 
 # Code checkout with Sourcetree app
 

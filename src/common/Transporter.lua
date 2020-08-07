@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
+-- local logger = require(Modules.src.utils.Logger)
+local ModelManager = require(Modules.src.ModelManager)
 
 local Place = game.Workspace:WaitForChild('Place')
 local Spawns = Place.Spawns:GetChildren()
@@ -11,14 +12,9 @@ function Transporter:fadePlayerTo(player, a, b, c)
 	for transparency = a, b, c do
 		-- go from a to b, counting by c
 
-		for _, part in pairs(player.Character:GetChildren()) do
-			-- for each of the objects in the character,
-
-			if part:IsA('BasePart') then
-				-- check if it's a part, and if so
-
-				part.Transparency = transparency
-				-- set its transparency
+		for _, v in ipairs(player.Character:GetDescendants()) do
+			if v:IsA('BasePart') and v.Name ~= 'HumanoidRootPart' or v:IsA('Decal') then
+				v.Transparency = transparency
 			end
 		end
 		wait(0.1)
@@ -27,10 +23,9 @@ end
 
 function Transporter:transportPlayers(players, target)
 	for i, player in pairs(players) do
-		-- fadePlayerTo(player, 0, 1, 0.1) --fade out,
-
-		player.Character.HumanoidRootPart.CFrame = target.CFrame -- teleport the player
-		-- fadePlayerTo(player, 1, 0, -0.1) --fade back in
+		-- Transporter:fadePlayerTo(player, 0, 1, 0.1) --fade out,
+		player.Character.HumanoidRootPart.CFrame = ModelManager:onlyDirection(target.CFrame) -- teleport the player
+		-- Transporter:fadePlayerTo(player, 1, 0, -0.1) --fade back in
 	end
 end
 
@@ -45,7 +40,7 @@ function Transporter:teleportTo(player, target)
 	if player.Character then
 		local humanoid = player.Character:FindFirstChildOfClass('Humanoid')
 		if humanoid then
-			humanoid.RootPart.CFrame = target.CFrame
+			humanoid.RootPart.CFrame = ModelManager:onlyDirection(target.CFrame)
 		end
 	end
 	-- fadePlayerTo(player, 1, 0, -0.1) --fade back in

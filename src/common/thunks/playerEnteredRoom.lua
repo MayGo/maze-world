@@ -10,7 +10,6 @@ local addPlayerToRoom = require(Modules.src.actions.rooms.addPlayerToRoom)
 local clientSetRoom = require(Modules.src.actions.toClient.clientSetRoom)
 local setRoomCountDown = require(Modules.src.actions.rooms.setRoomCountDown)
 local startGame = require(Modules.src.thunks.startGame)
-local RoomsConfig = require(Modules.src.RoomsConfig)
 local GlobalConfig = require(Modules.src.GlobalConfig)
 local M = require(Modules.M)
 
@@ -22,7 +21,6 @@ local function playerEnteredRoom(player, roomId)
 		store:dispatch(addPlayerToRoom(player, roomId))
 		store:dispatch(clientSetRoom(player, roomId))
 
-		logger:w('endTime', endTime)
 		if M.count(playersWaiting) == 0 and not endTime then
 			local gameStartedEvent = Instance.new('BindableEvent')
 

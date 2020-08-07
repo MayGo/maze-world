@@ -7,6 +7,9 @@
             "$className": "Workspace",
             "Place": {
                 "$path": "Place.rbxmx"
+            },
+            "$properties": {
+                "FilteringEnabled": true
             }
         },
         "Lighting": {
