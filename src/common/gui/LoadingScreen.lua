@@ -36,6 +36,8 @@ LoadingScreen.__index = LoadingScreen
 local imgW = 1343
 local imgH = 1029
 
+local imgRatio = imgW / imgH
+
 function LoadingScreen:show(localPlayer)
 	warn('LoadingScreen:show')
 	local PlayerGui = localPlayer:WaitForChild('PlayerGui')
@@ -47,15 +49,20 @@ function LoadingScreen:show(localPlayer)
 	local logoImage
 
 	ContentProvider:PreloadAsync(preloadAssets, function()
+		local aspectRatioConstraint = Instance.new('UIAspectRatioConstraint')
+
 		logoImage = Instance.new('ImageLabel')
 
-		logoImage.Size = UDim2.new(0, imgW / 10 * 5, 0, imgH / 10 * 5)
+		logoImage.Size = UDim2.new(0.8, 0, 0.8, 0)
 		logoImage.BackgroundTransparency = 1
 		logoImage.AnchorPoint = Vector2.new(.5, .5)
 		logoImage.Position = UDim2.new(.5, 0, .5, 0)
 		logoImage.Image = loadingLogo
 
 		logoImage.Parent = screen
+
+		aspectRatioConstraint.AspectRatio = imgRatio
+		aspectRatioConstraint.Parent = logoImage
 		self.logoImage = logoImage
 	end)
 
@@ -83,8 +90,8 @@ function LoadingScreen:hide()
 	warn('LoadingScreen:hide')
 
 	self.logoImage:TweenSizeAndPosition(
-		UDim2.new(0, imgW * 10, 0, imgH * 10),
-		UDim2.new(0, -imgW, 0, -imgH / 2),
+		UDim2.new(10, 0, 10, 0),
+		UDim2.new(-0.4, 0, -0.4, 0),
 		'Out',
 		'Quad',
 		1,
