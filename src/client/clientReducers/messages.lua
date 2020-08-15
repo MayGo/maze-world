@@ -2,13 +2,10 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local Dict = require(Modules.src.utils.Dict)
-local None = require(Modules.src.utils.None)
-local Players = game:GetService('Players')
-
-local LocalPlayer = Players.LocalPlayer
+local M = require(Modules.M)
 
 local dummyNotifications = { {
-	time = tick(),
+	time = os.time(),
 	text = 'Notifi 1',
 	thumbnail = 'rbxasset://textures/ui/GuiImagePlaceholder.png',
 	rectSize = Vector2.new(0, 0),
@@ -16,7 +13,7 @@ local dummyNotifications = { {
 	statusColor = Color3.fromRGB(20, 20, 40),
 	layoutIndex = 0,
 }, {
-	time = tick() + 1,
+	time = os.time() + 1,
 	text = 'Notif 2',
 	thumbnail = 'rbxasset://textures/ui/GuiImagePlaceholder.png',
 	rectSize = Vector2.new(0, 0),
@@ -38,9 +35,7 @@ local function messages(state, action)
 			text = action.text,
 		}
 
-		return Dict.join(state, {
-			notifications = Dict.join(state.notifications, { notification }),
-		})
+		return Dict.join(state, { notifications = M.append(state.notifications, { notification }) })
 	end
 
 	return state

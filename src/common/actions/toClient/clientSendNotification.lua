@@ -6,7 +6,7 @@ local function clientSendNotification(player, text)
 		playerId = tostring(player.UserId),
 		replicateTo = tostring(player.UserId),
 		text = text,
-		time = tick(),
+		time = os.time(),
 	}
 end
 

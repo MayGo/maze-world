@@ -13,7 +13,7 @@ local Notifications = Roact.PureComponent:extend('Notifications')
 
 local Theme = require(Modules.src.Theme)
 
-local NOTIFICATION_TIME = 30
+local NOTIFICATION_TIME = 10
 
 local PADDING = 8
 
@@ -36,7 +36,7 @@ function Notifications:render()
 	local children = {}
 
 	for idx, notification in ipairs(self.props.notifications) do
-		local timeSince = tick() - notification.time
+		local timeSince = os.time() - notification.time
 		local id = notification.time
 
 		if timeSince < NOTIFICATION_TIME then
