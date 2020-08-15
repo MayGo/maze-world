@@ -85,6 +85,7 @@ There is also unfinished chest model `box.blend`.
 -   [Minershaven](https://github.com/berezaa/minershaven)
 -   [Roblox World](https://github.com/gtraines/roblox-world)
 -   [Outyards](https://github.com/Nimblz/outyards)
+-   [roactplayground](https://github.com/Nimblz/roactplayground)
 -   [VintageCube](https://github.com/VintageCube/VintageCube)
 -   [World Messages](https://github.com/two-moons/world-messages/blob/master/src/Components/Thumbnail.lua) Nice user thunbnails
 
