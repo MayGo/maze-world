@@ -9,6 +9,7 @@ local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderbo
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
 local playerDied = require(Modules.src.actions.rooms.playerDied)
 local clientReset = require(Modules.src.actions.toClient.clientReset)
+local clientSendNotification = require(Modules.src.actions.toClient.clientSendNotification)
 
 local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItemsToPlayerInventory)
 
@@ -64,6 +65,8 @@ local function connectPlayer(player)
 
 				store:dispatch(playerDied(player))
 				store:dispatch(clientReset(player))
+				store:dispatch(clientSendNotification(player, 'You Died'))
+
 				player:LoadCharacter()
 			end)
 		end)

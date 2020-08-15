@@ -17,6 +17,7 @@ local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
 local InventoryAndShopButtons = require(clientSrc.Components.InventoryAndShopButtons)
 local FinishScreen = require(clientSrc.Components.FinishScreen)
+local Notifications = require(clientSrc.Components.common.Notifications)
 local ClockScreen = require(clientSrc.Components.ClockScreen)
 local Room = require(clientSrc.Components.Room)
 local LeaderboardsConnect = require(clientSrc.Components.LeaderboardsConnect)
@@ -91,6 +92,7 @@ function Game:render(props)
 					},
 					{ Finish = createElement(FinishScreen) }
 				),
+				Notifications = createElement(Notifications),
 				ClockScreenContainer = createElement(
 					'Frame',
 					{
