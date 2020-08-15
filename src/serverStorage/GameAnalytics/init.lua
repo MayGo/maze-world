@@ -18,11 +18,11 @@ local Players = game:GetService('Players')
 local MKT = game:GetService('MarketplaceService')
 local RunService = game:GetService('RunService')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local LS = game:GetService('LogService')
-local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local LocalizationService = game:GetService('LocalizationService')
+local ScriptContext = game:GetService('ScriptContext')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
 local Postie = require(Modules.src.utils.Postie)
+
 local OnPlayerReadyEvent
 local ProductCache = {}
 local ONE_HOUR_IN_SECONDS = 3600
@@ -223,7 +223,13 @@ function ga:addBusinessEvent(playerId, options)
 			message = 'Could not add business event',
 		}) then
 			if playerId then
-				addToInitializationQueueByUserId(playerId, ga.addBusinessEvent, ga, playerId, options)
+				addToInitializationQueueByUserId(
+					playerId,
+					ga.addBusinessEvent,
+					ga,
+					playerId,
+					options
+				)
 			else
 				addToInitializationQueue(ga.addBusinessEvent, ga, playerId, options)
 			end
@@ -239,11 +245,14 @@ function ga:addBusinessEvent(playerId, options)
 
 		events:addBusinessEvent(playerId, 'USD', USDSpent, itemType, itemId, cartType)
 
-		if itemType == 'Gamepass' then
+		if itemType == 'Gamepass' and cartType ~= 'Website' then
 			local player = Players:GetPlayerByUserId(playerId)
 			local playerData = store:GetPlayerData(player)
+			if not playerData.OwnedGamepasses then
+				playerData.OwnedGamepasses = {}
+			end
 			table.insert(playerData.OwnedGamepasses, gamepassId)
-			store.PlayerCache[player] = playerData
+			store.PlayerCache[playerId] = playerData
 			store:SavePlayerData(player)
 		end
 	end)
@@ -261,7 +270,13 @@ function ga:addResourceEvent(playerId, options)
 			message = 'Could not add resource event',
 		}) then
 			if playerId then
-				addToInitializationQueueByUserId(playerId, ga.addResourceEvent, ga, playerId, options)
+				addToInitializationQueueByUserId(
+					playerId,
+					ga.addResourceEvent,
+					ga,
+					playerId,
+					options
+				)
 			else
 				addToInitializationQueue(ga.addResourceEvent, ga, playerId, options)
 			end
@@ -290,7 +305,13 @@ function ga:addProgressionEvent(playerId, options)
 			message = 'Could not add progression event',
 		}) then
 			if playerId then
-				addToInitializationQueueByUserId(playerId, ga.addProgressionEvent, ga, playerId, options)
+				addToInitializationQueueByUserId(
+					playerId,
+					ga.addProgressionEvent,
+					ga,
+					playerId,
+					options
+				)
 			else
 				addToInitializationQueue(ga.addProgressionEvent, ga, playerId, options)
 			end
@@ -303,7 +324,14 @@ function ga:addProgressionEvent(playerId, options)
 		local progression03 = options['progression03'] or nil
 		local score = options['score'] or nil
 
-		events:addProgressionEvent(playerId, progressionStatus, progression01, progression02, progression03, score)
+		events:addProgressionEvent(
+			playerId,
+			progressionStatus,
+			progression01,
+			progression02,
+			progression03,
+			score
+		)
 	end)
 end
 
@@ -483,7 +511,7 @@ end
 function ga:addGameAnalyticsTeleportData(playerIds, teleportData)
 	local gameAnalyticsTeleportData = {}
 	for _, playerId in ipairs(playerIds) do
-		local PlayerData = store.PlayerCache[playerId]
+		local PlayerData = store:GetPlayerDataFromCache(playerId)
 		PlayerData.PlayerTeleporting = true
 		local data = {
 			SessionID = PlayerData.SessionID,
@@ -514,17 +542,29 @@ function ga:getRemoteConfigsContentAsString(playerId)
 end
 
 function ga:PlayerJoined(Player)
-	if store.PlayerCache[Player.UserId] then return end
-
 	local joinData = Player:GetJoinData()
 	local teleportData = joinData.TeleportData
 	local gaData = nil
-	if teleportData then
-		gaData = teleportData.gameanalyticsData and teleportData.gameanalyticsData[tostring(Player.UserId)]
-	end
 
 	--Variables
 	local PlayerData = store:GetPlayerData(Player)
+
+	if teleportData then
+		gaData =
+			teleportData.gameanalyticsData and teleportData.gameanalyticsData[tostring(
+				Player.UserId
+			)]
+	end
+
+	local pd = store:GetPlayerDataFromCache(Player.UserId)
+	if pd then
+		if gaData then
+			pd.SessionID = gaData.SessionID
+			pd.SessionStart = gaData.SessionStart
+		end
+		pd.PlayerTeleporting = false
+		return
+	end
 
 	local PlayerPlatform = 'unknown'
 	local isSuccessful, platform = Postie.InvokeClient('getPlatform', Player, 5)
@@ -535,6 +575,14 @@ function ga:PlayerJoined(Player)
 	--Fill Data
 	for key, value in pairs(store.BasePlayerData) do
 		PlayerData[key] = PlayerData[key] or value
+	end
+
+	local countryCodeResult, countryCode = pcall(function()
+		return LocalizationService:GetCountryRegionForPlayerAsync(Player)
+	end)
+
+	if countryCodeResult then
+		PlayerData.CountryCode = countryCode
 	end
 
 	store.PlayerCache[Player.UserId] = PlayerData
@@ -617,35 +665,24 @@ function ga:PlayerJoined(Player)
 
 		logger:i('Player initialization queue called #' .. #playerEventQueue .. ' events')
 	end
-
-	--Autosave
-	spawn(function()
-		--Loop
-		while true do
-			--Delay
-			wait(store.AutoSaveData)
-
-			--Validate
-			if not Player or Player.Parent ~= Players then return end
-
-			--Save
-			store:SavePlayerData(Player)
-		end
-	end)
 end
 
 function ga:PlayerRemoved(Player)
 	--Save
 	store:SavePlayerData(Player)
 
-	local PlayerData = store.PlayerCache[Player.UserId]
-	if PlayerData and not PlayerData.PlayerTeleporting then
-		ga:endSession(Player.UserId)
+	local PlayerData = store:GetPlayerDataFromCache(Player.UserId)
+	if PlayerData then
+		if not PlayerData.PlayerTeleporting then
+			ga:endSession(Player.UserId)
+		else
+			store.PlayerCache[Player.UserId] = nil
+		end
 	end
 end
 
 function ga:isPlayerReady(playerId)
-	if store.PlayerCache[playerId] then
+	if store:GetPlayerDataFromCache(playerId) then
 		return true
 	else
 		return false
@@ -681,30 +718,25 @@ function ga:GamepassPurchased(player, id, customGamepassInfo)
 		ProductCache[id] = gamepassInfo
 	end
 
+	local amount = 0
+	local itemId = 'GamePass'
+	if customGamepassInfo then
+		amount = customGamepassInfo.PriceInRobux
+		itemId = customGamepassInfo.Name
+	elseif gamepassInfo then
+		amount = gamepassInfo.PriceInRobux
+		itemId = gamepassInfo.Name
+	end
+
 	ga:addBusinessEvent(player.UserId, {
-		amount = customGamepassInfo.PriceInRobux or gamepassInfo.PriceInRobux,
+		amount = amount or 0,
 		itemType = 'Gamepass',
-		itemId = ga:filterForBusinessEvent(customGamepassInfo.Name or gamepassInfo.Name),
+		itemId = ga:filterForBusinessEvent(itemId),
 		gamepassId = id,
 	})
 end
 
-local initializationOptions =
-	{
-		'build',
-		'gameKey',
-		'secretKey',
-		'enableInfoLog',
-		'enableVerboseLog',
-		'automaticSendBusinessEvents',
-		'reportErrors',
-		'availableCustomDimensions01',
-		'availableCustomDimensions02',
-		'availableCustomDimensions03',
-		'availableResourceCurrencies',
-		'availableResourceItemTypes',
-		'availableGamepasses',
-	}
+local requiredInitializationOptions = { 'gameKey', 'secretKey' }
 
 function ga:initialize(options)
 	threading:performTaskOnGAThread(function()
@@ -714,41 +746,48 @@ function ga:initialize(options)
 	-- Players leaving
 
 	-- Fire for players already in game
-		for _, option in ipairs(initializationOptions) do
+		for _, option in ipairs(requiredInitializationOptions) do
 			if options[option] == nil then
 				logger:e("Initialize '" .. option .. "' option missing")
 				return
 			end
 		end
-		if options.enableInfoLog then
+		if options.enableInfoLog ~= nil and options.enableInfoLog then
 			ga:setEnabledInfoLog(options.enableInfoLog)
 		end
-		if options.enableVerboseLog then
+		if options.enableVerboseLog ~= nil and options.enableVerboseLog then
 			ga:setEnabledVerboseLog(options.enableVerboseLog)
 		end
-		if #options.availableCustomDimensions01 > 0 then
+		if options.availableCustomDimensions01 ~= nil and #options.availableCustomDimensions01 > 0 then
 			ga:configureAvailableCustomDimensions01(options.availableCustomDimensions01)
 		end
-		if #options.availableCustomDimensions02 > 0 then
+		if options.availableCustomDimensions02 ~= nil and #options.availableCustomDimensions02 > 0 then
 			ga:configureAvailableCustomDimensions02(options.availableCustomDimensions02)
 		end
-		if #options.availableCustomDimensions03 > 0 then
+		if options.availableCustomDimensions03 ~= nil and #options.availableCustomDimensions03 > 0 then
 			ga:configureAvailableCustomDimensions03(options.availableCustomDimensions03)
 		end
-		if #options.availableResourceCurrencies > 0 then
+		if options.availableResourceCurrencies ~= nil and #options.availableResourceCurrencies > 0 then
 			ga:configureAvailableResourceCurrencies(options.availableResourceCurrencies)
 		end
-		if #options.availableResourceItemTypes > 0 then
+		if options.availableResourceItemTypes ~= nil and #options.availableResourceItemTypes > 0 then
 			ga:configureAvailableResourceItemTypes(options.availableResourceItemTypes)
 		end
-		if #options.build > 0 then
+		if options.build ~= nil and #options.build > 0 then
 			ga:configureBuild(options.build)
 		end
-		if #options.availableGamepasses > 0 then
+		if options.availableGamepasses ~= nil and #options.availableGamepasses > 0 then
 			ga:configureAvailableGamepasses(options.availableGamepasses)
 		end
 		if options.enableDebugLog ~= nil then
 			ga:setEnabledDebugLog(options.enableDebugLog)
+		end
+
+		if options.automaticSendBusinessEvents ~= nil then
+			ga:setEnabledAutomaticSendBusinessEvents(options.automaticSendBusinessEvents)
+		end
+		if options.reportErrors ~= nil then
+			ga:setEnabledReportErrors(options.reportErrors)
 		end
 
 		if isSdkReady({
@@ -833,21 +872,29 @@ spawn(function()
 	end
 end)
 
---Error Logging
-LS.MessageOut:Connect(function(message, messageType)
+local function ErrorHandler(message, trace, Script, player)
+	--Validate
+	if not state.ReportErrors then return end
 
---Validate
+	if not Script then
+		return -- don't remember if this check is necessary but must have added it for a reason
+	end
 
--- don't report error if limit has been exceeded
+	local scriptName = nil
+	local ok, _ = pcall(function()
+		scriptName = Script:GetFullName() -- CoreGui.RobloxGui.Modules.PlayerList error, can't get name because of security permission
+	end)
+	if not ok then return end
 
---Report (use nil for playerId as real player id is not available)
-
--- increment error count
-	if not state.ReportErrors or messageType ~= Enum.MessageType.MessageError then return end
-
-	local m = message
+	local m = scriptName .. ': message=' .. message .. ', trace=' .. trace
 	if #m > 8192 then
 		m = string.sub(m, 1, 8192)
+	end
+
+	local userId = nil
+	if player then
+		userId = player.UserId
+		m = m:gsub(player.Name, '[LocalPlayer]') -- so we don't flood the same errors with different player names
 	end
 
 	local key = m
@@ -862,14 +909,29 @@ LS.MessageOut:Connect(function(message, messageType)
 		errorCountCache[key].currentCount = 0
 	end
 
+	-- don't report error if limit has been exceeded
 	if errorCountCache[key].currentCount > MaxErrorsPerHour then return end
 
-	ga:addErrorEvent(nil, {
+	ga:addErrorEvent(userId, {
 		severity = ga.EGAErrorSeverity.error,
 		message = m,
 	})
 
+	-- increment error count
 	errorCountCache[key].currentCount = errorCountCache[key].currentCount + 1
+end
+
+--Error Logging
+ScriptContext.Error:Connect(ErrorHandler)
+if not ReplicatedStorage:FindFirstChild('GameAnalyticsError') then
+	--Create
+	local f = Instance.new('RemoteEvent')
+	f.Name = 'GameAnalyticsError'
+	f.Parent = ReplicatedStorage
+end
+
+ReplicatedStorage.GameAnalyticsError.OnServerEvent:Connect(function(player, message, trace, Script)
+	ErrorHandler(message, trace, Script, player)
 end)
 
 --Record Gamepasses.
@@ -878,7 +940,7 @@ MKT.PromptGamePassPurchaseFinished:Connect(function(Player, ID, Purchased)
 --Validate
 	if not state.AutomaticSendBusinessEvents or not Purchased then return end
 
-	ga:GamepassPurchased(Player, ID, {})
+	ga:GamepassPurchased(Player, ID)
 end)
 
 return ga

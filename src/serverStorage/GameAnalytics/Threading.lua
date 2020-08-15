@@ -8,10 +8,10 @@ local threading = {
 }
 
 local logger = require(script.Parent.Logger)
-local RunService = game:GetService('RunService')
+local RunService = game:GetService("RunService")
 
 local function getScheduledBlock()
-	local now = os.time()
+	local now = tick()
 
 	if not threading._hasScheduledBlockRun and threading._scheduledBlock ~= nil and threading._scheduledBlock.deadline <= now then
 		threading._hasScheduledBlockRun = true
@@ -22,8 +22,9 @@ local function getScheduledBlock()
 end
 
 local function run()
+
 	spawn(function()
-		logger:d('Starting GA thread')
+		logger:d("Starting GA thread")
 
 		while not threading._endThread do
 			threading._canSafelyClose = false
@@ -51,21 +52,21 @@ local function run()
 			wait(1)
 		end
 
-		logger:d('GA thread stopped')
+		logger:d("GA thread stopped")
 	end)
 
 	--Safely Close
 	game:BindToClose(function()
 
-	-- waiting bug fix to work inside studio
+		-- waiting bug fix to work inside studio
+		if RunService:IsStudio() then
+			return
+		end
 
-	--Give game.Players.PlayerRemoving time to to its thang
-
-	--Delay
-		if RunService:IsStudio() then return end
-
+		--Give game.Players.PlayerRemoving time to to its thang
 		wait(1)
 
+		--Delay
 		if not threading._canSafelyClose then
 			repeat
 				wait()
@@ -77,7 +78,9 @@ local function run()
 end
 
 function threading:scheduleTimer(interval, callback)
-	if self._endThread then return end
+	if self._endThread then
+		return
+	end
 
 	if not self._isRunning then
 		self._isRunning = true
@@ -86,7 +89,7 @@ function threading:scheduleTimer(interval, callback)
 
 	local timedBlock = {
 		block = callback,
-		deadline = os.time() + interval,
+		deadline = tick() + interval,
 	}
 
 	if self._hasScheduledBlockRun then
@@ -96,14 +99,18 @@ function threading:scheduleTimer(interval, callback)
 end
 
 function threading:performTaskOnGAThread(callback)
-	if self._endThread then return end
+	if self._endThread then
+		return
+	end
 
 	if not self._isRunning then
 		self._isRunning = true
 		run()
 	end
 
-	local timedBlock = { block = callback }
+	local timedBlock = {
+		block = callback,
+	}
 
 	self._blocks[#self._blocks + 1] = timedBlock
 end

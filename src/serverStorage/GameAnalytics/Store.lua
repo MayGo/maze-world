@@ -21,6 +21,7 @@ local store = {
 		RemoteConfigsIsReady = false,
 		PlayerTeleporting = false,
 		OwnedGamepasses = nil, --nil means a completely new player. {} means player with no game passes
+		CountryCode = ""
 	},
 
 	DataToSave = {
@@ -51,6 +52,15 @@ function store:GetPlayerData(Player)
 	return PlayerData
 end
 
+function store:GetPlayerDataFromCache(userId)
+    local playerData = store.PlayerCache[userId]
+    if playerData then
+        return playerData
+    end
+    playerData = store.PlayerCache[tostring(userId)]
+    return playerData
+end
+
 function store:GetErrorDataStore(scope)
 	local ErrorDS
 	local success = pcall(function()
@@ -67,7 +77,7 @@ end
 function store:SavePlayerData(Player)
 
 	--Variables
-	local PlayerData = store.PlayerCache[Player.UserId]
+	local PlayerData = store:GetPlayerDataFromCache(Player.UserId)
 	local SavePlayerData = {}
 
 	if not PlayerData then

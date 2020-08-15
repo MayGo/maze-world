@@ -5,9 +5,12 @@
 local GS = game:GetService('GuiService')
 local UIS = game:GetService('UserInputService')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
-local Postie = require(Modules.src.utils.Postie)
+local Postie = require(ReplicatedStorage.Postie)
+local ScriptContext = game:GetService('ScriptContext')
+
+ScriptContext.Error:Connect(function(...)
+	ReplicatedStorage.GameAnalyticsError:FireServer(...)
+end)
 
 --Functions
 local function getPlatform()
