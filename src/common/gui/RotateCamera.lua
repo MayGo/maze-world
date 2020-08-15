@@ -9,7 +9,7 @@ camera.CameraType = Enum.CameraType.Scriptable
 local rotationAngle = Instance.new('NumberValue')
 local tweenComplete = false
 
-local cameraOffset = Vector3.new(70, 43, -40)
+local cameraOffset = Vector3.new(120, 43, -40)
 local rotationTime = 15 -- Time in seconds
 local rotationDegrees = 360
 local rotationRepeatCount = -1 -- Use -1 for infinite repeats
@@ -23,7 +23,7 @@ RotateCamera.__index = RotateCamera
 function RotateCamera:blur()
 	local blurEffect = Instance.new('BlurEffect')
 	blurEffect.Parent = camera
-	blurEffect.Size = 16
+	blurEffect.Size = 32
 	self.blurEffect = blurEffect
 end
 function RotateCamera:unblur()
