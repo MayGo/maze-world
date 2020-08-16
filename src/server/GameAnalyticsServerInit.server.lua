@@ -5,7 +5,7 @@
 --]]
 
 local ServerStorage = game:GetService('ServerStorage')
-local GameAnalytics = require(ServerStorage.GameAnalytics)
+local GameAnalytics = require(ServerStorage.serverStorageSrc.GameAnalytics)
 
 GameAnalytics:initialize({
 
