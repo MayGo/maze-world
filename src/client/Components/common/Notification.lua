@@ -27,8 +27,12 @@ end
 function Notification:willUnmount()
 end
 
+local PADDING = 0.04
+
 function Notification:render()
 	local children = {}
+
+	local paddingProp = UDim.new(PADDING, 0)
 
 	children.content = createElement(
 		'Frame',
@@ -38,32 +42,37 @@ function Notification:render()
 		},
 		{
 			listlayout = createElement('UIListLayout', {
-				Padding = UDim.new(0, 16),
+				Padding = paddingProp,
 				FillDirection = Enum.FillDirection.Horizontal,
 				HorizontalAlignment = Enum.HorizontalAlignment.Left,
 				VerticalAlignment = Enum.VerticalAlignment.Center,
 				SortOrder = Enum.SortOrder.LayoutOrder,
 			}),
 			uipadding = createElement('UIPadding', {
-				PaddingBottom = UDim.new(0, 8),
-				PaddingLeft = UDim.new(0, 8),
-				PaddingRight = UDim.new(0, 8),
-				PaddingTop = UDim.new(0, 8),
+				PaddingBottom = paddingProp,
+				PaddingLeft = paddingProp,
+				PaddingRight = paddingProp,
+				PaddingTop = paddingProp,
 			}),
-			thumbnail = createElement('ImageLabel', {
-				Size = UDim2.new(0, 64, 0, 64),
-				BorderSizePixel = 0,
-				BackgroundTransparency = 1,
-				Image = self.props.thumbnail or 'rbxasset://textures/ui/GuiImagePlaceholder.png',
-				ImageRectSize = self.props.rectSize or Vector2.new(0, 0),
-				ImageRectOffset = self.props.rectOffset or Vector2.new(0, 0),
-				LayoutOrder = 1,
-			}),
+			thumbnail = createElement(
+				'ImageLabel',
+				{
+					Size = UDim2.new(1, 0, 1, 0),
+					BorderSizePixel = 0,
+					BackgroundTransparency = 1,
+					Image = self.props.thumbnail or 'rbxasset://textures/ui/GuiImagePlaceholder.png',
+					ImageRectSize = self.props.rectSize or Vector2.new(0, 0),
+					ImageRectOffset = self.props.rectOffset or Vector2.new(0, 0),
+					LayoutOrder = 1,
+				},
+				{ aspect = createElement('UIAspectRatioConstraint') }
+			),
 			textLabel = createElement('TextLabel', {
-				Size = UDim2.new(1, -80, 0, 50),
+				Size = UDim2.new(0.72, 0, 1, 0),
 				BackgroundTransparency = 1,
 				Text = self.props.text or 'N/A',
 				Font = Enum.Font.GothamSemibold,
+				TextScaled = true,
 				TextSize = 18,
 				TextWrapped = true,
 				TextXAlignment = Enum.TextXAlignment.Left,
@@ -94,12 +103,15 @@ function Notification:render()
 	return createElement(
 		'Frame',
 		{
-			Size = UDim2.new(0, 300, 0, 80),
+			Size = UDim2.new(0.3, 0, 0.3, 0),
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
 			LayoutOrder = self.props.layoutIndex or 0,
 		},
-		innerFrame
+		{
+			innerFrame = innerFrame,
+			aspect = createElement('UIAspectRatioConstraint', { AspectRatio = 3.5 }),
+		}
 	)
 end
 

@@ -15,7 +15,7 @@ local Theme = require(Modules.src.Theme)
 
 local NOTIFICATION_TIME = 10
 
-local PADDING = 8
+local PADDING = 0.01
 
 function Notifications:init()
 	self.steppedConn = game:GetService('RunService').Stepped:connect(function()
@@ -34,6 +34,8 @@ end
 function Notifications:render()
 	local notifs = {}
 	local children = {}
+
+	local paddingProp = UDim.new(PADDING, 0)
 
 	for idx, notification in ipairs(self.props.notifications) do
 		local timeSince = os.time() - notification.time
@@ -54,15 +56,15 @@ function Notifications:render()
 	self.rerenderUntilNoNotifications = M.count(notifs) > 0
 
 	children.listLayout = createElement('UIListLayout', {
-		Padding = UDim.new(0, PADDING),
+		Padding = paddingProp,
 		VerticalAlignment = Enum.VerticalAlignment.Bottom,
 		HorizontalAlignment = Enum.HorizontalAlignment.Right,
 	})
 	children.padding = createElement('UIPadding', {
-		PaddingBottom = UDim.new(0, PADDING),
-		PaddingLeft = UDim.new(0, PADDING),
-		PaddingRight = UDim.new(0, PADDING),
-		PaddingTop = UDim.new(0, PADDING),
+		PaddingBottom = paddingProp,
+		PaddingLeft = paddingProp,
+		PaddingRight = paddingProp,
+		PaddingTop = paddingProp,
 	})
 
 	return createElement(
