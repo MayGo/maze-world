@@ -1,13 +1,20 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
+
+local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
+local TextLabel = require(clientSrc.Components.common.TextLabel)
+local ModelViewport = require(clientSrc.Components.common.ModelViewport)
 local logger = require(Modules.src.utils.Logger)
 local M = require(Modules.M)
 local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local ModelManager = require(Modules.src.ModelManager)
+local RoundButton = require(clientSrc.Components.common.RoundButton)
+local UICorner = require(clientSrc.Components.common.UICorner)
+local Frame = require(clientSrc.Components.common.Frame)
 
 local OBJECT_TYPES = InventoryObjects.OBJECT_TYPES
 local GamePasses = require(Modules.src.GamePasses)
 local Roact = require(Modules.Roact)
-local Dict = require(Modules.src.utils.Dict)
 local RoactMaterial = require(Modules.RoactMaterial)
 
 local createElement = Roact.createElement
@@ -17,6 +24,10 @@ local ShopItem = Roact.Component:extend('ShopItem')
 function ShopItem:render()
 	local props = self.props
 	local item = self.props.item
+	local isDisabled = self.props.isDisabled
+	local cellWidth = self.props.cellWidth
+	local buttonHeight = self.props.buttonHeight
+	local titleHeight = self.props.titleHeight
 
 	local equippedItems = props.equippedItems
 	local inventory = props.inventory
@@ -49,31 +60,58 @@ function ShopItem:render()
 		end
 	end
 
-	local layout = createElement('UIListLayout', {
-		HorizontalAlignment = Enum.HorizontalAlignment.Center,
-		SortOrder = Enum.SortOrder.LayoutOrder,
-	})
+	if isDisabled then
+		onClick = nil
+	end
 
-	local imageLabel = createElement('ImageButton', {
-		Position = UDim2.new(0.5, 0, 0.5, 0),
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Size = UDim2.new(0, 100, 0, 100),
-		Image = item.icon,
-		BackgroundTransparency = 1,
-		ZIndex = 2,
-	})
+	local image
+	local aspect
 
-	local nameLabel = createElement('TextLabel', {
-		AnchorPoint = Vector2.new(0.5, 1.0),
-		Position = UDim2.new(0.5, 0, 1, 0),
-		Size = UDim2.new(1, 0, 0.2, 0),
-		BackgroundColor3 = Color3.new(0, 0, 0),
-		BackgroundTransparency = 0.5,
-		Font = Enum.Font.Cartoon,
-		TextColor3 = Color3.new(0.85, 0.85, 0.85),
-		TextSize = 18,
-		Text = item.name,
-	})
+	if item.modelName and not item.icon then
+		local model = ModelManager:findModel(item)
+
+		if not model then
+			logger:e('No model found with name: ' .. item.modelName)
+		else
+			image = createElement(ModelViewport, {
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				Size = UDim2.new(1, 0, 1, 0),
+				model = model:Clone(),
+				Visible = true,
+				BackgroundTransparency = 0.5,
+			})
+		end
+	else
+		aspect = createElement('UIAspectRatioConstraint')
+		image = createElement('ImageButton', {
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			Size = UDim2.new(1, 0, 1, 0),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Image = item.icon,
+			BackgroundTransparency = 1,
+			ZIndex = 2,
+		})
+	end
+
+	local nameLabel = createElement(
+		TextLabel,
+		{
+			AnchorPoint = Vector2.new(0.5, 1.0),
+			Position = UDim2.new(0.5, 0, 1, 0),
+			Size = UDim2.new(1, 0, titleHeight, 0),
+			TextScaled = true,
+			BackgroundColor3 = Color3.new(0, 0, 0),
+			BackgroundTransparency = 0.5,
+			Font = Enum.Font.Cartoon,
+			TextColor3 = Color3.new(0.85, 0.85, 0.85),
+			TextXAlignment = Enum.TextXAlignment.Center,
+			TextYAlignment = Enum.TextYAlignment.Center,
+			TextSize = 18,
+			Text = item.name,
+			LayoutOrder = 0,
+		},
+		{ UICorner = createElement(UICorner) }
+	)
 
 	local buttonText = '..'
 
@@ -103,44 +141,85 @@ function ShopItem:render()
 		logger:w('No type found for item', item)
 	end
 
-	-- Have to create all 3 buttons, because they animate and switching bg color brakes that
+	if isDisabled then
+		buttonText = 'Buy tool first'
+	end
+
+	local amountLabel
+	if item.amount then
+		local outOfStock = item.amount == 0
+		local color = outOfStock and Color3.fromRGB(199, 0, 0) or Color3.fromRGB(255, 255, 255)
+
+		amountLabel = createElement(TextLabel, {
+			Position = UDim2.new(0, -5, 0, 5),
+			Size = UDim2.new(1, 0, 0, 20),
+			TextScaled = true,
+			Font = Enum.Font.Cartoon,
+			TextColor3 = color,
+			TextXAlignment = Enum.TextXAlignment.Right,
+			TextYAlignment = Enum.TextYAlignment.Top,
+			TextSize = 12,
+			Text = outOfStock and 'Out Of Stock' or item.amount .. 'x',
+		})
+	end
+
+	local imageLabel = createElement(
+		'Frame',
+		{
+			BackgroundTransparency = 1,
+			Size = UDim2.new(0.6, 0, 0.6, 0),
+			LayoutOrder = 1,
+		},
+		{
+			image = image,
+			aspect = aspect,
+			amountLabel = amountLabel,
+		}
+	)
+
+	local children = {
+		name = nameLabel,
+		imageLabel = imageLabel,
+	}
+
 	local buttonProps = {
 		Text = buttonText,
 		Position = UDim2.new(0.5, 0, 0.5, 0),
+		TextScaled = true,
 		AnchorPoint = Vector2.new(0.5, 0.5),
-		Size = UDim2.new(1, 0, 0.2, 0),
+		Size = UDim2.new(1, 0, buttonHeight, 0),
 		onClicked = onClick,
-		BackgroundColor3 = RoactMaterial.Colors.Blue200,
+		BackgroundColor3 = RoactMaterial.Colors.Blue500,
+		LayoutOrder = 2,
 	}
 
-	local children = { layout, nameLabel, imageLabel }
-
-	local buyButton = createElement(RoactMaterial.Button, buttonProps)
-	local equipButton = createElement(RoactMaterial.Button, Dict:join(buttonProps, { BackgroundColor3 = RoactMaterial.Colors.Grey400 }))
-	local gamePassButton = createElement(
-		RoactMaterial.Button,
-		Dict:join(buttonProps, {
+	if item.isGamePass and isOwned then
+		buttonProps = M.extend({}, buttonProps, {
 			BackgroundColor3 = RoactMaterial.Colors.Grey400,
 			onClick = nil,
 		})
-	)
-	local equippedButton = createElement(RoactMaterial.Button, Dict:join(buttonProps, { BackgroundColor3 = RoactMaterial.Colors.Blue500 }))
-
-	if item.isGamePass and isOwned then
-		children['gamePassButton'] = gamePassButton
 	elseif isEquipped then
-		children['equipButton'] = equipButton
+		buttonProps = M.extend({}, buttonProps, { BackgroundColor3 = RoactMaterial.Colors.Blue500 })
 	elseif isOwned then
-		children['equippedButton'] = equippedButton
-	else
-		children['buyButton'] = buyButton
+		buttonProps = M.extend({}, buttonProps, { BackgroundColor3 = RoactMaterial.Colors.Grey400 })
 	end
 
+	if isDisabled then
+		buttonProps = M.extend({}, buttonProps, { BackgroundColor3 = RoactMaterial.Colors.Grey400 })
+	end
+
+	children['button'] = createElement(RoundButton, buttonProps)
+
+	children['aspect'] = createElement('UIAspectRatioConstraint')
+
 	return createElement(
-		'Frame',
+		Frame,
 		{
-			BackgroundColor3 = Color3.new(0, 0, 0),
+			Layout = 'List',
+			Padding = UDim.new(0, 1),
 			BackgroundTransparency = 0.7,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			HorizontalAlignment = Enum.HorizontalAlignment.Center,
 		},
 		children
 	)

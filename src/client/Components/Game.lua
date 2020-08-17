@@ -79,13 +79,25 @@ function Game:render(props)
 					{
 						Size = UDim2.new(1, 0, 1, 0),
 						BackgroundTransparency = 1,
+						BorderSizePixel = 5,
+						BorderMode = Enum.BorderMode.Inset,
+						ZIndex = 2,
 					},
 					{ Inventory = createElement(InventoryAndShopButtons) }
+				),
+				ClockScreenContainer = createElement(
+					'Frame',
+					{
+						Position = UDim2.new(0.5, 0, -0.1, 0),
+						AnchorPoint = Vector2.new(0.5, 0),
+						BackgroundTransparency = 1,
+					},
+					{ Clock = createElement(ClockScreen) }
 				),
 				FinishScreenContainer = createElement(
 					'Frame',
 					{
-						Size = UDim2.new(0, 400, 0, 400),
+						Size = UDim2.new(0.8, 0, 0.6, 0),
 						Position = UDim2.new(0.5, 0, 0.5, 0),
 						AnchorPoint = Vector2.new(0.5, 0.5),
 						BackgroundTransparency = 1,
@@ -93,16 +105,6 @@ function Game:render(props)
 					{ Finish = createElement(FinishScreen) }
 				),
 				Notifications = createElement(Notifications),
-				ClockScreenContainer = createElement(
-					'Frame',
-					{
-						Size = UDim2.new(0, 1, 0, 1),
-						Position = UDim2.new(0.5, 0, 0, 0),
-						AnchorPoint = Vector2.new(0.5, 0),
-						BackgroundTransparency = 1,
-					},
-					{ Finish = createElement(ClockScreen) }
-				),
 				-- Even through our UI is being rendered inside a PlayerGui, we can
 				-- always take advantage of a feature called portals to put instances
 				-- elsewhere.

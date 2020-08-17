@@ -34,7 +34,8 @@ function ClockScreen:render()
 	local text = createElement(
 		TextLabel,
 		{
-			Size = UDim2.new(0, 500, 0, 40),
+			Size = UDim2.new(0.4, 0, 0.5, 0),
+			TextScaled = true,
 			TextSize = 30,
 			AnchorPoint = Vector2.new(0.5, 0),
 			TextXAlignment = Enum.TextXAlignment.Center,
@@ -54,7 +55,8 @@ function ClockScreen:render()
 			increment = false,
 			initialTime = props.countDownTime,
 			TextColor3 = props.TextColor3,
-			Size = UDim2.new(0, 100, 0, 40),
+			Size = UDim2.new(0.2, 0, 0.5, 0),
+			TextScaled = true,
 			TextSize = 30,
 			AnchorPoint = Vector2.new(0.5, 0),
 			TextXAlignment = Enum.TextXAlignment.Center,

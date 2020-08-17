@@ -1,19 +1,19 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
+-- local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 local Support = require(Modules.src.utils.SupportLibrary)
 local UserInputService = game:GetService('UserInputService')
 
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
-local RoactMaterial = require(Modules.RoactMaterial)
-
-local Print = require(Modules.src.utils.Print)
 
 local Shop = require(clientSrc.Components.Shop)
+local UICorner = require(clientSrc.Components.common.UICorner)
+
+local RoundButton = require(clientSrc.Components.common.RoundButton)
 local Frame = require(clientSrc.Components.common.Frame)
-local IconButton = require(clientSrc.Components.common.IconButton)
+
 local TextLabel = require(clientSrc.Components.common.TextLabel)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
@@ -32,29 +32,32 @@ function InventoryAndShopButtons:init()
 end
 
 function InventoryAndShopButtons:render()
-	local playerSlotsCount = self.props.playerSlotsCount
-	local isPlaying = self.props.isPlaying
-
+	local props = self.props
+	local playerSlotsCount = props.playerSlotsCount
+	local isPlaying = props.isPlaying
+	local inventory = props.inventory
 	local equippedItems = self.props.equippedItems
 
 	if isPlaying then return end
 
-	local inventoryButton = createElement(IconButton, {
-		onClick = function()
-			self:setState(function(prevState)
-				return { inventoryOpen = not prevState.inventoryOpen }
-			end)
-		end,
-		icon = 'inbox',
-	})
+	local toggleInventory = function()
+		self:setState(function(prevState)
+			return { inventoryOpen = not prevState.inventoryOpen }
+		end)
+	end
+	local toggleShop = function()
+		self:setState(function(prevState)
+			return { shopOpen = not prevState.shopOpen }
+		end)
+	end
 
-	local shopButton = createElement(IconButton, {
-		onClick = function()
-			self:setState(function(prevState)
-				return { shopOpen = not prevState.shopOpen }
-			end)
-		end,
+	local inventoryButton = createElement(RoundButton, {
+		icon = 'inbox',
+		onClicked = toggleInventory,
+	})
+	local shopButton = createElement(RoundButton, {
 		icon = 'shop',
+		onClicked = toggleShop,
 	})
 
 	if not self.state.shopOpen and not self.state.inventoryOpen then
@@ -71,23 +74,28 @@ function InventoryAndShopButtons:render()
 		)
 	end
 
-	local closeButton = createElement(IconButton, {
-		onClick = function()
-			self:setState(function()
-				return {
-					inventoryOpen = false,
-					shopOpen = false,
-				}
-			end)
-		end,
+	local closeInventoryAndSHop = function()
+		self:setState(function()
+			return {
+				inventoryOpen = false,
+				shopOpen = false,
+			}
+		end)
+	end
+
+	local closeButton = createElement(RoundButton, {
 		icon = 'close',
+		onClicked = closeInventoryAndSHop,
+		Size = UDim2.new(0.35, 0, 0.35, 0),
 	})
+
 	local slotsCount = createElement(TextLabel, {
 		Size = UDim2.new(1, 0, 1, 0),
+		TextScaled = true,
 		TextSize = 30,
 		AnchorPoint = Vector2.new(0, 0),
 		TextXAlignment = Enum.TextXAlignment.Center,
-		TextYAlignment = Enum.TextYAlignment.Center,
+		TextYAlignment = Enum.TextYAlignment.Bottom,
 		Text = 'Equipped ' .. #equippedItems .. ' / ' .. playerSlotsCount,
 	})
 
@@ -104,8 +112,8 @@ function InventoryAndShopButtons:render()
 
 	local shopProps = {
 		equippedItems = self.props.equippedItems,
-		inventory = self.props.inventory,
 		isGhosting = self.props.isGhosting,
+		inventory = inventory,
 		buyItem = function(itemId)
 			self.api:buyItem(itemId)
 		end,
@@ -124,11 +132,24 @@ function InventoryAndShopButtons:render()
 		[Roact.Children] = { closeButtonWithCount },
 	}
 
-	if self.state.inventoryOpen then
-		return createElement(Shop, Support.Merge({ items = self.props.inventory }, shopProps))
-	else
-		return createElement(Shop, Support.Merge({ items = self.props.items }, shopProps))
-	end
+	return createElement(
+		Frame,
+		{
+			BackgroundColor3 = Color3.fromRGB(179, 216, 236),
+			BackgroundTransparency = 0.1,
+		},
+		{
+			UICorner = createElement(UICorner),
+			Inventory = createElement(
+				Shop,
+
+				Support.Merge(
+					{ items = self.state.inventoryOpen and inventory or self.props.items },
+					shopProps
+				)
+			),
+		}
+	)
 end
 
 function InventoryAndShopButtons:didMount()
@@ -160,7 +181,7 @@ function InventoryAndShopButtons:willUnmount()
 	self._connection:Disconnect()
 end
 
-InventoryAndShopButtonsConnected = RoactRodux.connect(function(state)
+local InventoryAndShopButtonsConnected = RoactRodux.connect(function(state)
 	return {
 		items = state.shop.items,
 		equippedItems = state.player.equippedItems,

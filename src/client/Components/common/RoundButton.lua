@@ -31,11 +31,13 @@ local MaterialIcons = {
 
 local function RoundButton(props)
 	local image
+	local aspect
 
 	local size = UDim2.new(0.5, 0, 0, 50)
 
 	if props.icon then
-		size = UDim2.new(0, 50, 0, 50)
+		size = UDim2.new(0.7, 0, 0.7, 0)
+		aspect = createElement('UIAspectRatioConstraint')
 		image = createElement(
 			'ImageButton',
 			M.extend(
@@ -69,6 +71,7 @@ local function RoundButton(props)
 		),
 		{
 			UICorner = createElement(UICorner),
+			aspect,
 			image,
 		}
 	)

@@ -24,10 +24,12 @@ function ScrollingFrame:render()
 
 	-- Include aspect ratio constraint if specified
 	if props.AspectRatio then
-		local Constraint = createElement('UIAspectRatioConstraint', { AspectRatio = props.AspectRatio })
+		local Constraint =
+			createElement('UIAspectRatioConstraint', { AspectRatio = props.AspectRatio })
 
 		-- Insert constraint into children
-		props[Roact.Children] = Support.Merge({ AspectRatio = Constraint }, props[Roact.Children] or {})
+		props[Roact.Children] =
+			Support.Merge({ AspectRatio = Constraint }, props[Roact.Children] or {})
 	end
 
 	-- Include list layout if specified
@@ -144,8 +146,10 @@ function ScrollingFrame:GetCanvasSize(ContentSize)
 	local props = self.props
 
 	-- Determine dynamic canvas dimensions
-	local DynamicCanvasWidth = props.CanvasSize == 'WRAP_CONTENT' or props.CanvasWidth == 'WRAP_CONTENT'
-	local DynamicCanvasHeight = props.CanvasSize == 'WRAP_CONTENT' or props.CanvasHeight == 'WRAP_CONTENT'
+	local DynamicCanvasWidth =
+		props.CanvasSize == 'WRAP_CONTENT' or props.CanvasWidth == 'WRAP_CONTENT'
+	local DynamicCanvasHeight =
+		props.CanvasSize == 'WRAP_CONTENT' or props.CanvasHeight == 'WRAP_CONTENT'
 	local DynamicCanvasSize = DynamicCanvasWidth or DynamicCanvasHeight
 
 	-- Calculate size based on content if dynamic

@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
+--local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 local Roact = require(Modules.Roact)
 local ShopItem = require(clientSrc.Components.ShopItem)
@@ -11,6 +11,7 @@ local createElement = Roact.createElement
 
 local function Shop(props)
 	local items = props.items
+	local inventory = props.inventory
 	-- The order that items appear must be deterministic, so we create a list!
 	local itemList = {}
 
@@ -26,13 +27,27 @@ local function Shop(props)
 	-- of our UI is just a function returning objects.
 	local children = props[Roact.Children]
 
+	local cellWidth = 0.2
+	local buttonHeight = 0.2
+	local titleHeight = 0.2
+	local cellHeight = 0.3
+
 	for index, item in ipairs(itemList) do
-		children[item.id] = Roact.createElement(
+		local isDisabled = false
+		if item.toolObjectId and not inventory[item.toolObjectId] then
+			isDisabled = true
+		end
+
+		children[item.id] = createElement(
 			ShopItem,
 			Support.Merge(
 				{
 					index = index,
+					cellWidth = cellWidth,
+					buttonHeight = buttonHeight,
+					titleHeight = titleHeight,
 					item = item,
+					isDisabled = isDisabled,
 				},
 				props or {}
 			)
@@ -41,19 +56,18 @@ local function Shop(props)
 
 	return createElement(ScrollingFrame, {
 		Layout = 'Grid',
+		CanvasSize = 'WRAP_CONTENT',
+		ScrollingDirection = Enum.ScrollingDirection.Y,
 		SortOrder = Enum.SortOrder.Name,
-		CellSize = UDim2.new(0, 170, 0, 170),
-		CellPadding = UDim2.new(0, 10, 0, 10),
+		CellSize = UDim2.new(cellWidth, 0, cellHeight, 0),
+		CellPadding = UDim2.new(0.05, 0, 0.05, 0),
 		HorizontalAlignment = Enum.HorizontalAlignment.Left,
 		VerticalAlignment = Enum.VerticalAlignment.Top,
-		CanvasSize = UDim2.new(1, 0, 1, 0),
-		Size = UDim2.new(1, 0, 1, 0),
 		ScrollBarThickness = 4,
 		ScrollBarImageTransparency = 0.6,
 		VerticalScrollBarInset = 'ScrollBar',
-		BackgroundColor3 = Color3.new(0.6, 0.6, 0.6),
-		BackgroundTransparency = 0.2,
 		LayoutOrder = 100,
+		ElasticBehavior = Enum.ElasticBehavior.Always,
 		[Roact.Children] = children,
 	})
 end
