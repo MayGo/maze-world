@@ -101,6 +101,10 @@ local CoinObjects = {
 		name = '5 coins',
 		value = 5,
 	},
+	['9000008'] = {
+		name = '8 coins',
+		value = 8,
+	},
 }
 
 local function keyById(type)

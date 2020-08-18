@@ -3,6 +3,7 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local Dict = require(Modules.src.utils.Dict)
 local M = require(Modules.M)
+local AudioPlayer = require(Modules.src.AudioPlayer)
 
 local dummyNotifications = { {
 	time = os.time(),
@@ -29,10 +30,13 @@ local function messages(state, action)
 
 	if action.type == 'clientSendNotification' then
 		logger:d('clientSendNotification:', action.playerId)
+		-- TODO: Find better place to call this. not in reducer.
+		AudioPlayer.playAudio('Notification')
 
 		local notification = {
 			time = action.time,
 			text = action.text,
+			thumbnail = action.thumbnail,
 		}
 
 		return Dict.join(state, { notifications = M.append(state.notifications, { notification }) })

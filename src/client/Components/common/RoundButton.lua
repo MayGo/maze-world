@@ -3,7 +3,7 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 local UICorner = require(clientSrc.Components.common.UICorner)
-
+local AudioPlayer = require(Modules.src.AudioPlayer)
 local M = require(Modules.M)
 local Roact = require(Modules.Roact)
 local createElement = Roact.createElement
@@ -47,7 +47,10 @@ local function RoundButton(props)
 					Size = UDim2.new(0, 25, 0, 25),
 					BackgroundTransparency = 1,
 					ZIndex = 2,
-					[Roact.Event.MouseButton1Click] = props.onClicked,
+					[Roact.Event.MouseButton1Click] = function()
+						AudioPlayer.playAudio('Simple_Click')
+						props.onClicked()
+					end,
 				},
 				MaterialIcons[props.icon]
 			)
@@ -65,7 +68,10 @@ local function RoundButton(props)
 				TextColor3 = Color3.fromRGB(255, 255, 255),
 				TextSize = 26,
 				Text = '',
-				[Roact.Event.MouseButton1Click] = props.onClicked,
+				[Roact.Event.MouseButton1Click] = function()
+					AudioPlayer.playAudio('Simple_Click')
+					props.onClicked()
+				end,
 			},
 			M.omit(props, 'icon', 'onClicked')
 		),

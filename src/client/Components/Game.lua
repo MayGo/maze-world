@@ -23,6 +23,7 @@ local Room = require(clientSrc.Components.Room)
 local LeaderboardsConnect = require(clientSrc.Components.LeaderboardsConnect)
 local RoomsConfig = require(Modules.src.RoomsConfig)
 local TagItem = require(Modules.src.TagItem)
+local AudioPlayer = require(Modules.src.AudioPlayer)
 
 local Game = Roact.Component:extend('Game')
 
@@ -32,10 +33,13 @@ function Game:init(props)
 		logger:d('Player killed with killbrick. Hit name:', hit.Name)
 		hit.parent.Humanoid.Health = 0
 	end)
+
 	TagItem.create(nil, 'CoinBrick', function(player, hit, part)
 		if part:FindFirstChild('itemId') then
 			logger:d('Player got coin with value: ' .. part.itemId.Value)
+
 			self.api:pickUpCoin(tostring(part.itemId.Value))
+			AudioPlayer.playAudio('Coin_Collect')
 
 			if part.Name == 'PrimaryPart' then
 				local model = part:FindFirstAncestorOfClass('Model')

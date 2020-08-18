@@ -3,7 +3,7 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local M = require(Modules.M)
 local Transporter = require(Modules.src.Transporter)
-
+local assets = require(Modules.src.assets)
 local initializePlayerInventory = require(Modules.src.actions.inventory.initializePlayerInventory)
 local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderboardItems)
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
@@ -67,7 +67,9 @@ local function connectPlayer(player)
 
 				store:dispatch(playerDied(player))
 				store:dispatch(clientReset(player))
-				store:dispatch(clientSendNotification(player, 'You Died'))
+				store:dispatch(
+					clientSendNotification(player, 'You Died', assets.faces['cartoon-face-died'])
+				)
 
 				player:LoadCharacter()
 			end)

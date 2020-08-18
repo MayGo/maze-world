@@ -1,5 +1,6 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
+local assets = require(Modules.src.assets)
 local logger = require(Modules.src.utils.Logger)
 
 local clientSendNotification = require(Modules.src.actions.toClient.clientSendNotification)
@@ -45,7 +46,11 @@ function Leaderboards:connectPlayerVisits(player, store)
 		)
 		GameDatastore:incrementCoins(player, REWARD_DAILY)
 		store:dispatch(
-			clientSendNotification(player, 'Daily visit: Reward: ' .. REWARD_DAILY .. ' coins')
+			clientSendNotification(
+				player,
+				'Daily visit. Reward: ' .. REWARD_DAILY .. ' coins',
+				assets.money['coins-pile']
+			)
 		)
 	end
 
@@ -59,7 +64,8 @@ function Leaderboards:connectPlayerVisits(player, store)
 		store:dispatch(
 			clientSendNotification(
 				player,
-				'You visited 10 times. Reward: ' .. REWARD_10TIMES .. ' coins'
+				'You visited 10 times. Reward: ' .. REWARD_10TIMES .. ' coins',
+				assets.money['coins-pile']
 			)
 		)
 	end

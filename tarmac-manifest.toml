@@ -2,3 +2,28 @@
 hash = "4f553927d9d841b609dd36580aa00a16887ac15b3a8b1cedeed351c235ba6493"
 id = 5492341881
 packable = false
+
+[inputs."assets/faces/cartoon-face-angry.png"]
+hash = "5f2c29ccd5b8bb222525508df7a986ac2fe1b43f081d863ba793a27bc3d64c62"
+id = 5584473579
+packable = false
+
+[inputs."assets/faces/cartoon-face-died.png"]
+hash = "5408976b1140de51c60732413ade347d9935da37ba2276121d7b66d4f93f7b8d"
+id = 5584471203
+packable = false
+
+[inputs."assets/faces/cartoon-face-sad.png"]
+hash = "4b25d3acb06942ba7f923a72a04d611f18b55614babd01140fd686903f1154fa"
+id = 5584471348
+packable = false
+
+[inputs."assets/faces/coins-pile.png"]
+hash = "b4f46b7a6d902a96e906a82cb05e32f9de437b012636844283fc853c648b8ef5"
+id = 5584605974
+packable = false
+
+[inputs."assets/money/coins-pile.png"]
+hash = "b4f46b7a6d902a96e906a82cb05e32f9de437b012636844283fc853c648b8ef5"
+id = 5584627572
+packable = false

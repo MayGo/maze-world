@@ -22,6 +22,7 @@ local ClientApi = require(clientSrc.ClientApi)
 
 local Game = require(clientSrc.Components.Game)
 local ApiProvider = require(clientSrc.Components.ApiProvider)
+local AudioPlayer = require(Modules.src.AudioPlayer)
 
 local createElement = Roact.createElement
 
@@ -102,6 +103,10 @@ return function(context)
 			store:dispatch(clientReset(LocalPlayer))
 		end)
 	end
+	local clientPlaySound = function(soundName)
+		logger:d('clientPlaySound.' .. soundName)
+		AudioPlayer.playAudio(soundName)
+	end
 
 	api = ClientApi.connect({
 	-- Apply any saved actions from the last reload.
@@ -122,7 +127,12 @@ return function(context)
 				initialState = reducer(initialState, action)
 			end
 
-			store = Rodux.Store.new(reducer, initialState, { Rodux.thunkMiddleware, saveActionsMiddleware })
+			store =
+				Rodux.Store.new(
+					reducer,
+					initialState,
+					{ Rodux.thunkMiddleware, saveActionsMiddleware }
+				)
 
 			table.insert(context.destructors, function()
 				store:destruct()
@@ -132,6 +142,7 @@ return function(context)
 		end,
 		storeAction = storeAction,
 		clientStartGhosting = clientStartGhosting,
+		clientPlaySound = clientPlaySound,
 	})
 
 	api:clientStart()

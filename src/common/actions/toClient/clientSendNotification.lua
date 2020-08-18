@@ -1,4 +1,4 @@
-local function clientSendNotification(player, text)
+local function clientSendNotification(player, text, thumbnail)
 	--assert(typeof(playerId) == 'string')
 
 	return {
@@ -6,6 +6,7 @@ local function clientSendNotification(player, text)
 		playerId = tostring(player.UserId),
 		replicateTo = tostring(player.UserId),
 		text = text,
+		thumbnail = thumbnail,
 		time = os.time(),
 	}
 end
