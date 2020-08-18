@@ -2,6 +2,8 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 
+local clientSendNotification = require(Modules.src.actions.toClient.clientSendNotification)
+
 local STORE_MOST_PLAYED = 'MostPlayed'
 local STORE_MOST_COINS = 'PlayerCoins'
 local STORE_PLAYER_VISITS = 'PlayerVisits'
@@ -22,7 +24,7 @@ local LEADERBOARD_SIZE = 50
 local REWARD_10TIMES = 1000
 local REWARD_DAILY = 100
 
-function Leaderboards:connectPlayerVisits(player)
+function Leaderboards:connectPlayerVisits(player, store)
 	local playerKey = player.Name
 	local visits
 	local success, err = pcall(function()
@@ -32,6 +34,8 @@ function Leaderboards:connectPlayerVisits(player)
 	local lastLogin = GameDatastore:getLastLogin(player)
 	local hours = (os.time() - lastLogin) / 60 / 60
 
+	wait(7)
+
 	if hours >= 24 then
 		logger:d(
 			'Player ' .. player.Name .. ' last login was ' .. tostring(
@@ -40,6 +44,9 @@ function Leaderboards:connectPlayerVisits(player)
 			lastLogin
 		)
 		GameDatastore:incrementCoins(player, REWARD_DAILY)
+		store:dispatch(
+			clientSendNotification(player, 'Daily visit: Reward: ' .. REWARD_DAILY .. ' coins')
+		)
 	end
 
 	if success and visits == 10 then
@@ -49,6 +56,12 @@ function Leaderboards:connectPlayerVisits(player)
 			) .. ' times. Give reward.'
 		)
 		GameDatastore:incrementCoins(player, REWARD_10TIMES)
+		store:dispatch(
+			clientSendNotification(
+				player,
+				'You visited 10 times. Reward: ' .. REWARD_10TIMES .. ' coins'
+			)
+		)
 	end
 
 	GameDatastore:setLastLogin(player)

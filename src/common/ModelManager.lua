@@ -23,6 +23,7 @@ function ModelManager:findModel(item)
 
 	return model
 end
+
 function ModelManager:setTransparency(model, transparency)
 	local descendants = model:GetDescendants()
 	for i = 1, #descendants do

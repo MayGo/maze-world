@@ -22,8 +22,10 @@ local function connectPlayer(player)
 	return function(store)
 		logger:i('Connecting player:' .. player.Name)
 
-		Leaderboards:connectPlayerVisits(player)
-		Leaderboards:connectMostCoins(player)
+		spawn(function()
+			Leaderboards:connectPlayerVisits(player, store)
+			Leaderboards:connectMostCoins(player)
+		end)
 
 		local mostPlayed = Leaderboards:getMostPlayed()
 		local mostVisited = Leaderboards:getMostVisited(player)

@@ -33,15 +33,18 @@ function Game:init(props)
 		hit.parent.Humanoid.Health = 0
 	end)
 	TagItem.create(nil, 'CoinBrick', function(player, hit, part)
-		if part.itemId then
+		if part:FindFirstChild('itemId') then
 			logger:d('Player got coin with value: ' .. part.itemId.Value)
 			self.api:pickUpCoin(tostring(part.itemId.Value))
-			--local coinClone = part:Clone()
-			--part:Destroy()
 
-			part.Parent = nil
-			wait(10)
-			part.Parent = game.workspace
+			if part.Name == 'PrimaryPart' then
+				local model = part:FindFirstAncestorOfClass('Model')
+				model:Destroy()
+			else
+				part.Parent = nil
+				wait(10)
+				part.Parent = game.workspace
+			end
 		else
 			logger:w('No itemId Value for coin part')
 		end
@@ -88,7 +91,7 @@ function Game:render(props)
 				ClockScreenContainer = createElement(
 					'Frame',
 					{
-						Position = UDim2.new(0.5, 0, -0.1, 0),
+						Position = UDim2.new(0.5, 0, 0, -30),
 						AnchorPoint = Vector2.new(0.5, 0),
 						BackgroundTransparency = 1,
 					},

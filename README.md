@@ -59,6 +59,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 
 # TODO
 
+-   [ ] Add sound for coin collecting, daily reward notification
 -   [ ] Add tabs to inventory and shop
 -   [ ] Add more collectable item: eggs
 -   [ ] Add Chests, Treasures (more coins)

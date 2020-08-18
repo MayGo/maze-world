@@ -51,16 +51,12 @@ function FinishScreen:render()
 		self:setState({ open = false })
 	end
 
-	local button = createElement(
-		RoundButton,
-		{
-			Text = 'CLOSE',
-			Position = UDim2.new(0.5, 0, 1, 10),
-			AnchorPoint = Vector2.new(0.5, 0),
-			[Roact.Event.Activated] = OnClick,
-		},
-		{ UICorner = createElement(UICorner) }
-	)
+	local button = createElement(RoundButton, {
+		Text = 'CLOSE',
+		Position = UDim2.new(0.5, 0, 1, 10),
+		AnchorPoint = Vector2.new(0.5, 0),
+		[Roact.Event.Activated] = OnClick,
+	})
 
 	return createElement(
 		'Frame',

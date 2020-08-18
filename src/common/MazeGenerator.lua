@@ -1,11 +1,14 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
-
+local Dict = require(Modules.src.utils.Dict)
+local M = require(Modules.M)
 local Maze = require(script.Parent.Maze)
 local Models = ReplicatedStorage:WaitForChild('Models')
 local Prefabs = Models.Prefabs
 local Walls = Models.Walls
+local Misc = Models.Misc
+local Money = Models.Money
 local recursive_backtracker = require(script.Parent.MazeBacktrace)
 
 local blockHeight = 20
@@ -38,9 +41,109 @@ function partToRegion3(obj)
 	return Region3.new(minv, maxv)
 end
 
-function DrawBlock(x, y, z, location, vertical, wallsFolder)
+function dummyPart(position, location)
 	local newBlock = Instance.new('Part')
 
+	newBlock.Anchored = true
+	newBlock.Size = Vector3.new(0.5, blockHeight, 0.5)
+	newBlock.Position = position
+	newBlock.Parent = location
+end
+
+local areaHalfWidth = (blockWidth - 5) / 2
+local neg = M.range(5, areaHalfWidth)
+local pos = M.range(-5, -areaHalfWidth)
+local arr = M.append(neg, pos)
+
+function randomPos()
+	-- we are taking out center values
+
+	local p = M.sample(arr)
+
+	return p[1]
+end
+
+function randomRotation(position)
+	return CFrame.new(position) * CFrame.fromOrientation(0, math.random(1, 360), 0)
+end
+
+function AddRandomPart(x, y, z, location)
+	local parts = Misc:GetChildren()
+	local randomPart = parts[math.random(1, #parts)]
+	local newBlock = randomPart:Clone()
+
+	local randomPosition = Vector3.new(randomPos(), 0, randomPos())
+
+	local halfY  --height
+	local halfX
+	local halfZ
+
+	if newBlock:IsA('BasePart') then
+		halfY = newBlock.Size.Y / 2
+		halfX = blockWidth / 2 - newBlock.Size.X / 2
+		halfZ = blockWidth / 2 - newBlock.Size.Z / 2
+	else
+		halfY = newBlock.PrimaryPart.Size.Y / 2
+		halfX = blockWidth / 2 - newBlock.PrimaryPart.Size.X / 2
+		halfZ = blockWidth / 2 - newBlock.PrimaryPart.Size.Z / 2
+	end
+
+	local position = randomRotation(Vector3.new(x + halfX, y + halfY, z + halfZ) + randomPosition)
+
+	if newBlock:IsA('BasePart') then
+		newBlock.CFrame = position
+	else
+		newBlock:SetPrimaryPartCFrame(position)
+	end
+
+	newBlock.Parent = location
+end
+
+function AddCoinPart(x, y, z, location)
+	local parts = Money:GetChildren()
+	local randomPart = parts[math.random(1, #parts)]
+	local newBlock = randomPart:Clone()
+
+	local halfY  --height
+	local halfX
+	local halfZ
+	if newBlock:IsA('BasePart') then
+		halfY = newBlock.Size.Y / 2
+		halfX = blockWidth / 2 - newBlock.Size.X / 2
+		halfZ = blockWidth / 2 - newBlock.Size.Z / 2
+	else
+		halfY = newBlock.PrimaryPart.Size.Y / 2
+		halfX = blockWidth / 2 - newBlock.PrimaryPart.Size.X / 2
+		halfZ = blockWidth / 2 - newBlock.PrimaryPart.Size.Z / 2
+	end
+
+	local position = randomRotation(Vector3.new(x + halfX, y + halfY, z + halfZ))
+
+	if newBlock:IsA('BasePart') then
+		newBlock.CFrame = position
+	else
+		newBlock:SetPrimaryPartCFrame(position)
+	end
+
+	newBlock.Parent = location
+end
+
+function AddRandomParts(x, y, z, location)
+	local times = M.range(1, 5)
+
+	AddCoinPart(x, y, z, location)
+	M.map(times, function()
+		local willAdd = math.random(1, 10)
+		if willAdd == 1 then
+			AddRandomPart(x, y, z, location)
+		end
+	end)
+end
+
+function DrawBlock(x, y, z, location, vertical)
+	local newBlock = Instance.new('Part')
+
+	newBlock.Anchored = true
 	newBlock.Size = Vector3.new(1, blockHeight, blockWidth)
 	local halfWidth = newBlock.Size.Z / 2
 	local halfHeight = newBlock.Size.Y / 2
@@ -185,6 +288,8 @@ local function draw_maze(maze, blockWidth, blockDepth, location, primaryPart, wa
 			if not cell.west:IsOpened() then
 				DrawBlock(pos_x - blockDepth, pos_y, z, location, false, wallFolder)
 			end
+
+			AddRandomParts(pos_x, z, pos_y, location)
 		end
 	end
 end
