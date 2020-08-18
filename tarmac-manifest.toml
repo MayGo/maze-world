@@ -1,26 +1,26 @@
 [inputs."assets/brand/loading-logo.png"]
-hash = "4f553927d9d841b609dd36580aa00a16887ac15b3a8b1cedeed351c235ba6493"
-id = 5492341881
+hash = "9c565afd43be9e52ca200df04eee1963f4893a6a095336d555075459a7bd6591"
+id = 5584664400
 packable = false
 
 [inputs."assets/faces/cartoon-face-angry.png"]
-hash = "5f2c29ccd5b8bb222525508df7a986ac2fe1b43f081d863ba793a27bc3d64c62"
-id = 5584473579
+hash = "8e0f99b8f26d83c3d5235faf82a5f3e735fe0d31288fa542d17bb7068f7bd819"
+id = 5584664491
 packable = false
 
 [inputs."assets/faces/cartoon-face-died.png"]
-hash = "5408976b1140de51c60732413ade347d9935da37ba2276121d7b66d4f93f7b8d"
-id = 5584471203
+hash = "c12682f3eba8f3c0259dab5435c682c78512d4d2d7071364f70fb9fc4d9b52f4"
+id = 5584664569
 packable = false
 
 [inputs."assets/faces/cartoon-face-sad.png"]
-hash = "4b25d3acb06942ba7f923a72a04d611f18b55614babd01140fd686903f1154fa"
-id = 5584471348
+hash = "b3de702b58cad471c8081fd043f23c173a39998268ddf35630cd8f0f4dbffbee"
+id = 5584664658
 packable = false
 
 [inputs."assets/faces/coins-pile.png"]
-hash = "b4f46b7a6d902a96e906a82cb05e32f9de437b012636844283fc853c648b8ef5"
-id = 5584605974
+hash = "e84f586412619d3913582fde3347cfdbf93ebfa60d704c1d0a49d07af3bcddf4"
+id = 5584664762
 packable = false
 
 [inputs."assets/money/coins-pile.png"]
