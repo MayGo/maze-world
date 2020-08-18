@@ -11,8 +11,7 @@ local RoactRodux = require(Modules.RoactRodux)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 local SurfaceBillboard = require(clientSrc.Components.common.SurfaceBillboard)
-local RoomTimer = require(clientSrc.Components.RoomTimer)
-local TextList = require(clientSrc.Components.common.TextList)
+local ClockScreen = require(clientSrc.Components.ClockScreen)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableRow)
 local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
@@ -77,9 +76,21 @@ function Room:render()
 		}),
 	})
 
-	children['timer'] = createElement(RoomTimer, {
+	children['timer'] = createElement(SurfaceBillboard, {
 		item = timerPlaceholder,
-		countDownTime = self.props.countDownTime,
+		noTextListWithHeader = true,
+		[Roact.Children] = createElement(
+			'Frame',
+			{
+				Position = UDim2.new(0.5, 0, 0, 0),
+				AnchorPoint = Vector2.new(0.5, 0),
+				BackgroundTransparency = 1,
+			},
+			{ Clock = createElement(ClockScreen, {
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 1,
+			}) }
+		),
 	})
 
 	return createElement('Folder', nil, children)

@@ -55,7 +55,7 @@ function FinishScreen:render()
 		Text = 'CLOSE',
 		Position = UDim2.new(0.5, 0, 1, 10),
 		AnchorPoint = Vector2.new(0.5, 0),
-		[Roact.Event.Activated] = OnClick,
+		onClicked = OnClick,
 	})
 
 	return createElement(

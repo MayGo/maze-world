@@ -25,7 +25,7 @@
             "Bloom": {
                 "$className": "BloomEffect",
                 "$properties": {
-                    "Enabled": true,
+                    "Enabled": false,
                     "Intensity": 0.400000006,
                     "Name": "Bloom",
                     "Size": 24,
@@ -35,7 +35,7 @@
             "Blur": {
                 "$className": "BlurEffect",
                 "$properties": {
-                    "Enabled": true,
+                    "Enabled": false,
                     "Name": "Blur",
                     "Size": 3
                 }

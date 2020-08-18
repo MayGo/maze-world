@@ -60,7 +60,7 @@
         <CoordinateFrame name="CFrame">
           <X>0.911523</X>
           <Y>-2</Y>
-          <Z>-10</Z>
+          <Z>-10.8</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -112,7 +112,7 @@
         <SharedString name="PhysicalConfigData">+KXn2PVkmG8K5+S8Au8qxA==</SharedString>
         <BinaryString name="PhysicsData">
         </BinaryString>
-        <float name="Reflectance">0</float>
+        <float name="Reflectance">0.4000000059604645</float>
         <token name="RenderFidelity">1</token>
         <float name="RightParamA">-0.5</float>
         <float name="RightParamB">0.5</float>
@@ -204,7 +204,7 @@
         <CoordinateFrame name="CFrame">
           <X>1</X>
           <Y>-1.8999951</Y>
-          <Z>-10</Z>
+          <Z>-10.8</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -276,7 +276,7 @@
     </Item>
   </Item>
   <SharedStrings>
-    <SharedString md5="+KXn2PVkmG8K5+S8Au8qxA==">Q1NHUEhTAAAAAEJMT0NL</SharedString>
     <SharedString md5="1B2M2Y8AsgTpgAmY7PhCfg=="></SharedString>
+    <SharedString md5="+KXn2PVkmG8K5+S8Au8qxA==">Q1NHUEhTAAAAAEJMT0NL</SharedString>
   </SharedStrings>
 </roblox>

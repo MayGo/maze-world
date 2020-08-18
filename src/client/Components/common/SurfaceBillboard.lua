@@ -11,6 +11,7 @@ local createElement = Roact.createElement
 
 local function SurfaceBillboard(props)
 	local item = props.item
+	local noTextListWithHeader = props.noTextListWithHeader
 	local size = Vector2.new(item.Size.X, item.Size.Y)
 
 	return createElement(
@@ -28,7 +29,10 @@ local function SurfaceBillboard(props)
 				Face = Enum.NormalId.Front,
 				CanvasSize = 15 * size,
 			},
-			createElement(TextListWithHeader, props)
+			noTextListWithHeader and props[Roact.Children] or createElement(
+				TextListWithHeader,
+				props
+			)
 		) }
 	)
 end

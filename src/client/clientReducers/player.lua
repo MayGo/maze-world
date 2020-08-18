@@ -4,6 +4,7 @@ local logger = require(Modules.src.utils.Logger)
 local Dict = require(Modules.src.utils.Dict)
 local None = require(Modules.src.utils.None)
 local Players = game:GetService('Players')
+local AudioPlayer = require(Modules.src.AudioPlayer)
 
 local LocalPlayer = Players.LocalPlayer
 
@@ -12,6 +13,8 @@ local function player(state, action)
 
 	if action.type == 'clientFinishGame' then
 		logger:d('clientFinishGame:', action.playerId, LocalPlayer.UserId)
+
+		AudioPlayer.playAudio('Finish')
 
 		return Dict.join(state, {
 			isPlaying = false,
