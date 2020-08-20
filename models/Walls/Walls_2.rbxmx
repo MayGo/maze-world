@@ -24,7 +24,7 @@
         <CoordinateFrame name="CFrame">
           <X>0</X>
           <Y>10</Y>
-          <Z>-125.99999</Z>
+          <Z>-597</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -102,7 +102,7 @@
         <CoordinateFrame name="CFrame">
           <X>0</X>
           <Y>10</Y>
-          <Z>-145</Z>
+          <Z>-616</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -180,7 +180,7 @@
         <CoordinateFrame name="CFrame">
           <X>0</X>
           <Y>10</Y>
-          <Z>-163</Z>
+          <Z>-634</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>

@@ -60,7 +60,7 @@
         <CoordinateFrame name="CFrame">
           <X>0.911523</X>
           <Y>-2</Y>
-          <Z>-10.8</Z>
+          <Z>-618.8</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -146,46 +146,6 @@
           <Z>0</Z>
         </Vector3>
       </Properties>
-      <Item class="Weld" referent="3">
-        <Properties>
-          <string name="Name">BTWeld</string>
-          <BinaryString name="AttributesSerialize">
-          </BinaryString>
-          <CoordinateFrame name="C0">
-            <X>0</X>
-            <Y>0</Y>
-            <Z>0</Z>
-            <R00>1</R00>
-            <R01>0</R01>
-            <R02>0</R02>
-            <R10>0</R10>
-            <R11>1</R11>
-            <R12>0</R12>
-            <R20>0</R20>
-            <R21>0</R21>
-            <R22>1</R22>
-          </CoordinateFrame>
-          <CoordinateFrame name="C1">
-            <X>-0.088477015</X>
-            <Y>-0.10000491</Y>
-            <Z>0</Z>
-            <R00>1</R00>
-            <R01>0</R01>
-            <R02>0</R02>
-            <R10>0</R10>
-            <R11>1</R11>
-            <R12>0</R12>
-            <R20>0</R20>
-            <R21>0</R21>
-            <R22>1</R22>
-          </CoordinateFrame>
-          <bool name="Enabled">true</bool>
-          <Ref name="Part0">2</Ref>
-          <Ref name="Part1">1</Ref>
-          <BinaryString name="Tags">
-          </BinaryString>
-        </Properties>
-      </Item>
     </Item>
     <Item class="Part" referent="1">
       <Properties>
@@ -204,7 +164,7 @@
         <CoordinateFrame name="CFrame">
           <X>1</X>
           <Y>-1.8999951</Y>
-          <Z>-10.8</Z>
+          <Z>-618.8</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -263,7 +223,7 @@
           <Z>0</Z>
         </Vector3>
       </Properties>
-      <Item class="NumberValue" referent="4">
+      <Item class="NumberValue" referent="3">
         <Properties>
           <string name="Name">itemId</string>
           <BinaryString name="AttributesSerialize">
@@ -276,7 +236,7 @@
     </Item>
   </Item>
   <SharedStrings>
-    <SharedString md5="+KXn2PVkmG8K5+S8Au8qxA==">Q1NHUEhTAAAAAEJMT0NL</SharedString>
     <SharedString md5="1B2M2Y8AsgTpgAmY7PhCfg=="></SharedString>
+    <SharedString md5="+KXn2PVkmG8K5+S8Au8qxA==">Q1NHUEhTAAAAAEJMT0NL</SharedString>
   </SharedStrings>
 </roblox>

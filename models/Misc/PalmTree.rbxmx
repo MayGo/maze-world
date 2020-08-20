@@ -60,7 +60,7 @@
         <CoordinateFrame name="CFrame">
           <X>12.073441</X>
           <Y>51.08132</Y>
-          <Z>2.835678</Z>
+          <Z>-566.1643</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -164,7 +164,7 @@
         <CoordinateFrame name="CFrame">
           <X>11.344742</X>
           <Y>46.41008</Y>
-          <Z>2.9510803</Z>
+          <Z>-566.04895</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -250,46 +250,6 @@
           <Z>0</Z>
         </Vector3>
       </Properties>
-      <Item class="Weld" referent="3">
-        <Properties>
-          <string name="Name">BTWeld</string>
-          <BinaryString name="AttributesSerialize">
-          </BinaryString>
-          <CoordinateFrame name="C0">
-            <X>0</X>
-            <Y>0</Y>
-            <Z>0</Z>
-            <R00>1</R00>
-            <R01>0</R01>
-            <R02>0</R02>
-            <R10>0</R10>
-            <R11>1</R11>
-            <R12>0</R12>
-            <R20>0</R20>
-            <R21>0</R21>
-            <R22>1</R22>
-          </CoordinateFrame>
-          <CoordinateFrame name="C1">
-            <X>-0.72869873</X>
-            <Y>-4.6712418</Y>
-            <Z>0.11540222</Z>
-            <R00>1</R00>
-            <R01>0</R01>
-            <R02>0</R02>
-            <R10>0</R10>
-            <R11>1</R11>
-            <R12>0</R12>
-            <R20>0</R20>
-            <R21>0</R21>
-            <R22>1</R22>
-          </CoordinateFrame>
-          <bool name="Enabled">true</bool>
-          <Ref name="Part0">1</Ref>
-          <Ref name="Part1">2</Ref>
-          <BinaryString name="Tags">
-          </BinaryString>
-        </Properties>
-      </Item>
     </Item>
   </Item>
   <SharedStrings>

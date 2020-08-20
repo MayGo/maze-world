@@ -43,9 +43,9 @@ function Room:render()
 		return
 	end
 
-	local waitingPlaceholder = roomObj.placeholders.WaitingPlaceholder
-	local playingPlaceholder = roomObj.placeholders.PlayingPlaceholder
-	local timerPlaceholder = roomObj.placeholders.TimerPlaceholder
+	local waitingPlaceholder = roomObj.placeholders:WaitForChild('WaitingPlaceholder')
+	local playingPlaceholder = roomObj.placeholders:WaitForChild('PlayingPlaceholder')
+	local timerPlaceholder = roomObj.placeholders:WaitForChild('TimerPlaceholder')
 
 	children['waitingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = waitingPlaceholder,

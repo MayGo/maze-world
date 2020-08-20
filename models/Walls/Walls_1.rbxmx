@@ -68,7 +68,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>10</Y>
-            <Z>-107.99999</Z>
+            <Z>-579</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -146,7 +146,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.5</Y>
-            <Z>-107.99999</Z>
+            <Z>-579</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -205,46 +205,82 @@
             <Z>0</Z>
           </Vector3>
         </Properties>
-        <Item class="Weld" referent="4">
-          <Properties>
-            <string name="Name">BTWeld</string>
-            <BinaryString name="AttributesSerialize">
-            </BinaryString>
-            <CoordinateFrame name="C0">
-              <X>0</X>
-              <Y>0</Y>
-              <Z>0</Z>
-              <R00>1</R00>
-              <R01>0</R01>
-              <R02>0</R02>
-              <R10>0</R10>
-              <R11>1</R11>
-              <R12>0</R12>
-              <R20>0</R20>
-              <R21>0</R21>
-              <R22>1</R22>
-            </CoordinateFrame>
-            <CoordinateFrame name="C1">
-              <X>0</X>
-              <Y>10.5</Y>
-              <Z>0</Z>
-              <R00>1</R00>
-              <R01>0</R01>
-              <R02>0</R02>
-              <R10>0</R10>
-              <R11>1</R11>
-              <R12>0</R12>
-              <R20>0</R20>
-              <R21>0</R21>
-              <R22>1</R22>
-            </CoordinateFrame>
-            <bool name="Enabled">true</bool>
-            <Ref name="Part0">3</Ref>
-            <Ref name="Part1">2</Ref>
-            <BinaryString name="Tags">
-            </BinaryString>
-          </Properties>
-        </Item>
+      </Item>
+      <Item class="CornerWedgePart" referent="4">
+        <Properties>
+          <string name="Name">CornerWedge</string>
+          <bool name="Anchored">true</bool>
+          <BinaryString name="AttributesSerialize">
+          </BinaryString>
+          <float name="BackParamA">-0.5</float>
+          <float name="BackParamB">0.5</float>
+          <token name="BackSurface">0</token>
+          <token name="BackSurfaceInput">0</token>
+          <float name="BottomParamA">-0.5</float>
+          <float name="BottomParamB">0.5</float>
+          <token name="BottomSurface">0</token>
+          <token name="BottomSurfaceInput">0</token>
+          <CoordinateFrame name="CFrame">
+            <X>0</X>
+            <Y>20.241093</Y>
+            <Z>-573.3768</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>1</R11>
+            <R12>0</R12>
+            <R20>0</R20>
+            <R21>0</R21>
+            <R22>1</R22>
+          </CoordinateFrame>
+          <bool name="CanCollide">true</bool>
+          <bool name="CastShadow">true</bool>
+          <int name="CollisionGroupId">0</int>
+          <Color3uint8 name="Color3uint8">10724005</Color3uint8>
+          <PhysicalProperties name="CustomPhysicalProperties">
+            <CustomPhysics>false</CustomPhysics>
+          </PhysicalProperties>
+          <float name="FrontParamA">-0.5</float>
+          <float name="FrontParamB">0.5</float>
+          <token name="FrontSurface">0</token>
+          <token name="FrontSurfaceInput">0</token>
+          <float name="LeftParamA">-0.5</float>
+          <float name="LeftParamB">0.5</float>
+          <token name="LeftSurface">0</token>
+          <token name="LeftSurfaceInput">0</token>
+          <bool name="Locked">false</bool>
+          <bool name="Massless">false</bool>
+          <token name="Material">800</token>
+          <float name="Reflectance">0</float>
+          <float name="RightParamA">-0.5</float>
+          <float name="RightParamB">0.5</float>
+          <token name="RightSurface">0</token>
+          <token name="RightSurfaceInput">0</token>
+          <int name="RootPriority">0</int>
+          <Vector3 name="RotVelocity">
+            <X>0</X>
+            <Y>0</Y>
+            <Z>0</Z>
+          </Vector3>
+          <Vector3 name="size">
+            <X>0.5999999642372131</X>
+            <Y>0.5999999642372131</Y>
+            <Z>0.699999988079071</Z>
+          </Vector3>
+          <BinaryString name="Tags">
+          </BinaryString>
+          <float name="TopParamA">-0.5</float>
+          <float name="TopParamB">0.5</float>
+          <token name="TopSurface">0</token>
+          <token name="TopSurfaceInput">0</token>
+          <float name="Transparency">0</float>
+          <Vector3 name="Velocity">
+            <X>0</X>
+            <Y>0</Y>
+            <Z>0</Z>
+          </Vector3>
+        </Properties>
       </Item>
       <Item class="CornerWedgePart" referent="5">
         <Properties>
@@ -263,7 +299,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-102.37676</Z>
+            <Z>-581.77673</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -339,7 +375,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-110.776726</Z>
+            <Z>-579.67676</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -415,7 +451,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-108.676735</Z>
+            <Z>-571.97675</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -491,7 +527,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-100.97677</Z>
+            <Z>-576.17676</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -567,7 +603,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-105.17675</Z>
+            <Z>-583.8767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -643,7 +679,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-112.87672</Z>
+            <Z>-585.27673</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -719,7 +755,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-114.27671</Z>
+            <Z>-576.8768</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -795,7 +831,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-105.87675</Z>
+            <Z>-574.77673</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -871,7 +907,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-103.77676</Z>
+            <Z>-574.0768</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -947,7 +983,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-103.07676</Z>
+            <Z>-580.3767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1023,7 +1059,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-109.37673</Z>
+            <Z>-578.27673</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1099,7 +1135,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-107.27674</Z>
+            <Z>-572.67676</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1175,7 +1211,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-101.676765</Z>
+            <Z>-578.97675</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1251,7 +1287,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-107.97674</Z>
+            <Z>-581.0767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1327,7 +1363,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-110.07673</Z>
+            <Z>-577.5767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1403,7 +1439,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-106.576744</Z>
+            <Z>-582.47675</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1479,7 +1515,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-111.47672</Z>
+            <Z>-584.5767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1555,7 +1591,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-113.57671</Z>
+            <Z>-585.9767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1631,7 +1667,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-114.97671</Z>
+            <Z>-583.1767</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>
@@ -1707,83 +1743,7 @@
           <CoordinateFrame name="CFrame">
             <X>0</X>
             <Y>20.241093</Y>
-            <Z>-112.17672</Z>
-            <R00>1</R00>
-            <R01>0</R01>
-            <R02>0</R02>
-            <R10>0</R10>
-            <R11>1</R11>
-            <R12>0</R12>
-            <R20>0</R20>
-            <R21>0</R21>
-            <R22>1</R22>
-          </CoordinateFrame>
-          <bool name="CanCollide">true</bool>
-          <bool name="CastShadow">true</bool>
-          <int name="CollisionGroupId">0</int>
-          <Color3uint8 name="Color3uint8">10724005</Color3uint8>
-          <PhysicalProperties name="CustomPhysicalProperties">
-            <CustomPhysics>false</CustomPhysics>
-          </PhysicalProperties>
-          <float name="FrontParamA">-0.5</float>
-          <float name="FrontParamB">0.5</float>
-          <token name="FrontSurface">0</token>
-          <token name="FrontSurfaceInput">0</token>
-          <float name="LeftParamA">-0.5</float>
-          <float name="LeftParamB">0.5</float>
-          <token name="LeftSurface">0</token>
-          <token name="LeftSurfaceInput">0</token>
-          <bool name="Locked">false</bool>
-          <bool name="Massless">false</bool>
-          <token name="Material">800</token>
-          <float name="Reflectance">0</float>
-          <float name="RightParamA">-0.5</float>
-          <float name="RightParamB">0.5</float>
-          <token name="RightSurface">0</token>
-          <token name="RightSurfaceInput">0</token>
-          <int name="RootPriority">0</int>
-          <Vector3 name="RotVelocity">
-            <X>0</X>
-            <Y>0</Y>
-            <Z>0</Z>
-          </Vector3>
-          <Vector3 name="size">
-            <X>0.5999999642372131</X>
-            <Y>0.5999999642372131</Y>
-            <Z>0.699999988079071</Z>
-          </Vector3>
-          <BinaryString name="Tags">
-          </BinaryString>
-          <float name="TopParamA">-0.5</float>
-          <float name="TopParamB">0.5</float>
-          <token name="TopSurface">0</token>
-          <token name="TopSurfaceInput">0</token>
-          <float name="Transparency">0</float>
-          <Vector3 name="Velocity">
-            <X>0</X>
-            <Y>0</Y>
-            <Z>0</Z>
-          </Vector3>
-        </Properties>
-      </Item>
-      <Item class="CornerWedgePart" referent="25">
-        <Properties>
-          <string name="Name">CornerWedge</string>
-          <bool name="Anchored">true</bool>
-          <BinaryString name="AttributesSerialize">
-          </BinaryString>
-          <float name="BackParamA">-0.5</float>
-          <float name="BackParamB">0.5</float>
-          <token name="BackSurface">0</token>
-          <token name="BackSurfaceInput">0</token>
-          <float name="BottomParamA">-0.5</float>
-          <float name="BottomParamB">0.5</float>
-          <token name="BottomSurface">0</token>
-          <token name="BottomSurfaceInput">0</token>
-          <CoordinateFrame name="CFrame">
-            <X>0</X>
-            <Y>20.241093</Y>
-            <Z>-104.47675</Z>
+            <Z>-575.47675</Z>
             <R00>1</R00>
             <R01>0</R01>
             <R02>0</R02>

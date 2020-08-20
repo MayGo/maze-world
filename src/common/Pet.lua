@@ -69,8 +69,6 @@ end
 function Pet:start(petModel)
 	logger:d('Init petModel')
 
-	petModel.CanCollide = false
-	petModel.Anchored = false
 	for i, v in pairs(petModel:GetChildren()) do
 		if v.ClassName == 'Part' or v.ClassName == 'WedgePart' or v.ClassName == 'TrussPart' or v.ClassName == 'CornerWedgePart' or v.ClassName == 'MeshPart' then
 			v.Anchored = false
@@ -85,7 +83,11 @@ end
 
 -- local RotationOffset = 360/#ducks
 local function GetPointOnCircle(CircleRadius, Degrees)
-	return Vector3.new(math.cos(math.rad(Degrees)) * CircleRadius, 0, math.sin(math.rad(Degrees)) * CircleRadius)
+	return Vector3.new(
+		math.cos(math.rad(Degrees)) * CircleRadius,
+		0,
+		math.sin(math.rad(Degrees)) * CircleRadius
+	)
 end
 
 function Pet:animate()
@@ -94,7 +96,7 @@ function Pet:animate()
 	local sw = false
 	local fl = 0
 
-	local petModel = self.petModel
+	local part = self.petModel.PrimaryPart
 	local character = self.character
 	local head = character:FindFirstChild('Head')
 	local humanoid = character:FindFirstChild('Humanoid')
@@ -111,16 +113,16 @@ function Pet:animate()
 				sw = false
 			end
 		end
-		if petModel ~= nil and humanoid ~= nil and head ~= nil then
+		if part ~= nil and humanoid ~= nil and head ~= nil then
 			if humanoid.Health >= 0 then
 				local cf = head.CFrame * CFrame.new(0, -0.5 + fl, 0)
 
 				local rotationOffset = 360 / self.slot
 				local circlePoint = GetPointOnCircle(5, rotationOffset)
 
-				petModel.BodyPosition.Position = Vector3.new(cf.x, cf.y, cf.z) + circlePoint
-				petModel.BodyGyro.MaxTorque = Vector3.new(40000, 40000, 40000)
-				petModel.BodyGyro.CFrame = head.CFrame * CFrame.new(3, 0, -3)
+				part.BodyPosition.Position = Vector3.new(cf.x, cf.y, cf.z) + circlePoint
+				part.BodyGyro.MaxTorque = Vector3.new(40000, 40000, 40000)
+				part.BodyGyro.CFrame = head.CFrame * CFrame.new(3, 0, -3)
 				--break
 			else
 				logger:i('Human died')

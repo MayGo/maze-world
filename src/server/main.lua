@@ -344,7 +344,8 @@ return function(context)
 
 						local roomObj = RoomsFolder:findFirstChild(roomId)
 						if roomObj then
-							local roomPlaceholder = roomObj.placeholders.RoomPlaceholder
+							local roomPlaceholder =
+								roomObj.placeholders:WaitForChild('RoomPlaceholder')
 							TouchItem.create(
 								roomPlaceholder,
 								function(player)

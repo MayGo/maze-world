@@ -3,7 +3,7 @@ local RunService = game:GetService('RunService')
 local isDev = RunService:IsStudio()
 
 local GlobalConfig = {
-	WAIT_TIME = isDev and 200 or 20,
+	WAIT_TIME = isDev and 2 or 20,
 	PLAY_TIME_EASY = 120,
 	PLAY_TIME_MEDIUM = 500,
 	PLAY_TIME_HARD = 1500,

@@ -9,7 +9,8 @@
                 "$path": "Place.rbxmx"
             },
             "$properties": {
-                "FilteringEnabled": true
+                "FilteringEnabled": true,
+                "StreamingEnabled": true
             }
         },
         "Lighting": {
@@ -53,7 +54,7 @@
             "SunRays": {
                 "$className": "SunRaysEffect",
                 "$properties": {
-                    "Enabled": true,
+                    "Enabled": false,
                     "Name": "SunRays",
                     "Intensity": 0.0579999983,
                     "Spread": 0.463
