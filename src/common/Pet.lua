@@ -2,7 +2,9 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local GhostAbility = require(Modules.src.GhostAbility)
-
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local PET_TYPES = InventoryObjects.PET_TYPES
+local PetObjects = InventoryObjects.PetObjects
 local Models = ReplicatedStorage:WaitForChild('Models')
 
 local Pet = {}
@@ -29,12 +31,20 @@ function Pet:init()
 	self.petModel = self:addToCharacter()
 	GhostAbility:setCollisionGroupRecursive(self.petModel)
 	self:start(self.petModel)
+
+	logger:d('........', self.petObject)
+	if self.petObject.ability == PET_TYPES.TRAIL then
+		self:addTrailToCharacter()
+	end
 end
 
 function Pet:removeCurrentPet()
 	local petModel = self.character:FindFirstChild(self.variableName)
 	if petModel then
 		petModel:Destroy()
+	end
+	if self.petObject.ability == PET_TYPES.TRAIL then
+		self:removeTrailFromCharacter()
 	end
 end
 
@@ -47,7 +57,7 @@ end
 
 function Pet:addToCharacter()
 	if not self.character then
-		logger:w('No character to add pet to')
+		logger:w('Noself.character to add pet to')
 		return
 	end
 
@@ -98,8 +108,8 @@ function Pet:animate()
 
 	local part = self.petModel.PrimaryPart
 	local character = self.character
-	local head = character:FindFirstChild('Head')
-	local humanoid = character:FindFirstChild('Humanoid')
+	local head = self.character:FindFirstChild('Head')
+	local humanoid = self.character:FindFirstChild('Humanoid')
 
 	while self.started do
 		if not sw then
@@ -129,6 +139,32 @@ function Pet:animate()
 			end
 		end
 		wait()
+	end
+end
+
+function Pet:addTrailToCharacter()
+	local name = self.petObject.trailModelName
+	logger:w('Add trail ' .. self.petObject.trailModelName .. ' to character.')
+	local trail = Models.Trails[name]:Clone()
+	local plrTrail = trail:Clone()
+
+	local character = self.character
+	plrTrail.Name = name
+	plrTrail.Parent = character.HumanoidRootPart
+
+	if self.character:FindFirstChild('UpperTorso') then
+		plrTrail.Attachment0 = character.Head.FaceFrontAttachment
+		plrTrail.Attachment1 = character.UpperTorso.WaistRigAttachment
+	else
+		plrTrail.Attachment0 = character.Head.FaceFrontAttachment
+		plrTrail.Attachment1 = character.Torso.WaistBackAttachment
+	end
+end
+
+function Pet:removeTrailFromCharacter()
+	local trail = self.character.HumanoidRootPart:FindFirstChild(self.petObject.trailModelName)
+	if trail then
+		trail:Destroy()
 	end
 end
 

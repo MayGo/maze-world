@@ -34,7 +34,6 @@ local networkMiddleware = require(script.Parent.networkMiddleware)
 
 local InventoryObjects = require(Modules.src.objects.InventoryObjects)
 
-local MazeGenerator = require(Modules.src.MazeGenerator)
 local GameDatastore = require(Modules.src.GameDatastore)
 local GamePasses = require(Modules.src.GamePasses)
 local GhostAbility = require(Modules.src.GhostAbility)
@@ -340,8 +339,6 @@ return function(context)
 				local mapObj = MapsFolder:findFirstChild(roomId)
 				spawn(function()
 					if mapObj then
-						MazeGenerator:generate(mapObj, room.config.width, room.config.height)
-
 						local roomObj = RoomsFolder:findFirstChild(roomId)
 						if roomObj then
 							local roomPlaceholder =

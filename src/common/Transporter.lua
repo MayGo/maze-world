@@ -24,6 +24,7 @@ end
 function Transporter:transportPlayers(players, target)
 	for i, player in pairs(players) do
 		-- Transporter:fadePlayerTo(player, 0, 1, 0.1) --fade out,
+		player:RequestStreamAroundAsync(target.Position)
 		player.Character.HumanoidRootPart.CFrame = ModelManager:onlyDirection(target.CFrame) -- teleport the player
 		-- Transporter:fadePlayerTo(player, 1, 0, -0.1) --fade back in
 	end
@@ -40,6 +41,7 @@ function Transporter:teleportTo(player, target)
 	if player.Character then
 		local humanoid = player.Character:FindFirstChildOfClass('Humanoid')
 		if humanoid then
+			player:RequestStreamAroundAsync(target.Position)
 			humanoid.RootPart.CFrame = ModelManager:onlyDirection(target.CFrame)
 		end
 	end

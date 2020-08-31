@@ -78,7 +78,9 @@ function ShopItem:render()
 				Size = UDim2.new(1, 0, 1, 0),
 				model = model:Clone(),
 				Visible = true,
-				BackgroundTransparency = 0.5,
+				BackgroundTransparency = 1,
+				cameraOffset = item.cameraOffset,
+				isRotating = item.isRotating,
 			})
 		end
 	else

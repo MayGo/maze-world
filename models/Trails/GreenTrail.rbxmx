@@ -1,0 +1,29 @@
+<roblox version="4">
+  <Item class="Trail" referent="0">
+    <Properties>
+      <string name="Name">GreenTrail</string>
+      <Ref name="Attachment0">null</Ref>
+      <Ref name="Attachment1">null</Ref>
+      <BinaryString name="AttributesSerialize">
+      </BinaryString>
+      <ColorSequence name="Color">0 0.129717 0.778912 0.0675059 0 1 0.129717 0.778912 0.0675059 0 </ColorSequence>
+      <bool name="Enabled">true</bool>
+      <bool name="FaceCamera">false</bool>
+      <float name="Lifetime">20</float>
+      <float name="LightEmission">0</float>
+      <float name="LightInfluence">1</float>
+      <float name="MaxLength">0</float>
+      <float name="MinLength">0.10000000149011612</float>
+      <BinaryString name="Tags">
+      </BinaryString>
+      <Content name="Texture">
+        <null>
+        </null>
+      </Content>
+      <float name="TextureLength">1</float>
+      <token name="TextureMode">0</token>
+      <NumberSequence name="Transparency">0 0.5 0 1 0.5 0 </NumberSequence>
+      <NumberSequence name="WidthScale">0 1 0 1 1 0 </NumberSequence>
+    </Properties>
+  </Item>
+</roblox>

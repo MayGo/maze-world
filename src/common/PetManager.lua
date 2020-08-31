@@ -1,7 +1,8 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
-
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local PET_TYPES = InventoryObjects.PET_TYPES
 local Pet = require(Modules.src.Pet)
 local Print = require(Modules.src.utils.Print)
 local M = require(Modules.M)
@@ -41,7 +42,7 @@ function PetManager:checkAbilities(character)
 	local humanoid = character:FindFirstChild('Humanoid')
 
 	function getMaxSpeed(petDeployed)
-		if petDeployed.petObject.ability == 'speed' then
+		if petDeployed.petObject.ability == PET_TYPES.SPEED then
 			return petDeployed.petObject.speed
 		else
 			return defaultSpeed
@@ -71,6 +72,7 @@ function PetManager:addToCharacter(petObjects, character, playerSlotsCount)
 		if characterPets[character][petObject] then
 			logger:d('deleting pet' .. petObject.id)
 			SlotManager:clearSlot(character, characterPets[character][petObject].slot)
+
 			characterPets[character][petObject]:delete()
 			characterPets[character][petObject] = nil
 		end

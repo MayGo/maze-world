@@ -10,7 +10,8 @@
             },
             "$properties": {
                 "FilteringEnabled": true,
-                "StreamingEnabled": true
+                "StreamingEnabled": true,
+                "StreamingTargetRadius": 512
             }
         },
         "Lighting": {
@@ -54,7 +55,7 @@
             "SunRays": {
                 "$className": "SunRaysEffect",
                 "$properties": {
-                    "Enabled": false,
+                    "Enabled": true,
                     "Name": "SunRays",
                     "Intensity": 0.0579999983,
                     "Spread": 0.463

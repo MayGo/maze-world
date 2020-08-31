@@ -1,6 +1,7 @@
 local RunService = game:GetService('RunService')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
+local logger = require(Modules.src.utils.Logger)
 local Roact = require(Modules.Roact)
 local M = require(Modules.M)
 local createElement = Roact.createElement
@@ -21,6 +22,7 @@ function ModelViewport:init()
 	self.viewportCamera = Instance.new('Camera')
 	self.viewportCamera.CameraType = Enum.CameraType.Scriptable
 	self.model = self.props.model
+	self.isRotating = self.props.isRotating == nil and true or self.props.isRotating
 end
 
 function ModelViewport:didMount()
@@ -55,7 +57,7 @@ function ModelViewport:setRotation()
 		local part = isTool and model.Box or model.PrimaryPart
 
 		local partLenght = math.max(part.Size.X, part.Size.Y, part.Size.Z)
-		local offset = CFrame.new(0, partLenght, partLenght)
+		local offset = self.props.cameraOffset or CFrame.new(0, partLenght, partLenght)
 
 		local cameraPosition =
 			(CFrame.new(part.Position) * CFrame.Angles(0, -self.yRotation, 0) * CFrame.Angles(
@@ -78,18 +80,19 @@ function ModelViewport:render()
 			{
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
 				Active = true,
 				[Roact.Ref] = self.viewportFrameRef,
 			},
-			M.omit(props, 'model')
+			M.omit(props, 'model', 'cameraOffset', 'isRotating')
 		)
 	)
 end
 
 function ModelViewport:handleSpin()
 	spawn(function()
-		while self.isMounted do
+		while self.isMounted and self.isRotating do
 			local function returnToDefaultPosition(current, maxStep)
 				current = current % math.rad(360)
 				if current > math.rad(180) then

@@ -2,8 +2,9 @@ local TweenService = game:GetService('TweenService')
 
 local RunService = game:GetService('RunService')
 
-local Place = game.Workspace:WaitForChild('Place')
-local target = Place:WaitForChild('CameraFocusPart', 10) -- The object to rotate around
+local newBlock = Instance.new('Part')
+newBlock.Position = Vector3.new(0, 0, 0)
+local target = newBlock
 local camera = workspace.CurrentCamera
 camera.CameraType = Enum.CameraType.Scriptable
 local rotationAngle = Instance.new('NumberValue')

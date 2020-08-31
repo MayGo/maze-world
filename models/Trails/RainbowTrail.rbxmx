@@ -1,0 +1,29 @@
+<roblox version="4">
+  <Item class="Trail" referent="0">
+    <Properties>
+      <string name="Name">RainbowTrail</string>
+      <Ref name="Attachment0">null</Ref>
+      <Ref name="Attachment1">null</Ref>
+      <BinaryString name="AttributesSerialize">
+      </BinaryString>
+      <ColorSequence name="Color">0 1 1 0 0 0.0415973 1 0 0 0 0.0748752 1 0 0 0 0.0915141 1 0 0 0 0.121464 1 0.141026 0 0 0.134775 1 0.333333 0 0 0.236273 1 1 0 0 0.264559 1 1 0 0 0.281198 1 1 0 0 0.282862 1 1 0 0 0.287854 1 1 0 0 0.339434 0.333333 1 0 0 0.425957 0 0 1 0 0.532446 0 0 1 0 0.557404 0 0 1 0 0.592346 0 0 1 0 0.645591 0.333333 0 0.498039 0 0.848586 0.333333 0 0.498039 0 0.97005 0.333333 0 0.498039 0 1 1 1 1 0 </ColorSequence>
+      <bool name="Enabled">true</bool>
+      <bool name="FaceCamera">false</bool>
+      <float name="Lifetime">20</float>
+      <float name="LightEmission">0</float>
+      <float name="LightInfluence">1</float>
+      <float name="MaxLength">0</float>
+      <float name="MinLength">0.10000000149011612</float>
+      <BinaryString name="Tags">
+      </BinaryString>
+      <Content name="Texture">
+        <null>
+        </null>
+      </Content>
+      <float name="TextureLength">1</float>
+      <token name="TextureMode">0</token>
+      <NumberSequence name="Transparency">0 0.5 0 1 0.5 0 </NumberSequence>
+      <NumberSequence name="WidthScale">0 1 0 1 1 0 </NumberSequence>
+    </Properties>
+  </Item>
+</roblox>

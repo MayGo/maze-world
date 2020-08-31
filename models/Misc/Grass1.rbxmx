@@ -60,16 +60,16 @@
       <bool name="Massless">false</bool>
       <token name="Material">272</token>
       <Content name="MeshID">
-        <url>rbxassetid://516875678</url>
+        <url>rbxassetid://5631253328</url>
       </Content>
       <Content name="MeshId">
-        <url>rbxassetid://516875678</url>
+        <url>rbxassetid://5631253328</url>
       </Content>
       <SharedString name="PhysicalConfigData">2f+244QVPupBDvrmXP0cmw==</SharedString>
       <BinaryString name="PhysicsData">
       </BinaryString>
       <float name="Reflectance">0</float>
-      <token name="RenderFidelity">1</token>
+      <token name="RenderFidelity">0</token>
       <float name="RightParamA">-0.5</float>
       <float name="RightParamB">0.5</float>
       <token name="RightSurface">0</token>

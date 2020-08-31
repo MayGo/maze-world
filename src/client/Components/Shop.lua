@@ -30,7 +30,7 @@ local function Shop(props)
 	local cellWidth = 0.2
 	local buttonHeight = 0.2
 	local titleHeight = 0.2
-	local cellHeight = 0.3
+	local cellHeight = 0.2
 
 	for index, item in ipairs(itemList) do
 		local isDisabled = false
