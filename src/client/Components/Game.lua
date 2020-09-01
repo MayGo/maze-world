@@ -7,7 +7,9 @@ local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 
 local Workspace = game:GetService('Workspace')
-
+local M = require(Modules.M)
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local RoomObjects = InventoryObjects.RoomObjects
 local Roact = require(Modules.Roact)
 local RoactMaterial = require(Modules.RoactMaterial)
 
@@ -21,7 +23,6 @@ local Notifications = require(clientSrc.Components.common.Notifications)
 local ClockScreen = require(clientSrc.Components.ClockScreen)
 local Room = require(clientSrc.Components.Room)
 local LeaderboardsConnect = require(clientSrc.Components.LeaderboardsConnect)
-local RoomsConfig = require(Modules.src.RoomsConfig)
 local TagItem = require(Modules.src.TagItem)
 local AudioPlayer = require(Modules.src.AudioPlayer)
 
@@ -71,6 +72,56 @@ function Game:init(props)
 end
 
 function Game:render(props)
+	local children = {}
+	function createRoom(roomObject)
+		children[roomObject.name] =
+			createElement(
+				Roact.Portal,
+				{ target = Workspace },
+				{ Room = createElement(Room, { roomId = roomObject.id }) }
+			)
+	end
+
+	M.each(RoomObjects, createRoom)
+
+	children['InventoryContainer'] = createElement(
+		'Frame',
+		{
+			Size = UDim2.new(1, 0, 1, 0),
+			BackgroundTransparency = 1,
+			BorderSizePixel = 5,
+			BorderMode = Enum.BorderMode.Inset,
+			ZIndex = 2,
+		},
+		{ Inventory = createElement(InventoryAndShopButtons) }
+	)
+	children['ClockScreenContainer'] = createElement(
+		'Frame',
+		{
+			Position = UDim2.new(0.5, 0, 0, -30),
+			AnchorPoint = Vector2.new(0.5, 0),
+			BackgroundTransparency = 1,
+		},
+		{ Clock = createElement(ClockScreen) }
+	)
+	children['FinishScreenContainer'] = createElement(
+		'Frame',
+		{
+			Size = UDim2.new(0.8, 0, 0.6, 0),
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundTransparency = 1,
+		},
+		{ Finish = createElement(FinishScreen) }
+	)
+	children['NotificationsContainer'] = createElement(Notifications)
+	children['LeaderboardsContainer'] =
+		createElement(
+			Roact.Portal,
+			{ target = Workspace },
+			{ Leaderboards = createElement(LeaderboardsConnect) }
+		)
+
 	return Roact.createElement(
 		RoactMaterial.ThemeProvider,
 		{ Theme = RoactMaterial.Themes.Light },
@@ -80,67 +131,7 @@ function Game:render(props)
 				ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 				ResetOnSpawn = false,
 			},
-			{
-				InventoryContainer = createElement(
-					'Frame',
-					{
-						Size = UDim2.new(1, 0, 1, 0),
-						BackgroundTransparency = 1,
-						BorderSizePixel = 5,
-						BorderMode = Enum.BorderMode.Inset,
-						ZIndex = 2,
-					},
-					{ Inventory = createElement(InventoryAndShopButtons) }
-				),
-				ClockScreenContainer = createElement(
-					'Frame',
-					{
-						Position = UDim2.new(0.5, 0, 0, -30),
-						AnchorPoint = Vector2.new(0.5, 0),
-						BackgroundTransparency = 1,
-					},
-					{ Clock = createElement(ClockScreen) }
-				),
-				FinishScreenContainer = createElement(
-					'Frame',
-					{
-						Size = UDim2.new(0.8, 0, 0.6, 0),
-						Position = UDim2.new(0.5, 0, 0.5, 0),
-						AnchorPoint = Vector2.new(0.5, 0.5),
-						BackgroundTransparency = 1,
-					},
-					{ Finish = createElement(FinishScreen) }
-				),
-				Notifications = createElement(Notifications),
-				-- Even through our UI is being rendered inside a PlayerGui, we can
-				-- always take advantage of a feature called portals to put instances
-				-- elsewhere.
-
-				-- Portals are a feature that makes having a virtual tree worthwhile,
-				-- since implementing them without having formalized destructors is
-				-- bug-prone!
-
-				RoomEasy = createElement(
-					Roact.Portal,
-					{ target = Workspace },
-					{ Room = createElement(Room, { roomId = RoomsConfig.EASY }) }
-				),
-				RoomMedium = createElement(
-					Roact.Portal,
-					{ target = Workspace },
-					{ Room = createElement(Room, { roomId = RoomsConfig.MEDIUM }) }
-				),
-				RoomHard = createElement(
-					Roact.Portal,
-					{ target = Workspace },
-					{ Room = createElement(Room, { roomId = RoomsConfig.HARD }) }
-				),
-				LeaderboardsA = createElement(
-					Roact.Portal,
-					{ target = Workspace },
-					{ Leaderboards = createElement(LeaderboardsConnect) }
-				),
-			}
+			children
 		) }
 	)
 end

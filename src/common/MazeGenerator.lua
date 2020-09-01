@@ -208,9 +208,11 @@ end
 
 function DrawFloor(x, y, z, folder, width, height)
 	local floor = Instance.new('Part')
-	--floor.Parent = folder
+	floor.Parent = folder
 	floor.Size = Vector3.new(width, 1, height)
 	floor.Name = floorPartName
+	floor.CanCollide = false
+	floor.Transparency = 1
 	floor.Anchored = true
 	floor.CFrame = CFrame.new(x + width / 2, z, y + height / 2)
 

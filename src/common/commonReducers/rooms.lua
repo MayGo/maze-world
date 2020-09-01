@@ -5,67 +5,44 @@ local logger = require(Modules.src.utils.Logger)
 local Dict = require(Modules.src.utils.Dict)
 local None = require(Modules.src.utils.None)
 local Print = require(Modules.src.utils.Print)
-local RoomsConfig = require(Modules.src.RoomsConfig)
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local RoomObjects = InventoryObjects.RoomObjects
 local GlobalConfig = require(Modules.src.GlobalConfig)
 local M = require(Modules.M)
 
+
+local roomInitial={
+ 
+    playersWaiting = {},
+    playersPlaying = {
+        --[[  Player1 = {
+            id = "1",
+            finishTime = 1577984576.7429,
+            name = "trimatech1"
+        },
+        Player2 = {
+            id = "2",
+            finishTime = 1577994576.7429,
+            name = "trimatech2"
+        },
+        Player3 = {
+            id = "3",
+            finishTime = 1577988576.7429,
+            name = "trimatech3"
+        }]] --
+    },
+    endTime =  nil,
+    --  startTime = 1577984537.9199,
+    countDownTime = nil,
+    countDownText = nil
+}
+
+function initRoom (roomObject)
+    return M.extend({}, roomInitial, roomObject)
+end
+
 local function rooms(state, action)
-    state = state or {
-        [RoomsConfig.EASY] = {
-            config = {
-                width = 10,
-                height = 10,
-                prizeCoins = 100
-            },
-            playersWaiting = {},
-            playersPlaying = {
-                --[[  Player1 = {
-                    id = "1",
-                    finishTime = 1577984576.7429,
-                    name = "trimatech1"
-                },
-                Player2 = {
-                    id = "2",
-                    finishTime = 1577994576.7429,
-                    name = "trimatech2"
-                },
-                Player3 = {
-                    id = "3",
-                    finishTime = 1577988576.7429,
-                    name = "trimatech3"
-                }]] --
-            },
-            endTime =  nil,
-            --  startTime = 1577984537.9199,
-            countDownTime = nil,
-            countDownText = nil,
-            playTime = GlobalConfig.PLAY_TIME_EASY,
-        },
-        [RoomsConfig.MEDIUM] = {
-            config = {
-                width = 20,
-                height = 20,
-                prizeCoins = 500
-            },
-            playersWaiting = {},
-            playersPlaying = {},
-            countDownTime = nil,
-            countDownText = nil,
-            playTime = GlobalConfig.PLAY_TIME_MEDIUM,
-        },
-        [RoomsConfig.HARD] = {
-            config = {
-                width = 40,
-                height = 40,
-                prizeCoins = 1000
-            },
-            playersWaiting = {},
-            playersPlaying = {},
-            countDownTime = nil,
-            countDownText = nil,
-            playTime = GlobalConfig.PLAY_TIME_HARD,
-        }
-    }
+    state = state or M.map(RoomObjects, initRoom)
 
     if action.type == "playerDied" then
 

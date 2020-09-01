@@ -10,7 +10,8 @@ local Transporter = require(Modules.src.Transporter)
 local Leaderboards = require(Modules.src.Leaderboards)
 local GameDatastore = require(Modules.src.GameDatastore)
 
-local Place = game.Workspace:WaitForChild('Place')
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local RoomObjects = InventoryObjects.RoomObjects
 
 local function calulatePrize(prizeCoins, playersPlaying)
 	local function isPlayerFinished(player)
@@ -37,7 +38,9 @@ end
 local function playerFinishedRoom(player, roomId)
 	return function(store)
 		local room = store:getState().rooms[roomId]
-		local config = store:getState().rooms[roomId].config
+
+		local roomObject = RoomObjects[roomId]
+		local config = roomObject.config
 
 		local playerObj = room.playersPlaying[player.UserId]
 		if playerObj and playerObj.finishTime then

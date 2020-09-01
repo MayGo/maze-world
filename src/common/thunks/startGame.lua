@@ -42,10 +42,10 @@ local function startGame(roomId)
 			return
 		end
 
-		local mapObj = MapsFolder:findFirstChild(roomId)
+		local mapObj = MapsFolder:findFirstChild(room.modelName)
 
 		if not mapObj then
-			logger:w('Maps folder  is missing ' .. roomId .. ' object!')
+			logger:w('Maps folder  is missing ' .. room.modelName .. ' object!')
 			return
 		end
 
@@ -96,9 +96,9 @@ local function startGame(roomId)
 
 		spawn(function()
 			local gameEndedEvent = Instance.new('BindableEvent')
-			store:dispatch(setRoomCountDown(roomId, room.playTime, 'Find exit'))
+			store:dispatch(setRoomCountDown(roomId, room.config.playTime, 'Find exit'))
 
-			delay(room.playTime, function()
+			delay(room.config.playTime, function()
 				gameEndedEvent:Fire(true)
 			end)
 

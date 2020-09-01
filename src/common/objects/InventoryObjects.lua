@@ -12,6 +12,7 @@ local OBJECT_TYPES = {
 	PET = 'PET',
 	COLLECTABLE = 'COLLECTABLE',
 	COIN = 'COIN',
+	ROOM = 'ROOM',
 }
 local PET_TYPES = {
 	TRAIL = 'TRAIL',
@@ -135,6 +136,38 @@ local WorldObjects = {
 		icon = 'rbxassetid://5050640918',
 	},
 }
+local RoomObjects = {
+	['10000001'] = {
+		name = 'Easy',
+		modelName = 'EasyRoom',
+		config = {
+			width = 10,
+			height = 10,
+			prizeCoins = 100,
+			playTime = 300,
+		},
+	},
+	['10000002'] = {
+		name = 'Medium',
+		modelName = 'MediumRoom',
+		config = {
+			width = 20,
+			height = 20,
+			prizeCoins = 500,
+			playTime = 600,
+		},
+	},
+	['10000003'] = {
+		name = 'Hard',
+		modelName = 'HardRoom',
+		config = {
+			width = 40,
+			height = 40,
+			prizeCoins = 1000,
+			playTime = 1000,
+		},
+	},
+}
 
 local CoinObjects = {
 	['9000001'] = {
@@ -162,14 +195,17 @@ end
 
 local remappedPet = M.map(PetObjects, keyById(OBJECT_TYPES.PET))
 local remappedWorld = M.map(WorldObjects, keyById(OBJECT_TYPES.COLLECTABLE))
+local remappedRoom = M.map(RoomObjects, keyById(OBJECT_TYPES.ROOM))
 local remappedCoins = M.map(CoinObjects, keyById(OBJECT_TYPES.COIN))
 local remappedGamePasses = M.map(GamePassObjects, keyById(OBJECT_TYPES.GAME_PASS))
 
 local AllObjects = {}
 local ShopObjects = {}
+local BuyObjects = {}
 
 M.extend(AllObjects, remappedPet, remappedWorld, remappedGamePasses)
 M.extend(ShopObjects, remappedPet, remappedGamePasses)
+M.extend(BuyObjects, remappedPet, remappedGamePasses, remappedRoom)
 
 return {
 	OBJECT_TYPES = OBJECT_TYPES,
@@ -177,8 +213,10 @@ return {
 	HIGH_JUMP_ID = HIGH_JUMP_ID,
 	PetObjects = remappedPet,
 	GamePassObjects = remappedGamePasses,
+	RoomObjects = remappedRoom,
 	WorldObjects = remappedWorld,
 	CoinObjects = remappedCoins,
 	ShopObjects = ShopObjects,
+	BuyObjects = BuyObjects,
 	AllObjects = AllObjects,
 }

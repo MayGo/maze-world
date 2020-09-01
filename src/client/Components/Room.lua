@@ -12,6 +12,7 @@ local RoactRodux = require(Modules.RoactRodux)
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 local SurfaceBillboard = require(clientSrc.Components.common.SurfaceBillboard)
 local ClockScreen = require(clientSrc.Components.ClockScreen)
+local RoomLockScreen = require(clientSrc.Components.RoomLockScreen)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableRow)
 local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
@@ -32,20 +33,22 @@ end
 function Room:render()
 	local children = {}
 	local roomId = self.props.roomId
+	local modelName = self.props.modelName
 	if not RoomsFolder then
 		logger:w('Rooms Folder does not exists!')
 		return
 	end
 
-	local roomObj = RoomsFolder:findFirstChild(roomId)
+	local roomObj = RoomsFolder:findFirstChild(modelName)
 	if not roomObj then
-		logger:w('Room object for ' .. roomId .. ' does not exists!')
+		logger:w('Room object for ' .. modelName .. ' does not exists!')
 		return
 	end
 
 	local waitingPlaceholder = roomObj.placeholders:WaitForChild('WaitingPlaceholder')
 	local playingPlaceholder = roomObj.placeholders:WaitForChild('PlayingPlaceholder')
 	local timerPlaceholder = roomObj.placeholders:WaitForChild('TimerPlaceholder')
+	local lockPlaceholder = roomObj.placeholders:FindFirstChild('LockPlaceholder')
 
 	children['waitingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = waitingPlaceholder,
@@ -92,18 +95,30 @@ function Room:render()
 			}) }
 		),
 	})
+	if lockPlaceholder then
+		children['lock'] = createElement(SurfaceBillboard, {
+			item = lockPlaceholder,
+			noTextListWithHeader = true,
+			[Roact.Children] = createElement(RoomLockScreen, {
+				lockPlaceholder = lockPlaceholder,
+				roomId = roomId,
+			}),
+		})
+	end
 
 	return createElement('Folder', nil, children)
 end
 
 Room = RoactRodux.connect(function(state, props)
 	local roomId = props.roomId
+	local room = state.rooms[roomId]
 	return {
 		roomId = roomId,
-		startTime = state.rooms[roomId].startTime,
-		playersWaiting = state.rooms[roomId].playersWaiting,
-		playersPlaying = state.rooms[roomId].playersPlaying,
-		countDownTime = state.rooms[roomId].countDownTime,
+		startTime = room.startTime,
+		modelName = room.modelName,
+		playersWaiting = room.playersWaiting,
+		playersPlaying = room.playersPlaying,
+		countDownTime = room.countDownTime,
 	}
 end)(Room)
 

@@ -33,6 +33,7 @@ local ServerApi = require(script.Parent.ServerApi)
 local networkMiddleware = require(script.Parent.networkMiddleware)
 
 local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local BuyObjects = InventoryObjects.BuyObjects
 
 local GameDatastore = require(Modules.src.GameDatastore)
 local GamePasses = require(Modules.src.GamePasses)
@@ -255,8 +256,7 @@ return function(context)
 		buyItem = function(player, productId)
 			logger:d('Player ' .. player.Name .. ' bought item ' .. productId)
 
-			local items = store:getState().shop.items
-			local product = items[productId]
+			local product = BuyObjects[productId]
 			if not product then
 				logger:w('No product')
 				return
@@ -336,10 +336,10 @@ return function(context)
 			for roomId, room in pairs(store:getState().rooms) do
 				logger:i('Initializing room ', roomId, room)
 
-				local mapObj = MapsFolder:findFirstChild(roomId)
+				local mapObj = MapsFolder:findFirstChild(room.modelName)
 				spawn(function()
 					if mapObj then
-						local roomObj = RoomsFolder:findFirstChild(roomId)
+						local roomObj = RoomsFolder:findFirstChild(room.modelName)
 						if roomObj then
 							local roomPlaceholder =
 								roomObj.placeholders:WaitForChild('RoomPlaceholder')
@@ -356,7 +356,7 @@ return function(context)
 							logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
 						end
 					else
-						logger:w('Maps folder is missing ' .. roomId .. ' object!!')
+						logger:w('Maps folder is missing ' .. room.modelName .. ' object!!')
 					end
 				end)
 			end
