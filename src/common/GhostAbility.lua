@@ -16,13 +16,16 @@ function GhostAbility:getGhostCollisionGroupId()
 	local ok, groupId = pcall(PhysicsService.GetCollisionGroupId, PhysicsService, GHOST_GROUP)
 	return ok and groupId or nil
 end
+function GhostAbility:setGhostCollisionGroup(char)
+	GhostAbility:setCollisionGroupRecursive(char, GHOST_GROUP)
+end
 
-function GhostAbility:setCollisionGroupRecursive(object)
+function GhostAbility:setCollisionGroupRecursive(object, groupName)
 	if object:IsA('BasePart') then
-		PhysicsService:SetPartCollisionGroup(object, GHOST_GROUP)
+		PhysicsService:SetPartCollisionGroup(object, groupName)
 	end
 	for _, child in ipairs(object:GetChildren()) do
-		GhostAbility:setCollisionGroupRecursive(child)
+		GhostAbility:setCollisionGroupRecursive(child, groupName)
 	end
 end
 
@@ -39,7 +42,7 @@ end
 function GhostAbility:addGhostAbility(char)
 	logger:i('Adding Ghost ability to player')
 	GhostAbility:makeGhostLike(char)
-	GhostAbility:setCollisionGroupRecursive(char)
+	GhostAbility:setGhostCollisionGroup(char)
 end
 
 return GhostAbility

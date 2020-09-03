@@ -140,6 +140,7 @@ local RoomObjects = {
 	['10000001'] = {
 		name = 'Easy',
 		modelName = 'EasyRoom',
+		price = 0,
 		config = {
 			width = 10,
 			height = 10,
@@ -150,6 +151,7 @@ local RoomObjects = {
 	['10000002'] = {
 		name = 'Medium',
 		modelName = 'MediumRoom',
+		price = 99,
 		config = {
 			width = 20,
 			height = 20,
@@ -160,6 +162,7 @@ local RoomObjects = {
 	['10000003'] = {
 		name = 'Hard',
 		modelName = 'HardRoom',
+		price = 100,
 		config = {
 			width = 40,
 			height = 40,
@@ -203,7 +206,7 @@ local AllObjects = {}
 local ShopObjects = {}
 local BuyObjects = {}
 
-M.extend(AllObjects, remappedPet, remappedWorld, remappedGamePasses)
+M.extend(AllObjects, remappedPet, remappedWorld, remappedGamePasses, remappedRoom)
 M.extend(ShopObjects, remappedPet, remappedGamePasses)
 M.extend(BuyObjects, remappedPet, remappedGamePasses, remappedRoom)
 

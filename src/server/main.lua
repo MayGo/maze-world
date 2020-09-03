@@ -38,8 +38,10 @@ local BuyObjects = InventoryObjects.BuyObjects
 local GameDatastore = require(Modules.src.GameDatastore)
 local GamePasses = require(Modules.src.GamePasses)
 local GhostAbility = require(Modules.src.GhostAbility)
+local RoomManager = require(Modules.src.RoomManager)
 
 GhostAbility:initCollisionGroup()
+RoomManager:initCollisionGroups()
 
 local Place = game.Workspace:WaitForChild('Place')
 
@@ -169,12 +171,16 @@ return function(context)
 
 			local function getInventoryObject(obj, itemId)
 				obj[itemId] = InventoryObjects.AllObjects[itemId]
+				if not obj[itemId] then
+					logger:e('No object found in InventoryObjects', itemId)
+				end
 				return obj
 			end
 
 			local inventoryItems = M.reduce(inventoryItemIds, getInventoryObject, {})
 			logger:d('Add inventory items:', inventoryItems)
 			store:dispatch(addItemsToPlayerInventory(tostring(player.UserId), inventoryItems))
+			RoomManager:addToCharacter(player.Character, inventoryItems)
 		end
 
 		updateInventoryInState(GameDatastore:getInventory(player))

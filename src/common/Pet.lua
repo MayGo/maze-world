@@ -29,10 +29,9 @@ end
 
 function Pet:init()
 	self.petModel = self:addToCharacter()
-	GhostAbility:setCollisionGroupRecursive(self.petModel)
+	GhostAbility:setGhostCollisionGroup(self.petModel)
 	self:start(self.petModel)
 
-	logger:d('........', self.petObject)
 	if self.petObject.ability == PET_TYPES.TRAIL then
 		self:addTrailToCharacter()
 	end

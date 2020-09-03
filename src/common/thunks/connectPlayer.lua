@@ -3,6 +3,7 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local M = require(Modules.M)
 local Transporter = require(Modules.src.Transporter)
+local RoomManager = require(Modules.src.RoomManager)
 local assets = require(Modules.src.assets)
 local initializePlayerInventory = require(Modules.src.actions.inventory.initializePlayerInventory)
 local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderboardItems)
@@ -56,6 +57,11 @@ local function connectPlayer(player)
 		end)
 		player.CharacterAdded:Connect(function(character)
 			logger:d('CharacterAdded:', character)
+			local state = store:getState()
+			local playerId = tostring(player.UserId)
+			local inventory = state.playerInventories[playerId]
+
+			RoomManager:addToCharacter(character, inventory)
 
 			local petIds = GameDatastore:getEquippedPets(player)
 

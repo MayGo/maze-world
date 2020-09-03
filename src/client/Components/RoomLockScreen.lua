@@ -52,8 +52,9 @@ function RoomLockScreen:init()
 end
 function RoomLockScreen:render()
 	local props = self.props
+	local isLockActive = props.isLockActive
 
-	local price = 100
+	local price = props.price
 
 	local lockedText = createElement(
 		TextLabel,
@@ -65,7 +66,7 @@ function RoomLockScreen:render()
 			AnchorPoint = Vector2.new(0.5, 0.1),
 			TextXAlignment = Enum.TextXAlignment.Center,
 			TextYAlignment = Enum.TextYAlignment.Center,
-			Text = 'Locked',
+			Text = isLockActive and 'Locked' or 'Open',
 			TextColor3 = Color3.fromRGB(255, 255, 255),
 			BackgroundTransparency = props.BackgroundTransparency or 0.5,
 			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
@@ -113,13 +114,11 @@ end
 local RoomLockScreenConnected = RoactRodux.connect(function(state, props)
 	local roomId = props.roomId
 	local room = state.rooms[roomId]
+	local hasRoom = state.inventory[roomId]
 
 	return {
-		isFinishScreenOpen = state.player.isFinishScreenOpen,
-		countDownTime = room.countDownTime,
-		countDownText = room.countDownText,
-		playersPlaying = room.playersPlaying,
-		playersWaiting = room.playersWaiting,
+		isLockActive = not hasRoom,
+		price = room.price,
 	}
 end)(RoomLockScreen)
 
