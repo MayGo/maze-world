@@ -15,8 +15,6 @@ local rotationTime = 15 -- Time in seconds
 local rotationDegrees = 360
 local rotationRepeatCount = -1 -- Use -1 for infinite repeats
 local lookAtTarget = true -- Whether the camera tilts to point directly at the target
-warn('RotateCamera:RemoveDefaultRotateCamera')
-
 local RotateCamera = {}
 
 RotateCamera.__index = RotateCamera

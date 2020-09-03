@@ -156,7 +156,7 @@ function InventoryAndShopButtons:didMount()
 	self._connection = UserInputService.InputEnded:Connect(function(inputObject)
 		if inputObject.UserInputType ~= Enum.UserInputType.Keyboard then return end
 
-		if inputObject.keyCode == Enum.KeyCode.E then
+		if inputObject.keyCode == Enum.KeyCode.R then
 			self:setState(function(state)
 				return {
 					inventoryOpen = not state.inventoryOpen,

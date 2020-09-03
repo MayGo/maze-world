@@ -97,7 +97,7 @@ function Room:render()
 	})
 	if lockPlaceholder then
 		children['lock'] = createElement(SurfaceBillboard, {
-			item = lockPlaceholder,
+			item = lockPlaceholder.Display,
 			noTextListWithHeader = true,
 			[Roact.Children] = createElement(RoomLockScreen, {
 				lockPlaceholder = lockPlaceholder,

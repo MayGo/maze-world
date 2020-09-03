@@ -50,16 +50,17 @@ function TouchItem.create(roomPart, touchedFn, untouchedFn)
 		local data = {}
 		data.touchedConn = part.Touched:Connect(onTouchStart)
 		data.untouchedConn = part.TouchEnded:Connect(onTouchEnd)
-
 		return data
 	end
 
-	local function undoBrick(data)
+	local data = addTouchListeners(roomPart)
+
+	local function Disconnect()
 		data.touchedConn:Disconnect()
 		data.untouchedConn:Disconnect()
 	end
 
-	addTouchListeners(roomPart)
+	return { Disconnect = Disconnect }
 end
 
 return TouchItem

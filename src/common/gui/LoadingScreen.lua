@@ -7,8 +7,6 @@ local assets = require(Modules.src.assets)
 local logger = require(Modules.src.utils.Logger)
 local rotateCamera = require(Modules.src.gui.RotateCamera)
 
-warn('LoadingScreen:RemoveDefaultLoadingScreen')
-
 game.ReplicatedFirst:RemoveDefaultLoadingScreen()
 
 -- Disable the topbar asap
@@ -26,6 +24,7 @@ coroutine.wrap(function()
 	logger:i('Disabled TopBar and Backpack')
 	game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 end)()
+
 local loadingLogo = assets.brand['loading-logo']
 local preloadAssets = { 'rbxassetid://5357049486' }
 
@@ -39,7 +38,6 @@ local imgH = 1029
 local imgRatio = imgW / imgH
 
 function LoadingScreen:show(localPlayer)
-	warn('LoadingScreen:show')
 	local PlayerGui = localPlayer:WaitForChild('PlayerGui')
 	local screen = Instance.new('ScreenGui')
 	screen.Parent = PlayerGui
@@ -87,8 +85,6 @@ function LoadingScreen:show(localPlayer)
 end
 
 function LoadingScreen:hide()
-	warn('LoadingScreen:hide')
-
 	self.logoImage:TweenSizeAndPosition(
 		UDim2.new(10, 0, 10, 0),
 		UDim2.new(-0.4, 0, -0.4, 0),

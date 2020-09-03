@@ -3,18 +3,43 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 local ContextActionService = game:GetService('ContextActionService')
 local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
-
+local M = require(Modules.M)
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
 local UICorner = require(clientSrc.Components.common.UICorner)
 local Frame = require(clientSrc.Components.common.Frame)
+local YAxisBillboard = require(clientSrc.Components.common.YAxisBillboard)
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
 local TouchItem = require(Modules.src.TouchItem)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
+local UIPadding = require(clientSrc.Components.common.UIPadding)
 
 local createElement = Roact.createElement
 local RoomLockScreen = Roact.Component:extend('RoomLockScreen')
+
+local function StyledText(props)
+	return createElement(
+		TextLabel,
+		M.extend(
+			{},
+			{
+				LayoutOrder = 1,
+				Size = UDim2.new(0.4, 0, 0.4, 0),
+				TextScaled = true,
+				TextSize = 30,
+				AnchorPoint = Vector2.new(0.5, 0.1),
+				TextXAlignment = Enum.TextXAlignment.Center,
+				TextYAlignment = Enum.TextYAlignment.Center,
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = props.BackgroundTransparency or 0.7,
+				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				BorderColor3 = Color3.fromRGB(255, 255, 255),
+			},
+			props
+		)
+	)
+end
 
 function RoomLockScreen:init()
 	self.api = getApiFromComponent(self)
@@ -23,14 +48,12 @@ function RoomLockScreen:init()
 
 	local function handleAction(actionName, inputState, inputObject)
 		if inputState == Enum.UserInputState.Begin then
-			print(actionName, inputObject)
-
 			local itemId = self.props.roomId
 			self.api:buyItem(itemId)
 		end
 	end
 
-	TouchItem.create(
+	self.connection = TouchItem.create(
 		touchPart,
 		function(player)
 			logger:w('Added Interact bind')
@@ -42,11 +65,17 @@ function RoomLockScreen:init()
 				Enum.KeyCode.ButtonR1
 			)
 
+			self:setState(function(state)
+				return { interactActive = true }
+			end)
 			ContextActionService:SetTitle('Interact', 'Buy')
 		end,
 		function(player)
 			logger:w('Removed Interact bind')
 			ContextActionService:UnbindAction('Interact')
+			self:setState(function(state)
+				return { interactActive = false }
+			end)
 		end
 	)
 end
@@ -54,44 +83,79 @@ function RoomLockScreen:render()
 	local props = self.props
 	local isLockActive = props.isLockActive
 
+	local display = self.props.lockPlaceholder:WaitForChild('Display')
+
+	if not isLockActive then
+		display.Transparency = 1
+		display.CanCollide = false
+		if self.connection then
+			self.connection.Disconnect()
+			self.connection = nil
+		end
+		logger:w('render')
+		return
+	end
+
 	local price = props.price
 
 	local lockedText = createElement(
-		TextLabel,
+		StyledText,
 		{
 			LayoutOrder = 1,
 			Size = UDim2.new(0.4, 0, 0.4, 0),
-			TextScaled = true,
-			TextSize = 30,
-			AnchorPoint = Vector2.new(0.5, 0.1),
-			TextXAlignment = Enum.TextXAlignment.Center,
-			TextYAlignment = Enum.TextYAlignment.Center,
 			Text = isLockActive and 'Locked' or 'Open',
-			TextColor3 = Color3.fromRGB(255, 255, 255),
-			BackgroundTransparency = props.BackgroundTransparency or 0.5,
-			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-			BorderColor3 = Color3.fromRGB(255, 255, 255),
 		},
-		{ UICorner = createElement(UICorner) }
+		{
+			UICorner = createElement(UICorner),
+			UIPadding = createElement(UIPadding, { padding = 10 }),
+		}
 	)
-
 	local priceText = createElement(
-		TextLabel,
+		StyledText,
 		{
 			LayoutOrder = 2,
 			Size = UDim2.new(0.7, 0, 0.2, 0),
-			TextScaled = true,
-			TextSize = 30,
-			AnchorPoint = Vector2.new(0.5, 0),
-			TextXAlignment = Enum.TextXAlignment.Center,
-			TextYAlignment = Enum.TextYAlignment.Center,
-			Text = 'Price: ' .. tostring(price) .. ' coins',
-			TextColor3 = Color3.fromRGB(255, 255, 255),
-			BackgroundTransparency = props.BackgroundTransparency or 0.5,
-			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-			BorderColor3 = Color3.fromRGB(255, 255, 255),
+			Text = 'Unlock for:',
 		},
-		{ UICorner = createElement(UICorner) }
+		{
+			UICorner = createElement(UICorner),
+			UIPadding = createElement(UIPadding, { padding = 5 }),
+		}
+	)
+	local priceAmountText = createElement(
+		StyledText,
+		{
+			LayoutOrder = 2,
+			Size = UDim2.new(0.7, 0, 0.2, 0),
+			Text = tostring(price) .. ' coins',
+		},
+		{
+			UICorner = createElement(UICorner),
+			UIPadding = createElement(UIPadding, { padding = 5 }),
+		}
+	)
+	local eText = createElement(
+		StyledText,
+		{
+			LayoutOrder = 2,
+			Size = UDim2.new(0, 200, 0, 200),
+			Text = 'E',
+			Transparency = 0.2,
+			TextColor3 = Color3.fromRGB(0, 0, 0),
+		},
+		{
+			UICorner = createElement(UICorner, { CornerRadius = UDim.new(0, 100) }),
+			UIPadding = createElement(UIPadding, { padding = 5 }),
+		}
+	)
+
+	local labelE = createElement(
+		YAxisBillboard,
+		{
+			position = (display.CFrame * CFrame.new(Vector3.new(0, 0, -3))).Position,
+			size = Vector2.new(0.1, 0.1),
+		},
+		{ eText = eText }
 	)
 
 	return createElement(
@@ -107,6 +171,8 @@ function RoomLockScreen:render()
 		{
 			lockedText = lockedText,
 			priceText = priceText,
+			priceAmountText = priceAmountText,
+			labelE = self.state.interactActive and labelE or nil,
 		}
 	)
 end
