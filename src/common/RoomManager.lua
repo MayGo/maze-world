@@ -21,7 +21,6 @@ function RoomManager:initCollisionGroups()
 
 		PhysicsService:CreateCollisionGroup(groupName)
 		PhysicsService:CollisionGroupSetCollidable('Default', groupName, true)
-		PhysicsService:CollisionGroupSetCollidable(groupName, groupName, false)
 
 		local roomPart = RoomManager:findRoomPart(room)
 
@@ -37,6 +36,11 @@ function RoomManager:initCollisionGroups()
 	end
 
 	M.each(RoomObjects, initRoomGroups)
+end
+
+function RoomManager:initPlayerCollisionGroup(playerId)
+	logger:d('Init player collisigon group ' .. playerId)
+	PhysicsService:CreateCollisionGroup(playerId)
 end
 
 -- TODO use this everywehere else also
@@ -59,15 +63,17 @@ function RoomManager:getRoomCollisionGroup(room)
 	return 'room_' .. tostring(room.id)
 end
 
-function RoomManager:addToCharacter(character, inventory)
+function RoomManager:addToCharacter(character, inventory, playerId)
+	GhostAbility:setCollisionGroupRecursive(character, playerId)
+
 	function applyRoomLocks(room)
 		local hasRoom = inventory[room.id]
 
-		local groupName = RoomManager:getRoomCollisionGroup(room)
+		local groupName = RoomManager:getRoomCollisionGroup(room, playerId)
 
 		if hasRoom then
-			logger:w('Remove room ' .. room.name .. ' for player.')
-			GhostAbility:setCollisionGroupRecursive(character, groupName)
+			logger:d('Remove room ' .. room.name .. ' lock for player.')
+			PhysicsService:CollisionGroupSetCollidable(playerId, groupName, false)
 		end
 	end
 	M.each(RoomObjects, applyRoomLocks)

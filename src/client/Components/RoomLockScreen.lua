@@ -56,12 +56,12 @@ function RoomLockScreen:init()
 	self.connection = TouchItem.create(
 		touchPart,
 		function(player)
-			logger:w('Added Interact bind')
+			logger:d('Added Interact bind')
 			ContextActionService:BindAction(
 				'Interact',
 				handleAction,
 				true,
-				Enum.KeyCode.T,
+				Enum.KeyCode.E,
 				Enum.KeyCode.ButtonR1
 			)
 
@@ -71,7 +71,7 @@ function RoomLockScreen:init()
 			ContextActionService:SetTitle('Interact', 'Buy')
 		end,
 		function(player)
-			logger:w('Removed Interact bind')
+			logger:d('Removed Interact bind')
 			ContextActionService:UnbindAction('Interact')
 			self:setState(function(state)
 				return { interactActive = false }
@@ -79,6 +79,7 @@ function RoomLockScreen:init()
 		end
 	)
 end
+
 function RoomLockScreen:render()
 	local props = self.props
 	local isLockActive = props.isLockActive
@@ -88,11 +89,12 @@ function RoomLockScreen:render()
 	if not isLockActive then
 		display.Transparency = 1
 		display.CanCollide = false
+		logger:d('Removing lock')
 		if self.connection then
 			self.connection.Disconnect()
 			self.connection = nil
 		end
-		logger:w('render')
+
 		return
 	end
 

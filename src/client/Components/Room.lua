@@ -30,28 +30,54 @@ function Room:init()
 	logger:d('Init room: ' .. roomId)
 end
 
+function Room:didMount()
+	self.running = true
+
+	-- We don't want to block the main thread, so we spawn a new one!
+	-- We are using StreamingEnabled, so all rooms are not loaded all the time
+	spawn(function()
+		local modelName = self.props.modelName
+		if not RoomsFolder then
+			logger:w('Rooms Folder does not exists!')
+			return
+		end
+
+		local roomObj = RoomsFolder:WaitForChild(modelName)
+		if not roomObj then
+			logger:w('Room object for ' .. modelName .. ' does not exists!')
+			return
+		end
+
+		self.waitingPlaceholder = roomObj.placeholders:WaitForChild('WaitingPlaceholder', math.huge)
+		self.playingPlaceholder = roomObj.placeholders:WaitForChild('PlayingPlaceholder', math.huge)
+		self.timerPlaceholder = roomObj.placeholders:WaitForChild('TimerPlaceholder', math.huge)
+
+		self:setState(function(state)
+			return { roomLoaded = true }
+		end)
+		self.lockPlaceholder = roomObj.placeholders:WaitForChild('LockPlaceholder', math.huge)
+
+		self:setState(function(state)
+			return {
+				roomLoaded = state.roomLoaded,
+				lockLoaded = true,
+			}
+		end)
+	end)
+end
+
 function Room:render()
 	local children = {}
 	local roomId = self.props.roomId
-	local modelName = self.props.modelName
-	if not RoomsFolder then
-		logger:w('Rooms Folder does not exists!')
+
+	if not self.waitingPlaceholder or not self.playingPlaceholder or not self.timerPlaceholder then
+		logger:d('Not rendering room')
 		return
 	end
 
-	local roomObj = RoomsFolder:findFirstChild(modelName)
-	if not roomObj then
-		logger:w('Room object for ' .. modelName .. ' does not exists!')
-		return
-	end
-
-	local waitingPlaceholder = roomObj.placeholders:WaitForChild('WaitingPlaceholder')
-	local playingPlaceholder = roomObj.placeholders:WaitForChild('PlayingPlaceholder')
-	local timerPlaceholder = roomObj.placeholders:WaitForChild('TimerPlaceholder')
-	local lockPlaceholder = roomObj.placeholders:FindFirstChild('LockPlaceholder')
-
+	logger:d('Rendering room')
 	children['waitingPlaceholder'] = createElement(SurfaceBillboard, {
-		item = waitingPlaceholder,
+		item = self.waitingPlaceholder,
 		title = 'Waiting',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.playersWaiting,
@@ -66,7 +92,7 @@ function Room:render()
 	})
 
 	children['playingPlaceholder'] = createElement(SurfaceBillboard, {
-		item = playingPlaceholder,
+		item = self.playingPlaceholder,
 		title = 'PLAYERS',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.playersPlaying,
@@ -80,7 +106,7 @@ function Room:render()
 	})
 
 	children['timer'] = createElement(SurfaceBillboard, {
-		item = timerPlaceholder,
+		item = self.timerPlaceholder,
 		noTextListWithHeader = true,
 		[Roact.Children] = createElement(
 			'Frame',
@@ -95,12 +121,13 @@ function Room:render()
 			}) }
 		),
 	})
-	if lockPlaceholder then
+
+	if self.lockPlaceholder then
 		children['lock'] = createElement(SurfaceBillboard, {
-			item = lockPlaceholder.Display,
+			item = self.lockPlaceholder:WaitForChild('Display'),
 			noTextListWithHeader = true,
 			[Roact.Children] = createElement(RoomLockScreen, {
-				lockPlaceholder = lockPlaceholder,
+				lockPlaceholder = self.lockPlaceholder,
 				roomId = roomId,
 			}),
 		})

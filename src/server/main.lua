@@ -179,8 +179,9 @@ return function(context)
 
 			local inventoryItems = M.reduce(inventoryItemIds, getInventoryObject, {})
 			logger:d('Add inventory items:', inventoryItems)
-			store:dispatch(addItemsToPlayerInventory(tostring(player.UserId), inventoryItems))
-			RoomManager:addToCharacter(player.Character, inventoryItems)
+			local playerId = tostring(player.UserId)
+			store:dispatch(addItemsToPlayerInventory(playerId, inventoryItems))
+			RoomManager:addToCharacter(player.Character, inventoryItems, playerId)
 		end
 
 		updateInventoryInState(GameDatastore:getInventory(player))

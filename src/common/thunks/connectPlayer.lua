@@ -22,12 +22,13 @@ local InventoryObjects = require(Modules.src.objects.InventoryObjects)
 local function connectPlayer(player)
 	return function(store)
 		logger:i('Connecting player:' .. player.Name)
-
+		local playerId = tostring(player.UserId)
 		spawn(function()
 			Leaderboards:connectPlayerVisits(player, store)
 			Leaderboards:connectMostCoins(player)
 		end)
 
+		RoomManager:initPlayerCollisionGroup(playerId)
 		local mostPlayed = Leaderboards:getMostPlayed()
 		local mostVisited = Leaderboards:getMostVisited(player)
 		local mostCoins = Leaderboards:getMostCoins(player)
@@ -58,10 +59,10 @@ local function connectPlayer(player)
 		player.CharacterAdded:Connect(function(character)
 			logger:d('CharacterAdded:', character)
 			local state = store:getState()
-			local playerId = tostring(player.UserId)
+
 			local inventory = state.playerInventories[playerId]
 
-			RoomManager:addToCharacter(character, inventory)
+			RoomManager:addToCharacter(character, inventory, playerId)
 
 			local petIds = GameDatastore:getEquippedPets(player)
 
