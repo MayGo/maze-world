@@ -48,14 +48,14 @@ local function connectPlayer(player)
 			if M.count(inventoryItems) > 0 then
 				store:dispatch(addItemsToPlayerInventory(tostring(player.UserId), inventoryItems))
 			end
+
+			local state = store:getState()
+			local inventory = state.playerInventories[playerId]
+			RoomManager:addToCharacter(character, inventory, playerId)
 		end)
+
 		player.CharacterAdded:Connect(function(character)
 			logger:d('CharacterAdded:', character)
-			local state = store:getState()
-
-			local inventory = state.playerInventories[playerId]
-
-			RoomManager:addToCharacter(character, inventory, playerId)
 
 			local petIds = GameDatastore:getEquippedPets(player)
 

@@ -20,7 +20,7 @@ local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
 local createElement = Roact.createElement
 
-local InventoryAndShopButtons = Roact.Component:extend('InventoryAndShopButtons')
+local InventoryAndShopButtons = Roact.PureComponent:extend('InventoryAndShopButtons')
 
 function InventoryAndShopButtons:init()
 	self.state = {

@@ -16,7 +16,7 @@ local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableR
 
 local createElement = Roact.createElement
 
-local FinishScreen = Roact.Component:extend('FinishScreen')
+local FinishScreen = Roact.PureComponent:extend('FinishScreen')
 
 function FinishScreen:init()
 	self.state = { open = true }

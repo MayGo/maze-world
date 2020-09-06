@@ -19,7 +19,7 @@ local RoactMaterial = require(Modules.RoactMaterial)
 
 local createElement = Roact.createElement
 
-local ShopItem = Roact.Component:extend('ShopItem')
+local ShopItem = Roact.PureComponent:extend('ShopItem')
 
 function ShopItem:render()
 	local props = self.props

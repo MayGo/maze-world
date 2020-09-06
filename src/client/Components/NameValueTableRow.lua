@@ -8,7 +8,7 @@ local createElement = Roact.createElement
 local Frame = require(clientSrc.Components.common.Frame)
 
 --- Table row component
-local NameValueTableRow = Roact.Component:extend'NameValueTableRow'
+local NameValueTableRow = Roact.PureComponent:extend'NameValueTableRow'
 
 function NameValueTableRow:render()
 	local props = self.props

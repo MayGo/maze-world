@@ -46,7 +46,7 @@ local function rooms(state, action)
 
     if action.type == "playerDied" then
 
-        logger:d("Player died. Removing from rooms. Marking as DNF", state)
+        logger:d("Player died. Removing from rooms. Marking as DNF")
 
         local roomId
 

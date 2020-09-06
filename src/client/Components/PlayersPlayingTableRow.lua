@@ -11,7 +11,7 @@ local Frame = require(clientSrc.Components.common.Frame)
 local Timer = require(clientSrc.Components.Timer)
 
 --- Table row component
-local PlayersPlayingTableRow = Roact.Component:extend'PlayersPlayingTableRow'
+local PlayersPlayingTableRow = Roact.PureComponent:extend'PlayersPlayingTableRow'
 PlayersPlayingTableRow.defaultProps = { MaxHeight = 300 }
 
 function PlayersPlayingTableRow:render()

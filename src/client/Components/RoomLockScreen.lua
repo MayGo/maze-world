@@ -16,7 +16,7 @@ local TextLabel = require(clientSrc.Components.common.TextLabel)
 local UIPadding = require(clientSrc.Components.common.UIPadding)
 
 local createElement = Roact.createElement
-local RoomLockScreen = Roact.Component:extend('RoomLockScreen')
+local RoomLockScreen = Roact.PureComponent:extend('RoomLockScreen')
 
 local function StyledText(props)
 	return createElement(

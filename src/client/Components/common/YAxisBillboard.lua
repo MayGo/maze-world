@@ -19,7 +19,7 @@ local Workspace = game:GetService('Workspace')
 local Roact = require(Modules.Roact)
 local createElement = Roact.createElement
 
-local YAxisBillboard = Roact.Component:extend('YAxisBillboard')
+local YAxisBillboard = Roact.PureComponent:extend('YAxisBillboard')
 
 function YAxisBillboard:init()
 	self.partRef = Roact.createRef()
@@ -32,7 +32,11 @@ function YAxisBillboard:_updatePosition()
 
 	local cameraCFrame = Workspace.CurrentCamera.CFrame
 
-	local angle = math.atan2(self.props.position.x - cameraCFrame.p.x, self.props.position.z - cameraCFrame.p.z)
+	local angle =
+		math.atan2(
+			self.props.position.x - cameraCFrame.p.x,
+			self.props.position.z - cameraCFrame.p.z
+		)
 
 	local uiLocation = CFrame.Angles(0, angle, 0) + self.props.position
 

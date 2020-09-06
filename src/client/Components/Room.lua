@@ -19,7 +19,7 @@ local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
 
 local createElement = Roact.createElement
 
-local Room = Roact.Component:extend('Room')
+local Room = Roact.PureComponent:extend('Room')
 
 local Place = game.Workspace:WaitForChild('Place')
 local RoomsFolder = Place:findFirstChild('Rooms')

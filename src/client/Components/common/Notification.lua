@@ -3,7 +3,7 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 -- local logger = require(Modules.src.utils.Logger)
 local Roact = require(Modules.Roact)
 local createElement = Roact.createElement
-local Notification = Roact.Component:extend('Notification')
+local Notification = Roact.PureComponent:extend('Notification')
 
 --[[
 	{

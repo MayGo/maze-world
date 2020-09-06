@@ -11,7 +11,7 @@ local Time = require(Modules.src.Time)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
 
 local createElement = Roact.createElement
-local Timer = Roact.Component:extend('Timer')
+local Timer = Roact.PureComponent:extend('Timer')
 
 function Timer:init()
 	self:setState({ currentTime = self.props.initialTime or 0 })

@@ -26,7 +26,7 @@ local function startRoomGameLoop(roomId)
 				local canStartGame = hasEnoughWaiting and not isGameRunningAlready
 
 				if canStartGame then
-					logger:d('staring...', playersWaiting, room.endTime)
+					logger:d('Almost starting game.')
 
 					local gameStartedEvent = Instance.new('BindableEvent')
 

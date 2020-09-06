@@ -12,7 +12,7 @@ local TextLabel = require(clientSrc.Components.common.TextLabel)
 local Timer = require(clientSrc.Components.Timer)
 
 local createElement = Roact.createElement
-local ClockScreen = Roact.Component:extend('ClockScreen')
+local ClockScreen = Roact.PureComponent:extend('ClockScreen')
 
 local Players = game:GetService('Players')
 local localPlayer = Players.LocalPlayer

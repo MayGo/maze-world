@@ -12,7 +12,7 @@ local TextLabel = require(clientSrc.Components.common.TextLabel)
 local Timer = require(clientSrc.Components.Timer)
 
 local createElement = Roact.createElement
-local RoomClockScreen = Roact.Component:extend('RoomClockScreen')
+local RoomClockScreen = Roact.PureComponent:extend('RoomClockScreen')
 
 function RoomClockScreen:render()
 	local props = self.props

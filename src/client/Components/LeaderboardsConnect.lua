@@ -16,7 +16,7 @@ local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
 
 local createElement = Roact.createElement
 
-local LeaderboardsConnect = Roact.Component:extend('LeaderboardsConnect')
+local LeaderboardsConnect = Roact.PureComponent:extend('LeaderboardsConnect')
 
 local Place = game.Workspace:WaitForChild('Place')
 local leaderboards = Place.Leaderboards

@@ -26,7 +26,7 @@ local LeaderboardsConnect = require(clientSrc.Components.LeaderboardsConnect)
 local TagItem = require(Modules.src.TagItem)
 local AudioPlayer = require(Modules.src.AudioPlayer)
 
-local Game = Roact.Component:extend('Game')
+local Game = Roact.PureComponent:extend('Game')
 
 function Game:init(props)
 	self.api = getApiFromComponent(self)
