@@ -16,6 +16,8 @@ local M = require(Modules.M)
 local TouchItem = require(Modules.src.TouchItem)
 local MazeGenerator = require(Modules.src.MazeGenerator)
 
+local GlobalConfig = require(Modules.src.GlobalConfig)
+
 local Place = game.Workspace:WaitForChild('Place')
 local MapsFolder = Place:findFirstChild('Maps')
 
@@ -96,7 +98,7 @@ local function startGame(roomId)
 
 		spawn(function()
 			local gameEndedEvent = Instance.new('BindableEvent')
-			store:dispatch(setRoomCountDown(roomId, room.config.playTime, 'Find exit'))
+			store:dispatch(setRoomCountDown(roomId, room.config.playTime, 'Find exit', 'Wait'))
 
 			delay(room.config.playTime, function()
 				gameEndedEvent:Fire(true)
@@ -127,10 +129,18 @@ local function startGame(roomId)
 
 				Transporter:transportByKillingPlayers(playersPlayingInstances)
 			else
-				logger:d('Game will ended with  all player finished for room ' .. roomId)
+				logger:d('Game will end with all player finished for room ' .. roomId)
 			end
 
 			store:dispatch(setRoomEndTime(roomId, os.time()))
+
+			store:dispatch(
+				setRoomCountDown(roomId, GlobalConfig.afterFinishWaitTime, 'Finished - Cooldown')
+			)
+			wait(GlobalConfig.afterFinishWaitTime)
+
+			store:dispatch(setRoomEndTime(roomId, nil))
+			store:dispatch(setRoomCountDown(roomId, nil, 'Waiting players'))
 		end)
 	end
 end

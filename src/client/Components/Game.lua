@@ -78,7 +78,7 @@ function Game:render(props)
 			createElement(
 				Roact.Portal,
 				{ target = Workspace },
-				{ Room = createElement(Room, { roomId = roomObject.id }) }
+				{ ['Room' .. roomObject.name] = createElement(Room, { roomId = roomObject.id }) }
 			)
 	end
 

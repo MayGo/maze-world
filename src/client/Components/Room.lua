@@ -11,7 +11,7 @@ local RoactRodux = require(Modules.RoactRodux)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 local SurfaceBillboard = require(clientSrc.Components.common.SurfaceBillboard)
-local ClockScreen = require(clientSrc.Components.ClockScreen)
+local RoomClockScreen = require(clientSrc.Components.RoomClockScreen)
 local RoomLockScreen = require(clientSrc.Components.RoomLockScreen)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableRow)
@@ -75,7 +75,6 @@ function Room:render()
 		return
 	end
 
-	logger:d('Rendering room')
 	children['waitingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = self.waitingPlaceholder,
 		title = 'Waiting',
@@ -108,18 +107,11 @@ function Room:render()
 	children['timer'] = createElement(SurfaceBillboard, {
 		item = self.timerPlaceholder,
 		noTextListWithHeader = true,
-		[Roact.Children] = createElement(
-			'Frame',
-			{
-				Position = UDim2.new(0.5, 0, 0, 0),
-				AnchorPoint = Vector2.new(0.5, 0),
-				BackgroundTransparency = 1,
-			},
-			{ Clock = createElement(ClockScreen, {
-				TextColor3 = Color3.fromRGB(255, 255, 255),
-				BackgroundTransparency = 1,
-			}) }
-		),
+		[Roact.Children] = createElement(RoomClockScreen, {
+			TextColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			roomId = roomId,
+		}),
 	})
 
 	if self.lockPlaceholder then

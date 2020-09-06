@@ -21,6 +21,7 @@ local Item = require(Modules.src.objects.Item)
 local connectPlayer = require(Modules.src.thunks.connectPlayer)
 local playerEnteredRoom = require(Modules.src.thunks.playerEnteredRoom)
 local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
+local startRoomGameLoop = require(Modules.src.thunks.startRoomGameLoop)
 local removePlayerFromRoom = require(Modules.src.actions.rooms.removePlayerFromRoom)
 local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItemsToPlayerInventory)
 local removeItemFromPlayerInventory =
@@ -338,40 +339,32 @@ return function(context)
 	logger:i('Server started!')
 	logger:i('Initializing rooms')
 
-	if MapsFolder then
-		if RoomsFolder then
-			for roomId, room in pairs(store:getState().rooms) do
-				logger:i('Initializing room ', roomId, room)
+	if RoomsFolder then
+		for roomId, room in pairs(store:getState().rooms) do
+			logger:i('Initializing room ', roomId, room)
+			store:dispatch(startRoomGameLoop(roomId))
 
-				local mapObj = MapsFolder:findFirstChild(room.modelName)
-				spawn(function()
-					if mapObj then
-						local roomObj = RoomsFolder:findFirstChild(room.modelName)
-						if roomObj then
-							local roomPlaceholder =
-								roomObj.placeholders:WaitForChild('RoomPlaceholder')
-							TouchItem.create(
-								roomPlaceholder,
-								function(player)
-									store:dispatch(playerEnteredRoom(player, roomId))
-								end,
-								function(player)
-									store:dispatch(removePlayerFromRoom(player, roomId))
-								end
-							)
-						else
-							logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
+			spawn(function()
+				local roomObj = RoomsFolder:findFirstChild(room.modelName)
+
+				if roomObj then
+					local roomPlaceholder = roomObj.placeholders:WaitForChild('RoomPlaceholder')
+					TouchItem.create(
+						roomPlaceholder,
+						function(player)
+							store:dispatch(playerEnteredRoom(player, roomId))
+						end,
+						function(player)
+							store:dispatch(removePlayerFromRoom(player, roomId))
 						end
-					else
-						logger:w('Maps folder is missing ' .. room.modelName .. ' object!!')
-					end
-				end)
-			end
-		else
-			logger:w('Rooms Folder does not exists!!')
+					)
+				else
+					logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
+				end
+			end)
 		end
 	else
-		logger:w('Maps Folder does not exists!!')
+		logger:w('Rooms Folder does not exists!!')
 	end
 
 	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, id, purchaseSuccess)

@@ -1,9 +1,10 @@
-local function setRoomCountDown(roomId, countDownTime, text)
+local function setRoomCountDown(roomId, countDownTime, text, textOther)
 	return {
 		type = script.Name,
 		roomId = roomId,
 		text = text,
-		countDownTime = os.time() + countDownTime,
+		textOther = textOther,
+		countDownTime = countDownTime and os.time() + countDownTime or nil,
 	}
 end
 

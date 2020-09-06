@@ -89,7 +89,7 @@ local function rooms(state, action)
             return state
         end
         
-        logger:d("Adding player to room:" .. action.playerId)
+        logger:d("Adding player"..tostring(action.playerId).." to room:"..roomId )
         local newPlayers = Dict.join(playersWaiting, {
             [action.playerId] = {id = action.playerId, name = action.playerName}
         })
@@ -138,7 +138,11 @@ local function rooms(state, action)
     elseif action.type == "setRoomCountDown" then
         local roomId = action.roomId
 
-        local newRoom = Dict.join(state[roomId], {countDownTime = action.countDownTime,countDownText=action.text})
+        local newRoom = Dict.join(state[roomId], {
+            countDownTime = action.countDownTime and action.countDownTime or None,
+            countDownText = action.text,
+            countDownTextOther = action.textOther and action.textOther or None,
+        })
 
         return Dict.join(state, {[roomId] = newRoom})
     elseif action.type == "setRoomStartTime" then
@@ -149,6 +153,14 @@ local function rooms(state, action)
             startTime = action.startTime,
             endTime = None,
             playersPlaying = playersStarting
+        })
+
+        return Dict.join(state, {[roomId] = newRoom})
+
+    elseif action.type == "setRoomEndTime" then
+        local roomId = action.roomId
+        local newRoom = Dict.join(state[roomId], {
+            endTime = action.startTime and action.startTime or None,
         })
 
         return Dict.join(state, {[roomId] = newRoom})

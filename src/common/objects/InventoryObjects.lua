@@ -29,7 +29,7 @@ local PetObjects = {
 	[GHOST_MODE_ID] = GamePasses:getGamePass(GHOST_MODE_ID),
 	['10001'] = {
 		name = 'Speed Pet 1',
-		price = 50,
+		price = 300,
 		modelName = 'Speed Pet 1',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -3),
@@ -39,7 +39,7 @@ local PetObjects = {
 	},
 	['10002'] = {
 		name = 'Speed Pet 2',
-		price = 100,
+		price = 1000,
 		modelName = 'Speed Pet 2',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -3),
@@ -49,7 +49,7 @@ local PetObjects = {
 	},
 	['10003'] = {
 		name = 'Speed Pet 3',
-		price = 500,
+		price = 6000,
 		modelName = 'Speed Pet 3',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -3),
@@ -59,7 +59,7 @@ local PetObjects = {
 	},
 	['10004'] = {
 		name = 'Speed Pet 4',
-		price = 1500,
+		price = 10000,
 		modelName = 'Speed Pet 4',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -3),
@@ -69,7 +69,7 @@ local PetObjects = {
 	},
 	['10005'] = {
 		name = 'Speed Pet 5',
-		price = 3000,
+		price = 60000,
 		modelName = 'Speed Pet 5',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -3),
@@ -79,7 +79,7 @@ local PetObjects = {
 	},
 	['10006'] = {
 		name = 'Speed Pet 6',
-		price = 5000,
+		price = 500000,
 		modelName = 'Speed Pet 6',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -3),
@@ -89,7 +89,7 @@ local PetObjects = {
 	},
 	['20001'] = {
 		name = 'Path Pet Red',
-		price = 50,
+		price = 10000,
 		modelName = 'Path Pet Red',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -99,7 +99,7 @@ local PetObjects = {
 	},
 	['20002'] = {
 		name = 'Path Pet Green',
-		price = 50,
+		price = 10000,
 		modelName = 'Path Pet Green',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -109,7 +109,7 @@ local PetObjects = {
 	},
 	['20003'] = {
 		name = 'Path Pet Yellow',
-		price = 50,
+		price = 10000,
 		modelName = 'Path Pet Yellow',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -119,7 +119,7 @@ local PetObjects = {
 	},
 	['20004'] = {
 		name = 'Path Pet Rainbow',
-		price = 500,
+		price = 100000,
 		modelName = 'Path Pet Rainbow',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -136,38 +136,94 @@ local WorldObjects = {
 		icon = 'rbxassetid://5050640918',
 	},
 }
+
 local RoomObjects = {
 	['10000001'] = {
+		name = 'VeryEasy',
+		modelName = 'VeryEasyRoom',
+		price = 0,
+		config = {
+			width = 5,
+			height = 5,
+			prizeCoins = 50,
+			playTime = 1 * 60,
+		},
+	},
+	['10000002'] = {
 		name = 'Easy',
 		modelName = 'EasyRoom',
-		price = 0,
+		price = 500,
 		config = {
 			width = 10,
 			height = 10,
 			prizeCoins = 100,
-			playTime = 300,
-		},
-	},
-	['10000002'] = {
-		name = 'Medium',
-		modelName = 'MediumRoom',
-		price = 99,
-		config = {
-			width = 20,
-			height = 20,
-			prizeCoins = 500,
-			playTime = 600,
+			playTime = 3 * 60,
 		},
 	},
 	['10000003'] = {
+		name = 'Normal',
+		modelName = 'NormalRoom',
+		price = 2000,
+		config = {
+			width = 15,
+			height = 15,
+			prizeCoins = 300,
+			playTime = 5 * 60,
+		},
+	},
+	['10000004'] = {
 		name = 'Hard',
 		modelName = 'HardRoom',
-		price = 100,
+		price = 10000,
 		config = {
-			width = 40,
-			height = 40,
+			width = 20,
+			height = 20,
 			prizeCoins = 1000,
-			playTime = 1000,
+			playTime = 10 * 60,
+		},
+	},
+	['10000005'] = {
+		name = 'Insane',
+		modelName = 'InsaneRoom',
+		price = 50000,
+		config = {
+			width = 30,
+			height = 30,
+			prizeCoins = 10000,
+			playTime = 20 * 60,
+		},
+	},
+	['10000006'] = {
+		name = 'Crazy',
+		modelName = 'CrazyRoom',
+		price = 500000,
+		config = {
+			width = 50,
+			height = 50,
+			prizeCoins = 50000,
+			playTime = 40 * 60,
+		},
+	},
+	['10000007'] = {
+		name = 'Exreme',
+		modelName = 'ExtremeRoom',
+		price = 3000000,
+		config = {
+			width = 70,
+			height = 70,
+			prizeCoins = 300000,
+			playTime = 60 * 60,
+		},
+	},
+	['10000008'] = {
+		name = 'Impossible',
+		modelName = 'ImpossibleRoom',
+		price = 20000000,
+		config = {
+			width = 110,
+			height = 110,
+			prizeCoins = 5000000,
+			playTime = 3 * 60 * 60,
 		},
 	},
 }
