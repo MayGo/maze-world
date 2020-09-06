@@ -69,6 +69,8 @@ end
 function Room:render()
 	local children = {}
 	local roomId = self.props.roomId
+	local startTime = self.props.startTime
+	local mostPlayed = self.props.mostPlayed
 
 	if not self.waitingPlaceholder or not self.playingPlaceholder or not self.timerPlaceholder then
 		logger:d('Not rendering room')
@@ -77,6 +79,16 @@ function Room:render()
 
 	children['waitingPlaceholder'] = createElement(SurfaceBillboard, {
 		item = self.waitingPlaceholder,
+		title = 'Most Games Finished',
+		[Roact.Children] = createElement(DynamicTable, {
+			items = mostPlayed,
+			rowComponent = NameValueTableRow,
+			rowProps = { TextColor3 = Color3.fromRGB(255, 255, 255) },
+		}),
+	})
+
+	local waitingTable = createElement(SurfaceBillboard, {
+		item = self.playingPlaceholder,
 		title = 'Waiting',
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.playersWaiting,
@@ -90,7 +102,7 @@ function Room:render()
 		}),
 	})
 
-	children['playingPlaceholder'] = createElement(SurfaceBillboard, {
+	local playingTable = createElement(SurfaceBillboard, {
 		item = self.playingPlaceholder,
 		title = 'PLAYERS',
 		[Roact.Children] = createElement(DynamicTable, {
@@ -103,6 +115,12 @@ function Room:render()
 			},
 		}),
 	})
+
+	if startTime then
+		children['playing'] = playingTable
+	else
+		children['waiting'] = waitingTable
+	end
 
 	children['timer'] = createElement(SurfaceBillboard, {
 		item = self.timerPlaceholder,
@@ -132,6 +150,7 @@ Room = RoactRodux.connect(function(state, props)
 	local roomId = props.roomId
 	local room = state.rooms[roomId]
 	return {
+		mostPlayed = state.leaderboards[roomId],
 		roomId = roomId,
 		startTime = room.startTime,
 		modelName = room.modelName,

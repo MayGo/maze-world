@@ -6,7 +6,7 @@ local Transporter = require(Modules.src.Transporter)
 local RoomManager = require(Modules.src.RoomManager)
 local assets = require(Modules.src.assets)
 local initializePlayerInventory = require(Modules.src.actions.inventory.initializePlayerInventory)
-local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderboardItems)
+
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
 local playerDied = require(Modules.src.actions.rooms.playerDied)
 local clientReset = require(Modules.src.actions.toClient.clientReset)
@@ -29,13 +29,6 @@ local function connectPlayer(player)
 		end)
 
 		RoomManager:initPlayerCollisionGroup(playerId)
-		local mostPlayed = Leaderboards:getMostPlayed()
-		local mostVisited = Leaderboards:getMostVisited(player)
-		local mostCoins = Leaderboards:getMostCoins(player)
-
-		store:dispatch(addLeaderboardItems('mostPlayed', mostPlayed))
-		store:dispatch(addLeaderboardItems('mostVisited', mostVisited))
-		store:dispatch(addLeaderboardItems('mostCoins', mostCoins))
 
 		player.CharacterAppearanceLoaded:Connect(function(character)
 			logger:d('CharacterAppearanceLoaded:', character)

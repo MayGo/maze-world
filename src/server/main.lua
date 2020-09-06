@@ -46,7 +46,8 @@ RoomManager:initCollisionGroups()
 
 local Place = game.Workspace:WaitForChild('Place')
 
-local MapsFolder = Place:findFirstChild('Maps')
+local Leaderboards = require(Modules.src.Leaderboards)
+local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderboardItems)
 local RoomsFolder = Place:findFirstChild('Rooms')
 
 return function(context)
@@ -337,12 +338,23 @@ return function(context)
 	end)
 
 	logger:i('Server started!')
-	logger:i('Initializing rooms')
 
+	logger:i('Getting Leaderboards!')
+	local mostPlayed = Leaderboards:getMostPlayed()
+	local mostVisited = Leaderboards:getMostVisited()
+	local mostCoins = Leaderboards:getMostCoins()
+
+	store:dispatch(addLeaderboardItems('mostPlayed', mostPlayed))
+	store:dispatch(addLeaderboardItems('mostVisited', mostVisited))
+	store:dispatch(addLeaderboardItems('mostCoins', mostCoins))
+
+	logger:i('Initializing rooms')
 	if RoomsFolder then
 		for roomId, room in pairs(store:getState().rooms) do
 			logger:i('Initializing room ', roomId, room)
 			store:dispatch(startRoomGameLoop(roomId))
+			local mostPlayedRoom = Leaderboards:getMostPlayed(roomId)
+			store:dispatch(addLeaderboardItems(roomId, mostPlayedRoom))
 
 			spawn(function()
 				local roomObj = RoomsFolder:findFirstChild(room.modelName)
