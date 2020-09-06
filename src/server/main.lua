@@ -9,6 +9,7 @@ local Rodux = require(Modules.Rodux)
 
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
 local clientSlotsCount = require(Modules.src.actions.toClient.clientSlotsCount)
+local GlobalConfig = require(Modules.src.GlobalConfig)
 
 -- The Rodux DevTools aren't available yet! Check the README for more details.
 -- local RoduxVisualizer = require(Modules.RoduxVisualizer)
@@ -339,22 +340,34 @@ return function(context)
 
 	logger:i('Server started!')
 
-	logger:i('Getting Leaderboards!')
-	local mostPlayed = Leaderboards:getMostPlayed()
-	local mostVisited = Leaderboards:getMostVisited()
-	local mostCoins = Leaderboards:getMostCoins()
+	spawn(function()
+		logger:i('Getting Leaderboards!')
+		while true do
+			local mostPlayed = Leaderboards:getMostPlayed()
+			local mostVisited = Leaderboards:getMostVisited()
+			local mostCoins = Leaderboards:getMostCoins()
 
-	store:dispatch(addLeaderboardItems('mostPlayed', mostPlayed))
-	store:dispatch(addLeaderboardItems('mostVisited', mostVisited))
-	store:dispatch(addLeaderboardItems('mostCoins', mostCoins))
+			store:dispatch(addLeaderboardItems('mostPlayed', mostPlayed))
+			store:dispatch(addLeaderboardItems('mostVisited', mostVisited))
+			store:dispatch(addLeaderboardItems('mostCoins', mostCoins))
+
+			function refreshRoomLeaderboards(roomObject)
+				local roomId = roomObject.id
+				local mostPlayedRoom = Leaderboards:getMostPlayed(roomId)
+				store:dispatch(addLeaderboardItems(roomId, mostPlayedRoom))
+			end
+
+			M.each(store:getState().rooms, refreshRoomLeaderboards)
+
+			wait(GlobalConfig.refreshLeaderboards)
+		end
+	end)
 
 	logger:i('Initializing rooms')
 	if RoomsFolder then
 		for roomId, room in pairs(store:getState().rooms) do
 			logger:i('Initializing room ', roomId, room)
 			store:dispatch(startRoomGameLoop(roomId))
-			local mostPlayedRoom = Leaderboards:getMostPlayed(roomId)
-			store:dispatch(addLeaderboardItems(roomId, mostPlayedRoom))
 
 			spawn(function()
 				local roomObj = RoomsFolder:findFirstChild(room.modelName)
