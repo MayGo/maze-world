@@ -89,6 +89,12 @@
             "$className": "ServerStorage",
             "serverStorageSrc": {
                 "$path": "src/serverStorage"
+            },
+            "SaveInStudio": {
+                "$className": "BoolValue",
+                "$properties": {
+                    "Value": true
+                }
             }
         },
         "ServerScriptService": {
