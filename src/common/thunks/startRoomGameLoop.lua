@@ -22,7 +22,7 @@ local function startRoomGameLoop(roomId)
 				local playersWaiting = room.playersWaiting
 
 				local hasEnoughWaiting = M.count(playersWaiting) == 1
-				local isGameRunningAlready = room.endTime ~= nil
+				local isGameRunningAlready = room.startTime ~= nil
 				local canStartGame = hasEnoughWaiting and not isGameRunningAlready
 
 				if canStartGame then

@@ -164,6 +164,15 @@ local function rooms(state, action)
         })
 
         return Dict.join(state, {[roomId] = newRoom})
+    elseif action.type == "resetRoom" then
+        local roomId = action.roomId
+        local newRoom = Dict.join(state[roomId], {
+            endTime = None,
+            startTime = None,
+            playersPlaying={}
+        })
+
+        return Dict.join(state, {[roomId] = newRoom})
     end
 
     return state
