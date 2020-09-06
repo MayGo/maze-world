@@ -23,52 +23,11 @@ local Notifications = require(clientSrc.Components.common.Notifications)
 local ClockScreen = require(clientSrc.Components.ClockScreen)
 local Room = require(clientSrc.Components.Room)
 local LeaderboardsConnect = require(clientSrc.Components.LeaderboardsConnect)
-local TagItem = require(Modules.src.TagItem)
-local AudioPlayer = require(Modules.src.AudioPlayer)
 
 local Game = Roact.PureComponent:extend('Game')
 
 function Game:init(props)
 	self.api = getApiFromComponent(self)
-	TagItem.create(nil, 'KillBrick', function(player, hit)
-		logger:d('Player killed with killbrick. Hit name:', hit.Name)
-		hit.parent.Humanoid.Health = 0
-	end)
-
-	TagItem.create(nil, 'CoinBrick', function(player, hit, part)
-		if part:FindFirstChild('itemId') then
-			logger:d('Player got coin with value: ' .. part.itemId.Value)
-
-			self.api:pickUpCoin(tostring(part.itemId.Value))
-			AudioPlayer.playAudio('Coin_Collect')
-
-			if part.Name == 'PrimaryPart' then
-				local model = part:FindFirstAncestorOfClass('Model')
-				model:Destroy()
-			else
-				part.Parent = nil
-				wait(10)
-				part.Parent = game.workspace
-			end
-		else
-			logger:w('No itemId Value for coin part')
-		end
-	end)
-
-	TagItem.create(nil, 'CollectableBrick', function(player, hit, part)
-		if part.itemId then
-			logger:d('Player got collectable with value: ' .. part.itemId.Value)
-			self.api:pickUpItem(tostring(part.itemId.Value))
-			--local coinClone = part:Clone()
-			--part:Destroy()
-
-			part.Parent = nil
-			wait(10)
-			part.Parent = game.workspace
-		else
-			logger:w('No itemId Value for collectable part')
-		end
-	end)
 end
 
 function Game:render(props)

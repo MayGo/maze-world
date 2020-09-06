@@ -51,6 +51,8 @@ local Leaderboards = require(Modules.src.Leaderboards)
 local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderboardItems)
 local RoomsFolder = Place:findFirstChild('Rooms')
 
+local TagItem = require(Modules.src.TagItem)
+
 return function(context)
 	local reducer = Rodux.combineReducers(Dict.join(commonReducers, serverReducers))
 
@@ -392,6 +394,61 @@ return function(context)
 	else
 		logger:w('Rooms Folder does not exists!!')
 	end
+
+	logger:d('Initializing TagItems')
+
+	TagItem.create(nil, 'KillBrick', function(player, hit)
+		logger:d('Player killed with killbrick. Hit name:', hit.Name)
+		hit.parent.Humanoid.Health = 0
+	end)
+
+	TagItem.create(nil, 'CoinBrick', function(player, hit, part)
+		if part:FindFirstChild('itemId') then
+			logger:d('Player got coin with value: ' .. part.itemId.Value)
+
+			local itemId = tostring(part.itemId.Value)
+
+			logger:d('Player ' .. player.Name .. ' picked up coin ' .. itemId)
+			local coinItem = InventoryObjects.CoinObjects[itemId]
+			if coinItem then
+				GameDatastore:incrementCoins(player, coinItem.value)
+			else
+				logger:e('No coinItem found', itemId)
+			end
+
+			api:clientPlaySound(player, 'Coin_Collect')
+
+			if part.Name == 'PrimaryPart' then
+				local model = part:FindFirstAncestorOfClass('Model')
+				model:Destroy()
+			else
+				part.Parent = nil
+				wait(10)
+				part.Parent = game.workspace
+			end
+		else
+			logger:w('No itemId Value for coin part')
+		end
+	end)
+
+	TagItem.create(nil, 'CollectableBrick', function(player, hit, part)
+		if part.itemId then
+			logger:d('Player got collectable with value: ' .. part.itemId.Value)
+
+			local itemId = tostring(part.itemId.Value)
+			logger:d('Player ' .. player.Name .. ' picked up item ' .. itemId)
+
+			GameDatastore:setInventoryItem(player, itemId)
+			--local coinClone = part:Clone()
+			--part:Destroy()
+
+			part.Parent = nil
+			wait(10)
+			part.Parent = game.workspace
+		else
+			logger:w('No itemId Value for collectable part')
+		end
+	end)
 
 	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, id, purchaseSuccess)
 		local productId = tostring(id)
