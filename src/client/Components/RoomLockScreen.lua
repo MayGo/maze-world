@@ -8,12 +8,12 @@ local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
 local UICorner = require(clientSrc.Components.common.UICorner)
 local Frame = require(clientSrc.Components.common.Frame)
-local YAxisBillboard = require(clientSrc.Components.common.YAxisBillboard)
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
 local TouchItem = require(Modules.src.TouchItem)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
 local UIPadding = require(clientSrc.Components.common.UIPadding)
+local BillboardBuyButton = require(clientSrc.Components.common.BillboardBuyButton)
 
 local createElement = Roact.createElement
 local RoomLockScreen = Roact.PureComponent:extend('RoomLockScreen')
@@ -28,7 +28,7 @@ local function StyledText(props)
 				Size = UDim2.new(0.4, 0, 0.4, 0),
 				TextScaled = true,
 				TextSize = 30,
-				AnchorPoint = Vector2.new(0.5, 0.1),
+				AnchorPoint = Vector2.new(0.5, 0),
 				TextXAlignment = Enum.TextXAlignment.Center,
 				TextYAlignment = Enum.TextYAlignment.Center,
 				TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -43,41 +43,6 @@ end
 
 function RoomLockScreen:init()
 	self.api = getApiFromComponent(self)
-
-	local touchPart = self.props.lockPlaceholder:WaitForChild('TouchPart')
-
-	local function handleAction(actionName, inputState, inputObject)
-		if inputState == Enum.UserInputState.Begin then
-			local itemId = self.props.roomId
-			self.api:buyItem(itemId)
-		end
-	end
-
-	self.connection = TouchItem.create(
-		touchPart,
-		function(player)
-			logger:d('Added Interact bind')
-			ContextActionService:BindAction(
-				'Interact',
-				handleAction,
-				true,
-				Enum.KeyCode.E,
-				Enum.KeyCode.ButtonR1
-			)
-
-			self:setState(function(state)
-				return { interactActive = true }
-			end)
-			ContextActionService:SetTitle('Interact', 'Buy')
-		end,
-		function(player)
-			logger:d('Removed Interact bind')
-			ContextActionService:UnbindAction('Interact')
-			self:setState(function(state)
-				return { interactActive = false }
-			end)
-		end
-	)
 end
 
 function RoomLockScreen:render()
@@ -90,10 +55,6 @@ function RoomLockScreen:render()
 		display.Transparency = 1
 		display.CanCollide = false
 		logger:d('Removing lock')
-		if self.connection then
-			self.connection.Disconnect()
-			self.connection = nil
-		end
 
 		return
 	end
@@ -104,12 +65,12 @@ function RoomLockScreen:render()
 		StyledText,
 		{
 			LayoutOrder = 1,
-			Size = UDim2.new(0.4, 0, 0.4, 0),
+			Size = UDim2.new(0.3, 0, 0.3, 0),
 			Text = isLockActive and 'Locked' or 'Open',
 		},
 		{
 			UICorner = createElement(UICorner),
-			UIPadding = createElement(UIPadding, { padding = 10 }),
+			UIPadding = createElement(UIPadding, { padding = 5 }),
 		}
 	)
 	local priceText = createElement(
@@ -136,29 +97,16 @@ function RoomLockScreen:render()
 			UIPadding = createElement(UIPadding, { padding = 5 }),
 		}
 	)
-	local eText = createElement(
-		StyledText,
-		{
-			LayoutOrder = 2,
-			Size = UDim2.new(0, 200, 0, 200),
-			Text = 'E',
-			Transparency = 0.2,
-			TextColor3 = Color3.fromRGB(0, 0, 0),
-		},
-		{
-			UICorner = createElement(UICorner, { CornerRadius = UDim.new(0, 100) }),
-			UIPadding = createElement(UIPadding, { padding = 5 }),
-		}
-	)
 
-	local labelE = createElement(
-		YAxisBillboard,
-		{
-			position = (display.CFrame * CFrame.new(Vector3.new(0, 0, -3))).Position,
-			size = Vector2.new(0.1, 0.1),
-		},
-		{ eText = eText }
-	)
+	local onClicked = function()
+		local itemId = self.props.roomId
+		self.api:buyItem(itemId)
+	end
+
+	local buyButton = createElement(BillboardBuyButton, {
+		CFrame = display.CFrame,
+		onClicked = onClicked,
+	})
 
 	return createElement(
 		Frame,
@@ -174,7 +122,7 @@ function RoomLockScreen:render()
 			lockedText = lockedText,
 			priceText = priceText,
 			priceAmountText = priceAmountText,
-			labelE = self.state.interactActive and labelE or nil,
+			buyButton = buyButton,
 		}
 	)
 end

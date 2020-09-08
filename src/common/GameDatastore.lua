@@ -47,18 +47,19 @@ function GameDatastore:decrementCoins(player, coinsToSubtract)
 		logger:e('Invalid amount subtracted:' .. tostring(coinsToSubtract))
 	end
 
-	if GameDatastore:getCoins(player) >= coinsToSubtract then
+	local playerCoins = GameDatastore:getCoins(player)
+	if playerCoins >= coinsToSubtract then
 		logger:d(
 			'DataStore: Player ' .. player.Name .. ' wallet subtracted ' .. tostring(
 				coinsToSubtract
 			)
 		)
 		datastore:Increment(-coinsToSubtract)
-		return true
 	else
 		logger:d('DataStore: Player ' .. player.Name .. ' has not have enough money.')
-		return false
 	end
+
+	return playerCoins - coinsToSubtract
 end
 
 function GameDatastore:incrementCoins(player, coinsToAdd)

@@ -12,7 +12,7 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
-
+local AudioPlayer = require(Modules.src.AudioPlayer)
 local RunService = game:GetService('RunService')
 local Workspace = game:GetService('Workspace')
 
@@ -59,17 +59,22 @@ function YAxisBillboard:render()
 			CanCollide = false,
 			[Roact.Ref] = self.partRef,
 		},
-		{ -- If we wanted interaction with our ScreenGui, this is where we could
-		-- use Roact.Portal to jump into the local player's PlayerGui
-
-		UI = createElement(
-			'SurfaceGui',
-			{
-				Face = Enum.NormalId.Front,
-				CanvasSize = 100 * size,
-			},
-			self.props[Roact.Children]
-		) }
+		{
+			-- If we wanted interaction with our ScreenGui, this is where we could
+			-- use Roact.Portal to jump into the local player's PlayerGui
+			ClickDetector = createElement('ClickDetector', { [Roact.Event.MouseClick] = function()
+				AudioPlayer.playAudio('Simple_Click')
+				self.props.onClicked()
+			end }),
+			UI = createElement(
+				'SurfaceGui',
+				{
+					Face = Enum.NormalId.Front,
+					CanvasSize = 100 * size,
+				},
+				self.props[Roact.Children]
+			),
+		}
 	)
 end
 

@@ -17,7 +17,8 @@ local GlobalConfig = require(Modules.src.GlobalConfig)
 local commonReducers = require(Modules.src.commonReducers)
 local Dict = require(Modules.src.utils.Dict)
 local Item = require(Modules.src.objects.Item)
-
+local clientSendNotification = require(Modules.src.actions.toClient.clientSendNotification)
+local assets = require(Modules.src.assets)
 -- These imports are pretty darn verbose.
 local connectPlayer = require(Modules.src.thunks.connectPlayer)
 local playerEnteredRoom = require(Modules.src.thunks.playerEnteredRoom)
@@ -277,7 +278,8 @@ return function(context)
 
 			local productPrice = product.price
 
-			if GameDatastore:decrementCoins(player, productPrice) then
+			local afterCoins = GameDatastore:decrementCoins(player, productPrice)
+			if afterCoins >= 0 then
 				logger:d('Buying product', productId)
 				GameDatastore:setEquippedPet(player, product.id)
 				GameDatastore:setInventoryItem(player, productId)
@@ -287,6 +289,13 @@ return function(context)
 				)
 			else
 				logger:w('Not enough money')
+				store:dispatch(
+					clientSendNotification(
+						player,
+						'Not enough coins. Missing ' .. math.abs(afterCoins) .. ' coins',
+						assets.money['coins-pile']
+					)
+				)
 			end
 		end,
 		startGhosting = function(player)

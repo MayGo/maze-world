@@ -71,6 +71,19 @@ function FinishScreen:render()
 		}
 	)
 end
+--[[
+function FinishScreen:shouldUpdate(newProps, newState)
+	return newProps.isFinishScreenOpen ~= self.props.isFinishScreenOpen or newState.open ~= self.state.open
+end
+]]
+
+function FinishScreen:didUpdate(previousProps, previousState)
+	if not previousProps.isFinishScreenOpen and not previousState.open then
+		self:setState(function()
+			return { open = true }
+		end)
+	end
+end
 
 local FinishScreenConnected = RoactRodux.connect(function(state)
 	local roomId = state.player.lastFinishedRoomId

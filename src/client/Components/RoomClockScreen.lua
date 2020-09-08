@@ -35,7 +35,6 @@ function RoomClockScreen:render()
 		},
 		{ UICorner = createElement(UICorner) }
 	)
-	logger:w('countDownTime', countDownTime)
 
 	local time = countDownTime and createElement(
 		Timer,
