@@ -64,6 +64,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [x] Locked rooms, unlock for coins
 -   [x] Add clickable E indicator/button to workspace
 -   [x] Uses StreamingEnabled, content is loaded as needed.
+-   [x] Custom loading screen
 
 # TODO
 

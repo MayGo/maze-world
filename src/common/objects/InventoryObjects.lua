@@ -220,8 +220,8 @@ local RoomObjects = {
 		modelName = 'ImpossibleRoom',
 		price = 20000000,
 		config = {
-			width = 110,
-			height = 110,
+			width = 81,
+			height = 81,
 			prizeCoins = 5000000,
 			playTime = 3 * 60 * 60,
 		},

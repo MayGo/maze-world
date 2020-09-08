@@ -57,6 +57,7 @@ local function startRoomGameLoop(roomId)
 					if gameWillStart then
 						logger:d('Game will start for room: ' .. roomId)
 						store:dispatch(setRoomCountDown(roomId, nil, 'Loading maze'))
+						wait(0.5)
 						store:dispatch(startGame(roomId))
 					else
 						logger:d('Game will not start for room: ' .. roomId)

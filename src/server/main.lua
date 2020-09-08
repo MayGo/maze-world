@@ -200,9 +200,6 @@ return function(context)
 	-- clients to listen to.
 	api = ServerApi.create({
 	-- We need to make sure not to replicate anything secret!
-	--local newPosition = root.Position + root.CFrame.lookVector * 4
-	--local newItem = Dict.join(item, { position = newPosition })
-	--store:dispatch(addItemsToWorld({ [itemId] = newItem }))
 		clientStart = clientStart,
 		startRoomGame = function(player, roomId)
 			warn('NOT USED??????Room ' .. roomId .. ' started for player ' .. player.Name)

@@ -8,6 +8,16 @@ local Spawns = Place.Spawns:GetChildren()
 
 local Transporter = {}
 
+local offset = Vector3.new(0, 5, 0)
+
+function freezeCharacter(character, isAnchored)
+	for _, part in pairs(character:GetChildren()) do
+		if part:IsA('BasePart') then
+			part.Anchored = isAnchored
+		end
+	end
+end
+
 function Transporter:fadePlayerTo(player, a, b, c)
 	for transparency = a, b, c do
 		-- go from a to b, counting by c
@@ -25,7 +35,12 @@ function Transporter:transportPlayers(players, target)
 	for i, player in pairs(players) do
 		-- Transporter:fadePlayerTo(player, 0, 1, 0.1) --fade out,
 		player:RequestStreamAroundAsync(target.Position)
-		player.Character.HumanoidRootPart.CFrame = ModelManager:onlyDirection(target.CFrame) -- teleport the player
+
+		local rootPart = player.Character.HumanoidRootPart
+		if rootPart then
+			player:RequestStreamAroundAsync(target.Position)
+			rootPart.CFrame = ModelManager:onlyDirection(target.CFrame) + offset
+		end
 		-- Transporter:fadePlayerTo(player, 1, 0, -0.1) --fade back in
 	end
 end
@@ -39,10 +54,10 @@ end
 function Transporter:teleportTo(player, target)
 	-- fadePlayerTo(player, 0, 1, 0.1) --fade out,
 	if player.Character then
-		local humanoid = player.Character:FindFirstChildOfClass('Humanoid')
-		if humanoid then
+		local rootPart = player.Character.HumanoidRootPart
+		if rootPart then
 			player:RequestStreamAroundAsync(target.Position)
-			humanoid.RootPart.CFrame = ModelManager:onlyDirection(target.CFrame)
+			rootPart.CFrame = ModelManager:onlyDirection(target.CFrame) + offset
 		end
 	end
 	-- fadePlayerTo(player, 1, 0, -0.1) --fade back in

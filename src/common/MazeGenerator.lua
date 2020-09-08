@@ -210,6 +210,7 @@ function DrawFloor(x, y, z, folder, width, height)
 	local floor = Instance.new('Part')
 	floor.Parent = folder
 	floor.Size = Vector3.new(width, 1, height)
+
 	floor.Name = floorPartName
 	floor.CanCollide = false
 	floor.Transparency = 1
@@ -253,6 +254,8 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, locationPart, wal
 	local z = locationPart.Position.Y + halfHeight
 
 	logger:d('Positioning Maze: ' .. x .. ' ' .. y)
+	-- part can have max size 2048
+	logger:d('Size in studs:' .. tostring(maze_width) .. ', height:' .. tostring(maze_height))
 
 	DrawFloor(x, y, z, folder, maze_width, maze_height)
 	DrawStart(x, y, z + 1, folder, blockWidth, blockWidth)
