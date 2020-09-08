@@ -18,6 +18,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 
 ## Screenshots
 
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-loading.gif 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-1.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-2.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-3.png 'Maze World')
@@ -26,6 +27,8 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-6.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-7.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-8.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-9.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-10.png 'Maze World')
 
 # Used libraries
 
@@ -40,7 +43,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [Roact-Rodux](https://github.com/Roblox/roact-rodux.git)
 -   [Rojo](https://github.com/rojo-rbx/rojo)
 -   [GameAnalytics](https://gameanalytics.com/docs/item/roblox-sdk)
--   Algoritm for labyrinth generation taken from https://github.com/shironecko/LuaMaze
+-   Algoritm for maze generation taken from https://github.com/shironecko/LuaMaze
 
 # Game functionality
 
@@ -49,7 +52,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [x] Game Pass shop item
 -   [x] Statistics system. Top money earned. Top times visited. Top games won.
 -   [x] Pet system. Equipped pets and maximum pet slots are saved on server. Pets give abilities.
--   [x] Dynamically generated labyrinths.
+-   [x] Dynamically generated mazes. Generate random items inside of maze
 -   [x] Waiting rooms with waiting and playing lists.
 -   [x] Awards system. eg: Daily visit bonus, 10 times visit bonus
 -   [x] Collectable Coins
@@ -60,11 +63,11 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [x] Trails to pets
 -   [x] Locked rooms, unlock for coins
 -   [x] Add clickable E indicator/button to workspace
+-   [x] Uses StreamingEnabled, content is loaded as needed.
 
 # TODO
 
 -   [ ] Ontouch not triggered always when going through coins fast
--   [ ] Notifiy if not enough money
 -   [ ] Add tabs to inventory and shop
 -   [ ] Add more collectable item: eggs
 -   [ ] Add Chests, Treasures (more coins)

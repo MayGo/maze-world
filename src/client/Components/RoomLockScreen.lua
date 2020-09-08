@@ -88,7 +88,7 @@ function RoomLockScreen:render()
 	local priceAmountText = createElement(
 		StyledText,
 		{
-			LayoutOrder = 2,
+			LayoutOrder = 3,
 			Size = UDim2.new(0.7, 0, 0.2, 0),
 			Text = tostring(price) .. ' coins',
 		},
