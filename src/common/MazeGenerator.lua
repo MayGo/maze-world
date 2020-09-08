@@ -316,7 +316,7 @@ function MazeGenerator:generate(map, width, height)
 		local floor = mazeFolder:FindFirstChild(floorPartName)
 		workspace.Terrain:FillBlock(
 			floor.CFrame,
-			floor.Size + Vector3.new(10, blockHeight * 2, 10),
+			floor.Size + Vector3.new(10, blockHeight * 3, 10),
 			Enum.Material.Air
 		)
 		mazeFolder:Destroy()
