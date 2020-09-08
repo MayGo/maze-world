@@ -56,9 +56,10 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [x] Inventory, collectable items. eg: Cherries
 -   [x] GameAnalytics scripts (gameKey and secretKey in GameAnalyticsServerInit.server.lua)
 -   [x] Notifications system
--   [x] Sounds for coin collecting, daily reward notification
+-   [x] Sounds for coin collecting, daily reward notification, button click
 -   [x] Trails to pets
 -   [x] Locked rooms, unlock for coins
+-   [x] Add clickable E indicator/button to workspace
 
 # TODO
 
@@ -68,7 +69,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [ ] Add more collectable item: eggs
 -   [ ] Add Chests, Treasures (more coins)
 -   [ ] Fullscreen messages
--   [ ] add avatar icon to player lists
+-   [ ] Add avatar icon to player lists
 -   [ ] Developer Product to shop items (eg: buy coins for Robux)
 -   [ ] Add Badges, reward when completing some milestone
 
