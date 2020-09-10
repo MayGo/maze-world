@@ -6,6 +6,10 @@ local logger = require(Modules.src.utils.Logger)
 local ModelManager = {}
 
 function ModelManager:findModel(item)
+	if not item.modelFolder then
+		logger:e('No modelFolder for item', item)
+	end
+
 	local modelFolder = Models:FindFirstChild(item.modelFolder)
 	if not modelFolder then
 		logger:e('No modelFolder found with name: ' .. item.modelFolder)

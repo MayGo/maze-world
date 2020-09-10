@@ -311,8 +311,11 @@ return function(context)
 		end,
 		stopGhosting = function(player)
 			logger:d('Player ' .. player.Name .. ' stop ghosting ')
-
-			player.Character.Humanoid.Health = 0
+			if player.Character then
+				player.Character.Humanoid.Health = 0
+			else
+				logger:d('No Character found for player:' .. player.Name)
+			end
 		end,
 		equipItem = function(player, productId)
 			logger:d('Player ' .. player.Name .. ' equipped item ' .. productId)
@@ -337,6 +340,11 @@ return function(context)
 			end
 
 			GameDatastore:unsetEquippedPet(player, product.id)
+		end,
+		unequipAll = function(player)
+			logger:d('Player ' .. player.Name .. ' unequipped all')
+
+			GameDatastore:unsetAllEquippedPet(player)
 		end,
 	})
 

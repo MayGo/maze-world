@@ -55,6 +55,11 @@ function PetManager:checkAbilities(character)
 end
 
 function PetManager:addToCharacter(petObjects, character, playerSlotsCount)
+	if not character then
+		logger:d('No Character found')
+		return
+	end
+
 	if not characterPets[character] then
 		characterPets[character] = {}
 		SlotManager:initSlots(character, playerSlotsCount)

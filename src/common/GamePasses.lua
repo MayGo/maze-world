@@ -15,14 +15,18 @@ local GamePasses = {
 }
 
 function GamePasses:addAbility(player, productId)
-	local char = player.Character
-	local humanoid = char:FindFirstChild('Humanoid')
-	if HIGH_JUMP_ID == productId then
-		logger:i('Adding High Jump ability to player')
-		humanoid.JumpPower = 100
+	if player.Character then
+		local char = player.Character
+		local humanoid = char:FindFirstChild('Humanoid')
+		if HIGH_JUMP_ID == productId then
+			logger:i('Adding High Jump ability to player')
+			humanoid.JumpPower = 100
 
-		--GhostAbility:addGhostAbility(char)
-	elseif GHOST_MODE_ID == productId then
+			--GhostAbility:addGhostAbility(char)
+		elseif GHOST_MODE_ID == productId then
+		end
+	else
+		logger:d('No Character found for player:' .. player.Name)
 	end
 end
 

@@ -64,6 +64,11 @@ function RoomManager:getRoomCollisionGroup(room)
 end
 
 function RoomManager:addToCharacter(character, inventory, playerId)
+	if not character then
+		logger:d('No Character found for player:' .. tostring(playerId))
+		return
+	end
+
 	GhostAbility:setCollisionGroupRecursive(character, playerId)
 
 	function applyRoomLocks(room)
