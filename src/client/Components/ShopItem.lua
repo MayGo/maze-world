@@ -67,7 +67,7 @@ function ShopItem:render()
 	local image
 	local aspect
 
-	if item.modelName and not item.icon then
+	if item.modelName and item.modelFolder and not item.icon then
 		local model = ModelManager:findModel(item)
 
 		if not model then

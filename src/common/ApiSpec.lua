@@ -32,6 +32,7 @@ return {
 		startGhosting = { arguments = Typer.args() },
 		stopGhosting = { arguments = Typer.args() },
 		unequipItem = { arguments = Typer.args({ 'productId', Typer.type('string') }) },
+		unequipAll = { arguments = Typer.args() },
 	},
 	fromServer = {
 		initialStoreState = { arguments = Typer.args({ 'state', Typer.any() }) },

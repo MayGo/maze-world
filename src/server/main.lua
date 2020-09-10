@@ -175,12 +175,15 @@ return function(context)
 		local function updateInventoryInState(inventoryItemIds)
 			logger:d('DataStore:Inventory updated to:', inventoryItemIds)
 
-			local function getInventoryObject(obj, itemId)
-				obj[itemId] = InventoryObjects.AllObjects[itemId]
-				if not obj[itemId] then
-					logger:e('No object found in InventoryObjects', itemId)
+			local function getInventoryObject(objects, itemId)
+				local object = InventoryObjects.AllObjects[itemId]
+
+				if not object then
+					logger:d('No object found in InventoryObjects', itemId)
+				else
+					objects[itemId] = object
 				end
-				return obj
+				return objects
 			end
 
 			local inventoryItems = M.reduce(inventoryItemIds, getInventoryObject, {})

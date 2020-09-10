@@ -3,20 +3,23 @@ local Modules = ReplicatedStorage:WaitForChild('Modules')
 -- local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 local Support = require(Modules.src.utils.SupportLibrary)
-local UserInputService = game:GetService('UserInputService')
+local ContextActionService = game:GetService('ContextActionService')
 
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
-
+local M = require(Modules.M)
 local Shop = require(clientSrc.Components.Shop)
 local UICorner = require(clientSrc.Components.common.UICorner)
 
 local RoundButton = require(clientSrc.Components.common.RoundButton)
 local Frame = require(clientSrc.Components.common.Frame)
-
+local UIPadding = require(clientSrc.Components.common.UIPadding)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
+
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local OBJECT_TYPES = InventoryObjects.OBJECT_TYPES
 
 local createElement = Roact.createElement
 
@@ -74,7 +77,7 @@ function InventoryAndShopButtons:render()
 		)
 	end
 
-	local closeInventoryAndSHop = function()
+	local closeInventoryAndShop = function()
 		self:setState(function()
 			return {
 				inventoryOpen = false,
@@ -85,19 +88,36 @@ function InventoryAndShopButtons:render()
 
 	local closeButton = createElement(RoundButton, {
 		icon = 'close',
-		onClicked = closeInventoryAndSHop,
+		onClicked = closeInventoryAndShop,
 		Size = UDim2.new(0.35, 0, 0.35, 0),
 	})
 
-	local slotsCount = createElement(TextLabel, {
-		Size = UDim2.new(1, 0, 1, 0),
-		TextScaled = true,
-		TextSize = 30,
-		AnchorPoint = Vector2.new(0, 0),
-		TextXAlignment = Enum.TextXAlignment.Center,
-		TextYAlignment = Enum.TextYAlignment.Bottom,
-		Text = 'Equipped ' .. #equippedItems .. ' / ' .. playerSlotsCount,
+	local unequipAll = function()
+		self.api:unequipAll()
+	end
+
+	local unequipAllButton = createElement(RoundButton, {
+		Text = 'Unequip all',
+		onClicked = unequipAll,
+		Size = UDim2.new(0.8, 0, 0.35, 0),
+		AnchorPoint = Vector2.new(0.5, 1),
+		Position = UDim2.new(0.5, 0, 1, 0),
 	})
+
+	local slotsCount = createElement(
+		TextLabel,
+		{
+			Size = UDim2.new(1, 0, 0.35, 0),
+			Position = UDim2.new(0, 0, 0.5, 0),
+			TextScaled = true,
+			TextSize = 30,
+			AnchorPoint = Vector2.new(0, 0.5),
+			TextXAlignment = Enum.TextXAlignment.Center,
+			TextYAlignment = Enum.TextYAlignment.Bottom,
+			Text = 'Equipped ' .. #equippedItems .. ' / ' .. playerSlotsCount,
+		},
+		{ UIPadding = createElement(UIPadding, { padding = 10 }) }
+	)
 
 	local closeButtonWithCount = createElement(
 		'Frame',
@@ -107,7 +127,7 @@ function InventoryAndShopButtons:render()
 			Size = UDim2.new(0, 100, 0, 100),
 			ZIndex = 1,
 		},
-		{ closeButton, slotsCount }
+		{ closeButton, slotsCount, unequipAllButton }
 	)
 
 	local shopProps = {
@@ -153,28 +173,31 @@ function InventoryAndShopButtons:render()
 end
 
 function InventoryAndShopButtons:didMount()
-	self._connection = UserInputService.InputEnded:Connect(function(inputObject)
-		if inputObject.UserInputType ~= Enum.UserInputType.Keyboard then return end
-
-		if inputObject.keyCode == Enum.KeyCode.R then
-			self:setState(function(state)
-				return {
-					inventoryOpen = not state.inventoryOpen,
-					shopOpen = false,
-				}
-			end)
-			return
-		end
-		if inputObject.keyCode == Enum.KeyCode.Q then
+	local function openShop(actionName, inputState)
+		if inputState == Enum.UserInputState.Begin then
 			self:setState(function(state)
 				return {
 					shopOpen = not state.shopOpen,
 					inventoryOpen = false,
 				}
 			end)
-			return
 		end
-	end)
+	end
+
+	local function openInventory(actionName, inputState)
+		if inputState == Enum.UserInputState.Begin then
+			self:setState(function(state)
+				return {
+					inventoryOpen = not state.inventoryOpen,
+					shopOpen = false,
+				}
+			end)
+		end
+	end
+
+	ContextActionService:BindAction('openShop', openShop, false, Enum.KeyCode.Q)
+
+	ContextActionService:BindAction('openInventory', openInventory, false, Enum.KeyCode.R)
 end
 
 function InventoryAndShopButtons:willUnmount()
@@ -182,13 +205,20 @@ function InventoryAndShopButtons:willUnmount()
 end
 
 local InventoryAndShopButtonsConnected = RoactRodux.connect(function(state)
+	local function isVisible(item)
+		return item.type ~= OBJECT_TYPES.ROOM
+	end
+	local function byId(item)
+		return item.id, item
+	end
+
 	return {
 		items = state.shop.items,
 		equippedItems = state.player.equippedItems,
 		isPlaying = state.player.isPlaying,
 		playerSlotsCount = state.player.playerSlotsCount,
 		isGhosting = state.player.isGhosting,
-		inventory = state.inventory,
+		inventory = M.map(M.filter(state.inventory, isVisible), byId),
 	}
 end)(InventoryAndShopButtons)
 

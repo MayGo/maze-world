@@ -120,6 +120,12 @@ function GameDatastore:unsetEquippedPet(player, id)
 	end)
 end
 
+function GameDatastore:unsetAllEquippedPet(player)
+	local datastore = DataStore2(STORE_EQUIPPED, player)
+
+	datastore:Set({})
+end
+
 ----
 
 function GameDatastore:getLastLogin(player)
