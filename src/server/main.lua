@@ -53,6 +53,7 @@ local addLeaderboardItems = require(Modules.src.actions.leaderboards.addLeaderbo
 local RoomsFolder = Place:findFirstChild('Rooms')
 
 local TagItem = require(Modules.src.TagItem)
+local TagItemOnce = require(Modules.src.TagItemOnce)
 
 return function(context)
 	local reducer = Rodux.combineReducers(Dict.join(commonReducers, serverReducers))
@@ -419,7 +420,7 @@ return function(context)
 		hit.parent.Humanoid.Health = 0
 	end)
 
-	TagItem.create(nil, 'CoinBrick', function(player, hit, part)
+	TagItemOnce.create(nil, 'CoinBrick', function(player, hit, part)
 		if part:FindFirstChild('itemId') then
 			logger:d('Player got coin with value: ' .. part.itemId.Value)
 
