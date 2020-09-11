@@ -66,8 +66,8 @@ function Game:render(props)
 	children['FinishScreenContainer'] = createElement(
 		'Frame',
 		{
-			Size = UDim2.new(0.8, 0, 0.6, 0),
-			Position = UDim2.new(0.5, 0, 0.5, 0),
+			Size = UDim2.new(0.8, 0, 0.9, 0),
+			Position = UDim2.new(0.5, 0, 0.5, -50),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			BackgroundTransparency = 1,
 		},

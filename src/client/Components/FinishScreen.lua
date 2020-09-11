@@ -29,11 +29,9 @@ function FinishScreen:render()
 		return nil
 	end
 
-	local size = Vector2.new(200, 200)
 	local title = 'FINISHERS'
 
 	local playersList = createElement(TextListWithHeader, {
-		size = size,
 		title = title,
 		[Roact.Children] = createElement(DynamicTable, {
 			items = self.props.playersPlaying,

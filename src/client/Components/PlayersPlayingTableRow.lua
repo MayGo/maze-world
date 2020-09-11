@@ -67,7 +67,7 @@ function PlayersPlayingTableRow:render()
 
 	return createElement(
 		Frame,
-		{ LayoutOrder = finishTime },
+		{ LayoutOrder = finishTime and finishTime or 1999999999 },
 		{
 			Name = createElement(TextLabel, {
 				LayoutOrder = 1,
