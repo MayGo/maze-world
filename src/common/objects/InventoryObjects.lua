@@ -156,7 +156,7 @@ local RoomObjects = {
 		config = {
 			width = 10,
 			height = 10,
-			prizeCoins = 100,
+			prizeCoins = 250,
 			playTime = 3 * 60,
 		},
 	},
@@ -167,7 +167,7 @@ local RoomObjects = {
 		config = {
 			width = 15,
 			height = 15,
-			prizeCoins = 300,
+			prizeCoins = 2000,
 			playTime = 5 * 60,
 		},
 	},
@@ -178,7 +178,7 @@ local RoomObjects = {
 		config = {
 			width = 20,
 			height = 20,
-			prizeCoins = 1000,
+			prizeCoins = 10000,
 			playTime = 10 * 60,
 		},
 	},
@@ -200,7 +200,7 @@ local RoomObjects = {
 		config = {
 			width = 50,
 			height = 50,
-			prizeCoins = 50000,
+			prizeCoins = 600000,
 			playTime = 40 * 60,
 		},
 	},
@@ -211,7 +211,7 @@ local RoomObjects = {
 		config = {
 			width = 70,
 			height = 70,
-			prizeCoins = 300000,
+			prizeCoins = 4000000,
 			playTime = 60 * 60,
 		},
 	},
@@ -222,7 +222,7 @@ local RoomObjects = {
 		config = {
 			width = 81,
 			height = 81,
-			prizeCoins = 5000000,
+			prizeCoins = 20000000,
 			playTime = 3 * 60 * 60,
 		},
 	},

@@ -152,6 +152,8 @@ local function rooms(state, action)
         local newRoom = Dict.join(state[roomId], {
             startTime = action.startTime,
             endTime = None,
+            playersWaiting = {},
+        
             playersPlaying = playersStarting
         })
 
