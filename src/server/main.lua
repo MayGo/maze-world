@@ -484,4 +484,10 @@ return function(context)
 			logger:d(player.Name .. ' did not purchase game pass with ID ' .. productId)
 		end
 	end)
+
+	Players.PlayerRemoving:Connect(function(player)
+		logger:d(player.Name .. ' left the game!')
+		local playerId = tostring(player.UserId)
+		RoomManager:removePlayerCollisionGroup(playerId)
+	end)
 end

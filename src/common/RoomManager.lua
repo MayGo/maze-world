@@ -4,7 +4,7 @@ local logger = require(Modules.src.utils.Logger)
 local InventoryObjects = require(Modules.src.objects.InventoryObjects)
 local RoomObjects = InventoryObjects.RoomObjects
 local PhysicsService = game:GetService('PhysicsService')
-local GhostAbility = require(Modules.src.GhostAbility)
+local CollisionGroup = require(Modules.src.CollisionGroup)
 
 local M = require(Modules.M)
 
@@ -19,7 +19,7 @@ function RoomManager:initCollisionGroups()
 	function initRoomGroups(room)
 		local groupName = RoomManager:getRoomCollisionGroup(room)
 
-		PhysicsService:CreateCollisionGroup(groupName)
+		CollisionGroup:getOrCreateGroupId(groupName)
 		PhysicsService:CollisionGroupSetCollidable('Default', groupName, true)
 
 		local roomPart = RoomManager:findRoomPart(room)
@@ -30,7 +30,7 @@ function RoomManager:initCollisionGroups()
 			if lockPlaceholder then
 				local lockPart = lockPlaceholder:FindFirstChild('Lock')
 
-				GhostAbility:setCollisionGroupRecursive(lockPart, groupName)
+				CollisionGroup:setCollisionGroupRecursive(lockPart, groupName)
 			end
 		end
 	end
@@ -40,7 +40,12 @@ end
 
 function RoomManager:initPlayerCollisionGroup(playerId)
 	logger:d('Init player collisigon group ' .. playerId)
-	PhysicsService:CreateCollisionGroup(playerId)
+	CollisionGroup:getOrCreateGroupId(playerId)
+end
+
+function RoomManager:removePlayerCollisionGroup(playerId)
+	logger:d('Remove player collisigon group ' .. playerId)
+	PhysicsService:RemoveCollisionGroup(playerId)
 end
 
 -- TODO use this everywehere else also
@@ -69,7 +74,7 @@ function RoomManager:addToCharacter(character, inventory, playerId)
 		return
 	end
 
-	GhostAbility:setCollisionGroupRecursive(character, playerId)
+	CollisionGroup:setCollisionGroupRecursive(character, playerId)
 
 	function applyRoomLocks(room)
 		local hasRoom = inventory[room.id]

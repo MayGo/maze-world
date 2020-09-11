@@ -2,13 +2,14 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local PhysicsService = game:GetService('PhysicsService')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
+local CollisionGroup = require(Modules.src.CollisionGroup)
 
 local GhostAbility = {}
 local GHOST_GROUP = 'Ghost'
 
 function GhostAbility:initCollisionGroup()
 	logger.d('Initializing Ghost collision group')
-	PhysicsService:CreateCollisionGroup(GHOST_GROUP)
+	CollisionGroup:getOrCreateGroupId(GHOST_GROUP)
 	PhysicsService:CollisionGroupSetCollidable('Default', GHOST_GROUP, false)
 end
 
@@ -17,7 +18,7 @@ function GhostAbility:getGhostCollisionGroupId()
 	return ok and groupId or nil
 end
 function GhostAbility:setGhostCollisionGroup(char)
-	GhostAbility:setCollisionGroupRecursive(char, GHOST_GROUP)
+	CollisionGroup:setCollisionGroupRecursive(char, GHOST_GROUP)
 end
 
 function GhostAbility:setCollisionGroupRecursive(object, groupName)
@@ -25,7 +26,7 @@ function GhostAbility:setCollisionGroupRecursive(object, groupName)
 		PhysicsService:SetPartCollisionGroup(object, groupName)
 	end
 	for _, child in ipairs(object:GetChildren()) do
-		GhostAbility:setCollisionGroupRecursive(child, groupName)
+		CollisionGroup:setCollisionGroupRecursive(child, groupName)
 	end
 end
 
