@@ -52,15 +52,15 @@ local function connectPlayer(player)
 			local state = store:getState()
 			local inventory = state.playerInventories[playerId]
 			RoomManager:addToCharacter(character, inventory, playerId)
-		end)
-
-		player.CharacterAdded:Connect(function(character)
-			logger:d('CharacterAdded:', character)
 
 			local petIds = GameDatastore:getEquippedPets(player)
 
 			logger:d('DataStore:Pet Equipped status updated to: ', petIds)
 			store:dispatch(equipPlayer(player, petIds))
+		end)
+
+		player.CharacterAdded:Connect(function(character)
+			logger:d('CharacterAdded:', character)
 
 			character:WaitForChild('Humanoid').Died:Connect(function()
 				logger:i(player.Name .. ' has died!')
