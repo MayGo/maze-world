@@ -106,9 +106,12 @@ function Pet:animate()
 	local fl = 0
 
 	local part = self.petModel.PrimaryPart
+	part.BodyGyro.MaxTorque = Vector3.new(4000000, 4000000, 4000000)
+	part.BodyPosition.P = 100000
+
 	local character = self.character
-	local head = self.character:FindFirstChild('Head')
-	local humanoid = self.character:FindFirstChild('Humanoid')
+	local head = character:FindFirstChild('Head')
+	local humanoid = character:FindFirstChild('Humanoid')
 
 	while self.started do
 		if not sw then
@@ -130,7 +133,7 @@ function Pet:animate()
 				local circlePoint = GetPointOnCircle(5, rotationOffset)
 
 				part.BodyPosition.Position = Vector3.new(cf.x, cf.y, cf.z) + circlePoint
-				part.BodyGyro.MaxTorque = Vector3.new(40000, 40000, 40000)
+
 				part.BodyGyro.CFrame = head.CFrame * CFrame.new(3, 0, -3)
 				--break
 			else
