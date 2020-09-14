@@ -10,6 +10,9 @@ local RoundButton = require(clientSrc.Components.common.RoundButton)
 local Frame = require(clientSrc.Components.common.Frame)
 local Support = require(Modules.src.utils.SupportLibrary)
 local UIPadding = require(clientSrc.Components.common.UIPadding)
+local EquipStatusCell = require(clientSrc.Components.EquipStatusCell)
+local InventoryObjects = require(Modules.src.objects.InventoryObjects)
+local OBJECT_TYPES = InventoryObjects.OBJECT_TYPES
 
 local createElement = Roact.createElement
 
@@ -92,7 +95,11 @@ function Shop:render()
 
 	local itemList = M.filter(props.items, isVisible)
 
-	local shopItems = { UIPadding = createElement(UIPadding, { padding = 10 }) }
+	local isPetTab = activeTab == OBJECT_TYPES.PET
+	local shopItems = {
+		UIPadding = createElement(UIPadding, { padding = 10 }),
+		isPetTab and createElement(EquipStatusCell) or nil,
+	}
 
 	local cellWidth = 0.2
 	local buttonHeight = 0.2

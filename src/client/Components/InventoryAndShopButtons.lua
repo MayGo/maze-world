@@ -15,7 +15,6 @@ local RoundButton = require(clientSrc.Components.common.RoundButton)
 local Frame = require(clientSrc.Components.common.Frame)
 local UIPadding = require(clientSrc.Components.common.UIPadding)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
-local EquipStatusCell = require(clientSrc.Components.EquipStatusCell)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
@@ -108,12 +107,6 @@ function InventoryAndShopButtons:render()
 		unequipItem = function(itemId)
 			self.api:unequipItem(itemId)
 		end,
-		[Roact.Children] = {
-			closeButtonWithCount = createElement(
-				EquipStatusCell,
-				{ closeInventoryAndShop = closeInventoryAndShop }
-			),
-		},
 	}
 
 	return createElement(

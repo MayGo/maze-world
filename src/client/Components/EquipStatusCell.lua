@@ -2,17 +2,11 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 -- local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
-local Support = require(Modules.src.utils.SupportLibrary)
-local ContextActionService = game:GetService('ContextActionService')
 
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
 local M = require(Modules.M)
-local Shop = require(clientSrc.Components.Shop)
-local UICorner = require(clientSrc.Components.common.UICorner)
-
 local RoundButton = require(clientSrc.Components.common.RoundButton)
-local Frame = require(clientSrc.Components.common.Frame)
 local UIPadding = require(clientSrc.Components.common.UIPadding)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
 
@@ -33,7 +27,6 @@ function EquipStatusCell:render()
 	local props = self.props
 	local playerSlotsCount = props.playerSlotsCount
 	local equippedItems = self.props.equippedItems
-	local closeInventoryAndShop = self.props.closeInventoryAndShop
 
 	local unequipAll = function()
 		self.api:unequipAll()
@@ -50,11 +43,11 @@ function EquipStatusCell:render()
 	local slotsCount = createElement(
 		TextLabel,
 		{
-			Size = UDim2.new(1, 0, 0.35, 0),
-			Position = UDim2.new(0, 0, 0.5, 0),
+			Size = UDim2.new(1, 0, 0.65, 0),
+			Position = UDim2.new(0, 0, 0, 0),
 			TextScaled = true,
 			TextSize = 30,
-			AnchorPoint = Vector2.new(0, 0.5),
+			AnchorPoint = Vector2.new(0, 0),
 			TextXAlignment = Enum.TextXAlignment.Center,
 			TextYAlignment = Enum.TextYAlignment.Bottom,
 			Text = 'Equipped ' .. #equippedItems .. ' / ' .. playerSlotsCount,
@@ -70,7 +63,7 @@ function EquipStatusCell:render()
 			Size = UDim2.new(0, 100, 0, 100),
 			ZIndex = 1,
 		},
-		{ closeButton, slotsCount, unequipAllButton }
+		{ slotsCount, unequipAllButton }
 	)
 
 	return closeButtonWithCount
