@@ -218,7 +218,7 @@ function ShopItem:render()
 		Frame,
 		{
 			Layout = 'List',
-			Padding = UDim.new(0, 1),
+			Padding = UDim.new(0, 0),
 			BackgroundTransparency = 0.7,
 			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 			HorizontalAlignment = Enum.HorizontalAlignment.Center,

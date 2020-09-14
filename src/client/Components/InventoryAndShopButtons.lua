@@ -15,6 +15,7 @@ local RoundButton = require(clientSrc.Components.common.RoundButton)
 local Frame = require(clientSrc.Components.common.Frame)
 local UIPadding = require(clientSrc.Components.common.UIPadding)
 local TextLabel = require(clientSrc.Components.common.TextLabel)
+local EquipStatusCell = require(clientSrc.Components.EquipStatusCell)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
@@ -86,51 +87,9 @@ function InventoryAndShopButtons:render()
 		end)
 	end
 
-	local closeButton = createElement(RoundButton, {
-		icon = 'close',
-		onClicked = closeInventoryAndShop,
-		Size = UDim2.new(0.35, 0, 0.35, 0),
-	})
-
-	local unequipAll = function()
-		self.api:unequipAll()
-	end
-
-	local unequipAllButton = createElement(RoundButton, {
-		Text = 'Unequip all',
-		onClicked = unequipAll,
-		Size = UDim2.new(0.8, 0, 0.35, 0),
-		AnchorPoint = Vector2.new(0.5, 1),
-		Position = UDim2.new(0.5, 0, 1, 0),
-	})
-
-	local slotsCount = createElement(
-		TextLabel,
-		{
-			Size = UDim2.new(1, 0, 0.35, 0),
-			Position = UDim2.new(0, 0, 0.5, 0),
-			TextScaled = true,
-			TextSize = 30,
-			AnchorPoint = Vector2.new(0, 0.5),
-			TextXAlignment = Enum.TextXAlignment.Center,
-			TextYAlignment = Enum.TextYAlignment.Bottom,
-			Text = 'Equipped ' .. #equippedItems .. ' / ' .. playerSlotsCount,
-		},
-		{ UIPadding = createElement(UIPadding, { padding = 10 }) }
-	)
-
-	local closeButtonWithCount = createElement(
-		'Frame',
-		{
-			BackgroundTransparency = 1,
-			AnchorPoint = Vector2.new(0, 0),
-			Size = UDim2.new(0, 100, 0, 100),
-			ZIndex = 1,
-		},
-		{ closeButton, slotsCount, unequipAllButton }
-	)
-
 	local shopProps = {
+		tabs = OBJECT_TYPES,
+		closeClick = closeInventoryAndShop,
 		equippedItems = self.props.equippedItems,
 		isGhosting = self.props.isGhosting,
 		inventory = inventory,
@@ -149,7 +108,12 @@ function InventoryAndShopButtons:render()
 		unequipItem = function(itemId)
 			self.api:unequipItem(itemId)
 		end,
-		[Roact.Children] = { closeButtonWithCount },
+		[Roact.Children] = {
+			closeButtonWithCount = createElement(
+				EquipStatusCell,
+				{ closeInventoryAndShop = closeInventoryAndShop }
+			),
+		},
 	}
 
 	return createElement(
@@ -198,10 +162,6 @@ function InventoryAndShopButtons:didMount()
 	ContextActionService:BindAction('openShop', openShop, false, Enum.KeyCode.Q)
 
 	ContextActionService:BindAction('openInventory', openInventory, false, Enum.KeyCode.R)
-end
-
-function InventoryAndShopButtons:willUnmount()
-	self._connection:Disconnect()
 end
 
 local InventoryAndShopButtonsConnected = RoactRodux.connect(function(state)

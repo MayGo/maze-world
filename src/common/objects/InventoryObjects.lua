@@ -8,11 +8,11 @@ local HIGH_JUMP_ID = GamePasses.HIGH_JUMP_ID
 local GHOST_MODE_ID = GamePasses.GHOST_MODE_ID
 
 local OBJECT_TYPES = {
-	GAME_PASS = 'GAME_PASS',
-	PET = 'PET',
-	COLLECTABLE = 'COLLECTABLE',
-	COIN = 'COIN',
-	ROOM = 'ROOM',
+	GAME_PASS = 'Game Passes',
+	PET = 'Pets',
+	COLLECTABLE = 'Collectables',
+	COIN = 'Coins',
+	ROOM = 'Rooms',
 }
 local PET_TYPES = {
 	TRAIL = 'TRAIL',
