@@ -1,10 +1,10 @@
 {
-  "devDependencies": {
-    "@prettier/plugin-lua": "^0.0.1",
-    "prettier": "^1.19.1"
-  },
-  "scripts":{
-    "model": "remodel run get-models.lua",
-    "start":"./script/build-and-open.sh"
-  }
+    "devDependencies": {
+        "@prettier/plugin-lua": "^0.0.1",
+        "prettier": "^1.19.1"
+    },
+    "scripts": {
+        "model": "remodel run get-models.lua",
+        "start": "./script/build-and-open.sh"
+    }
 }

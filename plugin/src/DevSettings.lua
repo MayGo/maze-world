@@ -27,7 +27,7 @@ local VALUES = {
 	},
 }
 
-local CONTAINER_NAME = 'MazeGeneratorDevSettings' .. Config.codename
+local CONTAINER_NAME = 'RootDevSettings' .. Config.codename
 
 local function getValueContainer()
 	return game:FindFirstChild(CONTAINER_NAME)

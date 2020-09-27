@@ -1,8 +1,8 @@
-local MazeGenerator = script:FindFirstAncestor('MazeGenerator')
-local Plugin = MazeGenerator.Plugin
+local Root = script:FindFirstAncestor('MazeGenerator')
+local Plugin = Root.Plugin
 
-local Roact = require(MazeGenerator.Roact)
-local Log = require(MazeGenerator.Log)
+local Roact = require(Root.Roact)
+local Log = require(Root.Log)
 
 local Assets = require(Plugin.Assets)
 local Config = require(Plugin.Config)
@@ -63,10 +63,7 @@ function App:init()
 	)
 
 	self.dockWidget =
-		self.props.plugin:CreateDockWidgetPluginGui(
-			'MazeGenerator-' .. self.displayedVersion,
-			widgetInfo
-		)
+		self.props.plugin:CreateDockWidgetPluginGui('Root-' .. self.displayedVersion, widgetInfo)
 	self.dockWidget.Name = 'Maze Generator ' .. self.displayedVersion
 	self.dockWidget.Title = 'Maze Generator ' .. self.displayedVersion
 	self.dockWidget.AutoLocalize = false
@@ -125,7 +122,7 @@ function App:render()
 end
 
 function App:didMount()
-	Log.trace('MazeGenerator {} initializing', self.displayedVersion)
+	Log.trace('Root {} initializing', self.displayedVersion)
 
 	preloadAssets()
 end

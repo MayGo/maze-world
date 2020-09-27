@@ -19,11 +19,11 @@ local app =
 		Roact.createElement(
 			PluginSettings.StudioProvider,
 			{ plugin = plugin },
-			{ MazeGeneratorUI = Roact.createElement(App, { plugin = plugin }) }
+			{ RootUI = Roact.createElement(App, { plugin = plugin }) }
 		),
 	})
 
-local tree = Roact.mount(app, nil, 'MazeGenerator UI')
+local tree = Roact.mount(app, nil, 'Root UI')
 
 plugin.Unloading:Connect(function()
 	Roact.unmount(tree)

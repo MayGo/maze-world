@@ -68,7 +68,12 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 
 # TODO
 
--   [ ] Ontouch not triggered always when going through coins fast
+-   [ ] player died registered in playing list? Yes, but not while Game is starting.
+-   [ ] to long wait time when timer goes to 00:00
+-   [ ] Mobile, is there leaderboard
+-   [ ] Mazes have two short times
+-   [ ] Make prizes a bit bigger
+-   [ ] Don't add coinpacks too oftern to mazes
 -   [ ] Add tabs to inventory and shop
 -   [ ] Add more collectable item: eggs
 -   [ ] Add Chests, Treasures (more coins)

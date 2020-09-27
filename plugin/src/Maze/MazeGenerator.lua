@@ -303,11 +303,11 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, locationPart, wal
 	end
 end
 
-local MazeGenerator = {}
+local Root = {}
 
 local mazeFolderName = 'Maze'
 
-function MazeGenerator:generate(map, width, height)
+function Root:generate(map, width, height)
 	warn('Generating maze  width:' .. width .. ', height:' .. height)
 	local locationPart = map
 
@@ -335,4 +335,4 @@ function MazeGenerator:generate(map, width, height)
 	draw_maze(maze, blockWidth, blockDepth, mazeFolder, locationPart, wallFolder)
 end
 
-return MazeGenerator
+return Root

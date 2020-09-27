@@ -2,9 +2,9 @@
 	Persistent plugin settings that can be accessed via Roact context.
 ]]
 
-local MazeGenerator = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGenerator')
 
-local Roact = require(MazeGenerator.Roact)
+local Roact = require(Root.Roact)
 
 local defaultSettings = {
 	openScriptsExternally = false,
@@ -18,10 +18,10 @@ function Settings.fromPlugin(plugin)
 	local values = {}
 
 	for name, defaultValue in pairs(defaultSettings) do
-		local savedValue = plugin:GetSetting('MazeGenerator_' .. name)
+		local savedValue = plugin:GetSetting('Root_' .. name)
 
 		if savedValue == nil then
-			plugin:SetSetting('MazeGenerator_' .. name, defaultValue)
+			plugin:SetSetting('Root_' .. name, defaultValue)
 			values[name] = defaultValue
 		else
 			values[name] = savedValue
@@ -47,7 +47,7 @@ function Settings:get(name)
 end
 
 function Settings:set(name, value)
-	self.__plugin:SetSetting('MazeGenerator_' .. name, value)
+	self.__plugin:SetSetting('Root_' .. name, value)
 	self.__values[name] = value
 
 	for callback in pairs(self.__updateListeners) do
