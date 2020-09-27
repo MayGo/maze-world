@@ -1,7 +1,6 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
-local Dict = require(Modules.src.utils.Dict)
 local M = require(Modules.M)
 local Maze = require(script.Parent.Maze)
 local Models = ReplicatedStorage:WaitForChild('Models')

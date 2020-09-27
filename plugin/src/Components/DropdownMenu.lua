@@ -2,7 +2,8 @@ local Root = script:FindFirstAncestor('MazeGenerator')
 local Plugin = Root.Plugin
 
 local Roact = require(Root.Roact)
-local FitList = require(Plugin.Components.FitList)
+local M = require(Root.M)
+local FitScrollingFrame = require(Plugin.Components.FitScrollingFrame)
 
 local RoundButton = require(Plugin.Components.RoundButton)
 local DropdownItem = require(Plugin.Components.DropdownMenuItem)
@@ -13,10 +14,20 @@ local function noop()
 end
 
 function DropdownMenu:init()
-	self:setState({
-		selectedIndex = 1,
-		expanded = false,
-	})
+	local value = self.props.value
+	local options = self.props.options
+
+	if value then
+		self:setState({
+			selectedIndex = M.find(options, value.Name),
+			expanded = false,
+		})
+	else
+		self:setState({
+			selectedIndex = 1,
+			expanded = false,
+		})
+	end
 end
 
 function DropdownMenu:toggle()
@@ -49,11 +60,11 @@ function DropdownMenu:render()
 	end
 
 	local menu = Roact.createElement(
-		FitList,
+		FitScrollingFrame,
 		{
 			fitAxes = 'Y',
 			containerProps = {
-				Size = UDim2.new(1, 0, 0, 0),
+				Size = UDim2.new(1, 0, 0, 400),
 				Position = UDim2.new(0, 0, 1, 4),
 				color = color,
 				Visible = expanded,

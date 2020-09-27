@@ -11,13 +11,11 @@ local preloadAssets = require(Plugin.preloadAssets)
 local strict = require(Plugin.strict)
 local MazeGenerator = require(Plugin.Maze.MazeGenerator)
 
-local ConnectPanel = require(Plugin.Components.ConnectPanel)
-local ConnectingPanel = require(Plugin.Components.ConnectingPanel)
-local ConnectionActivePanel = require(Plugin.Components.ConnectionActivePanel)
-local ErrorPanel = require(Plugin.Components.ErrorPanel)
-local SettingsPanel = require(Plugin.Components.SettingsPanel)
+local SettingsForm = require(Plugin.Components.SettingsForm)
 
 local e = Roact.createElement
+
+local selection = game:GetService('Selection')
 
 local AppStatus = strict('AppStatus', {
 	NotStarted = 'NotStarted',
@@ -78,53 +76,22 @@ function App:init()
 end
 
 function App:generateMaze(settings)
-	MazeGenerator:generate(
-		workspace.Baseplate,
-		settings.width,
-		settings.height,
-		settings.wallMaterial,
-		settings.groundMaterial
-	)
+	MazeGenerator:generate(settings)
 end
 
 function App:render()
 	local children
 
-	if self.state.appStatus == AppStatus.NotStarted then
-		children = { ConnectPanel = e(ConnectPanel, {
-			generateMaze = function(settings)
-				self:generateMaze(settings)
-			end,
-			cancel = function()
-				Log.trace('Canceling session configuration')
+	children = { SettingsForm = e(SettingsForm, {
+		generateMaze = function(settings)
+			self:generateMaze(settings)
+		end,
+		cancel = function()
+			Log.trace('Canceling session configuration')
 
-				self:setState({ appStatus = AppStatus.NotStarted })
-			end,
-		}) }
-	elseif self.state.appStatus == AppStatus.Connecting then
-		children = { ConnectingPanel = e(ConnectingPanel) }
-	elseif self.state.appStatus == AppStatus.Connected then
-		children = { ConnectionActivePanel = e(ConnectionActivePanel, { stopSession = function()
-			Log.trace('Disconnecting session')
-
-			self.serveSession:stop()
-			self.serveSession = nil
 			self:setState({ appStatus = AppStatus.NotStarted })
-
-			Log.trace('Session terminated by user')
-		end }) }
-	elseif self.state.appStatus == AppStatus.Settings then
-		children = { e(SettingsPanel, { back = function()
-			self:setState({ appStatus = AppStatus.NotStarted })
-		end }) }
-	elseif self.state.appStatus == AppStatus.Error then
-		children = { ErrorPanel = e(ErrorPanel, {
-			errorMessage = self.state.errorMessage,
-			onDismiss = function()
-				self:setState({ appStatus = AppStatus.NotStarted })
-			end,
-		}) }
-	end
+		end,
+	}) }
 
 	return e(Roact.Portal, { target = self.dockWidget }, children)
 end

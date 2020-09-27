@@ -1,7 +1,6 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
-local logger = require(Modules.src.utils.Logger)
-local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
+-- local logger = require(Modules.src.utils.Logger)
 
 local Roact = require(Modules.Roact)
 local Support = require(Modules.src.utils.SupportLibrary)
