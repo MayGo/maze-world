@@ -4,8 +4,6 @@ local M = require(Root.M)
 local Plugin = Root.Plugin
 local FitList = require(Plugin.Components.FitList)
 local FitText = require(Plugin.Components.FitText)
-local FormButton = require(Plugin.Components.FormButton)
-local FormTextInput = require(Plugin.Components.FormTextInput)
 
 local e = Roact.createElement
 
