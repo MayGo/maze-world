@@ -1,12 +1,11 @@
-local Rojo = script:FindFirstAncestor('MazeGenerator')
-local Plugin = Rojo.Plugin
+local MazeGenerator = script:FindFirstAncestor('MazeGenerator')
+local Plugin = MazeGenerator.Plugin
 
-local Roact = require(Rojo.Roact)
-local Log = require(Rojo.Log)
+local Roact = require(MazeGenerator.Roact)
+local Log = require(MazeGenerator.Log)
 
 local Assets = require(Plugin.Assets)
 local Config = require(Plugin.Config)
-local DevSettings = require(Plugin.DevSettings)
 local Version = require(Plugin.Version)
 local preloadAssets = require(Plugin.preloadAssets)
 local strict = require(Plugin.strict)
@@ -18,39 +17,6 @@ local ErrorPanel = require(Plugin.Components.ErrorPanel)
 local SettingsPanel = require(Plugin.Components.SettingsPanel)
 
 local e = Roact.createElement
-
-local function showUpgradeMessage(lastVersion)
-	local message =
-		('Rojo detected an upgrade from version %s to version %s.' .. '\nMake sure you have also upgraded your server!' .. '\n\nRojo plugin version %s is intended for use with server version %s.'):format(
-			Version.display(lastVersion),
-			Version.display(Config.version),
-			Version.display(Config.version),
-			Config.expectedServerVersionString
-		)
-
-	Log.info(message)
-end
-
---[[
-	Check if the user is using a newer version of Rojo than last time. If they
-	are, show them a reminder to make sure they check their server version.
-]]
-local function checkUpgrade(plugin)
-	-- When developing Rojo, there's no use in doing version checks
-	if DevSettings:isEnabled() then return end
-
-	local lastVersion = plugin:GetSetting('LastRojoVersion')
-
-	if lastVersion then
-		local wasUpgraded = Version.compare(Config.version, lastVersion) == 1
-
-		if wasUpgraded then
-			showUpgradeMessage(lastVersion)
-		end
-	end
-
-	plugin:SetSetting('LastRojoVersion', Config.version)
-end
 
 local AppStatus = strict('AppStatus', {
 	NotStarted = 'NotStarted',
@@ -113,16 +79,16 @@ function App:init()
 	)
 end
 
+function App:generateMaze()
+end
+
 function App:render()
 	local children
 
 	if self.state.appStatus == AppStatus.NotStarted then
 		children = { ConnectPanel = e(ConnectPanel, {
-			startSession = function(address, port, settings)
-				self:startSession(address, port, settings)
-			end,
-			openSettings = function()
-				self:setState({ appStatus = AppStatus.Settings })
+			generateMaze = function(settings)
+				self:generateMaze(settings)
 			end,
 			cancel = function()
 				Log.trace('Canceling session configuration')
@@ -159,9 +125,8 @@ function App:render()
 end
 
 function App:didMount()
-	Log.trace('Rojo {} initializing', self.displayedVersion)
+	Log.trace('MazeGenerator {} initializing', self.displayedVersion)
 
-	checkUpgrade(self.props.plugin)
 	preloadAssets()
 end
 

@@ -2,7 +2,7 @@ local Roact = require(script:FindFirstAncestor('MazeGenerator').Roact)
 
 local Plugin = script:FindFirstAncestor('Plugin')
 
-local RojoFooter = require(Plugin.Components.RojoFooter)
+local Footer = require(Plugin.Components.Footer)
 local Theme = require(Plugin.Components.Theme)
 
 local e = Roact.createElement
@@ -35,7 +35,7 @@ function Panel:render()
 					},
 					self.props[Roact.Children]
 				),
-				Footer = e(RojoFooter),
+				Footer = e(Footer),
 			}
 		)
 	end)

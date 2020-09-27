@@ -1,16 +1,16 @@
 local Config = require(script.Parent.Config)
 
 local Environment = {
-	User = "User",
-	Dev = "Dev",
-	Test = "Test",
+	User = 'User',
+	Dev = 'Dev',
+	Test = 'Test',
 }
 
 local DEFAULT_ENVIRONMENT = Config.isDevBuild and Environment.Dev or Environment.User
 
 local VALUES = {
 	LogLevel = {
-		type = "IntValue",
+		type = 'IntValue',
 		values = {
 			[Environment.User] = 2,
 			[Environment.Dev] = 4,
@@ -18,7 +18,7 @@ local VALUES = {
 		},
 	},
 	TypecheckingEnabled = {
-		type = "BoolValue",
+		type = 'BoolValue',
 		values = {
 			[Environment.User] = false,
 			[Environment.Dev] = true,
@@ -27,7 +27,7 @@ local VALUES = {
 	},
 }
 
-local CONTAINER_NAME = "RojoDevSettings" .. Config.codename
+local CONTAINER_NAME = 'MazeGeneratorDevSettings' .. Config.codename
 
 local function getValueContainer()
 	return game:FindFirstChild(CONTAINER_NAME)
@@ -72,12 +72,12 @@ local function setStoredValue(name, kind, value)
 end
 
 local function createAllValues(environment)
-	assert(Environment[environment] ~= nil, "Invalid environment")
+	assert(Environment[environment] ~= nil, 'Invalid environment')
 
 	valueContainer = getValueContainer()
 
 	if valueContainer == nil then
-		valueContainer = Instance.new("Folder")
+		valueContainer = Instance.new('Folder')
 		valueContainer.Name = CONTAINER_NAME
 		valueContainer.Parent = game
 	end
@@ -88,7 +88,7 @@ local function createAllValues(environment)
 end
 
 local function getValue(name)
-	assert(VALUES[name] ~= nil, "Invalid DevSettings name")
+	assert(VALUES[name] ~= nil, 'Invalid DevSettings name')
 
 	local stored = getStoredValue(name)
 
@@ -125,11 +125,11 @@ function DevSettings:isEnabled()
 end
 
 function DevSettings:getLogLevel()
-	return getValue("LogLevel")
+	return getValue('LogLevel')
 end
 
 function DevSettings:shouldTypecheck()
-	return getValue("TypecheckingEnabled")
+	return getValue('TypecheckingEnabled')
 end
 
 function _G.ROJO_DEV_CREATE()

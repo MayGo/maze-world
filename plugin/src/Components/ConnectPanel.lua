@@ -1,7 +1,7 @@
-local Rojo = script:FindFirstAncestor('MazeGenerator')
-local Plugin = Rojo.Plugin
+local MazeGenerator = script:FindFirstAncestor('MazeGenerator')
+local Plugin = MazeGenerator.Plugin
 
-local Roact = require(Rojo.Roact)
+local Roact = require(MazeGenerator.Roact)
 
 local Config = require(Plugin.Config)
 
@@ -19,14 +19,13 @@ local ConnectPanel = Roact.Component:extend('ConnectPanel')
 
 function ConnectPanel:init()
 	self:setState({
-		address = '',
-		port = '',
+		height = 0,
+		width = 0,
 	})
 end
 
 function ConnectPanel:render()
-	local startSession = self.props.startSession
-	local openSettings = self.props.openSettings
+	local generateMaze = self.props.generateMaze
 
 	return Theme.with(function(theme)
 		return PluginSettings.with(function(settings)
@@ -55,7 +54,7 @@ function ConnectPanel:render()
 						},
 					},
 					{
-						Address = e(
+						Height = e(
 							FitList,
 							{
 								containerProps = {
@@ -72,25 +71,25 @@ function ConnectPanel:render()
 									TextXAlignment = Enum.TextXAlignment.Left,
 									Font = theme.TitleFont,
 									TextSize = 20,
-									Text = 'Address',
+									Text = 'Height in blocks',
 									TextColor3 = theme.Text1,
 								}),
 								Input = e(FormTextInput, {
 									layoutOrder = 2,
 									width = UDim.new(0, 220),
-									value = self.state.address,
-									placeholderValue = Config.defaultHost,
+									value = self.state.height,
+									placeholderValue = Config.defaultHeight,
 									onValueChange = function(newValue)
-										self:setState({ address = newValue })
+										self:setState({ height = newValue })
 									end,
 								}),
 							}
 						),
-						Port = e(
+						Width = e(
 							FitList,
 							{
 								containerProps = {
-									LayoutOrder = 2,
+									LayoutOrder = 1,
 									BackgroundTransparency = 1,
 								},
 								layoutProps = { Padding = UDim.new(0, 4) },
@@ -103,16 +102,16 @@ function ConnectPanel:render()
 									TextXAlignment = Enum.TextXAlignment.Left,
 									Font = theme.TitleFont,
 									TextSize = 20,
-									Text = 'Port',
+									Text = 'Width in blocks',
 									TextColor3 = theme.Text1,
 								}),
 								Input = e(FormTextInput, {
 									layoutOrder = 2,
-									width = UDim.new(0, 80),
-									value = self.state.port,
-									placeholderValue = Config.defaultPort,
+									width = UDim.new(0, 220),
+									value = self.state.width,
+									placeholderValue = Config.defaultWidth,
 									onValueChange = function(newValue)
-										self:setState({ port = newValue })
+										self:setState({ width = newValue })
 									end,
 								}),
 							}
@@ -141,35 +140,24 @@ function ConnectPanel:render()
 						},
 					},
 					{ e(FormButton, {
-						layoutOrder = 1,
-						text = 'Settings',
-						secondary = true,
-						onClick = function()
-							if openSettings ~= nil then
-								openSettings()
-							end
-						end,
-					}), e(FormButton, {
 						layoutOrder = 2,
-						text = 'Connect',
+						text = 'Generate',
 						onClick = function()
-							if startSession ~= nil then
-								local address = self.state.address
-								if address:len() == 0 then
-									address = Config.defaultHost
+							if generateMaze ~= nil then
+								local height = self.state.height
+								if height:len() == 0 then
+									height = Config.defaultHeight
 								end
 
-								local port = self.state.port
-								if port:len() == 0 then
-									port = Config.defaultPort
+								local width = self.state.width
+								if width:len() == 0 then
+									width = Config.defaultWidth
 								end
 
-								local sessionOptions = {
-									openScriptsExternally = settings:get('openScriptsExternally'),
-									twoWaySync = settings:get('twoWaySync'),
-								}
-
-								startSession(address, port, sessionOptions)
+								generateMaze({
+									width = width,
+									height = height,
+								})
 							end
 						end,
 					}) }

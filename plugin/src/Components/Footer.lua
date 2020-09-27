@@ -1,7 +1,7 @@
-local Rojo = script:FindFirstAncestor('MazeGenerator')
-local Plugin = Rojo.Plugin
+local MazeGenerator = script:FindFirstAncestor('MazeGenerator')
+local Plugin = MazeGenerator.Plugin
 
-local Roact = require(Rojo.Roact)
+local Roact = require(MazeGenerator.Roact)
 
 local Config = require(Plugin.Config)
 local Version = require(Plugin.Version)
@@ -10,14 +10,14 @@ local Theme = require(Plugin.Components.Theme)
 
 local e = Roact.createElement
 
-local RojoFooter = Roact.Component:extend('RojoFooter')
+local Footer = Roact.Component:extend('Footer')
 
-function RojoFooter:init()
+function Footer:init()
 	self.footerSize, self.setFooterSize = Roact.createBinding(Vector2.new())
 	self.footerVersionSize, self.setFooterVersionSize = Roact.createBinding(Vector2.new())
 end
 
-function RojoFooter:render()
+function Footer:render()
 	return Theme.with(function(theme)
 		return e(
 			'Frame',
@@ -69,4 +69,4 @@ function RojoFooter:render()
 	end)
 end
 
-return RojoFooter
+return Footer

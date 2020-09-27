@@ -6,6 +6,7 @@ return strict('Config', {
 	version = { 1, 0, 0 },
 	expectedServerVersionString = '1.0 or newer',
 	protocolVersion = 3,
-	defaultHost = 'localhost',
+	defaultHeight = 10,
+	defaultWidth = 10,
 	defaultPort = 34872,
 })
