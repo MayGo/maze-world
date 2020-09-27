@@ -9,6 +9,7 @@ local Config = require(Plugin.Config)
 local Version = require(Plugin.Version)
 local preloadAssets = require(Plugin.preloadAssets)
 local strict = require(Plugin.strict)
+local MazeGenerator = require(Plugin.Maze.MazeGenerator)
 
 local ConnectPanel = require(Plugin.Components.ConnectPanel)
 local ConnectingPanel = require(Plugin.Components.ConnectingPanel)
@@ -76,7 +77,14 @@ function App:init()
 	)
 end
 
-function App:generateMaze()
+function App:generateMaze(settings)
+	MazeGenerator:generate(
+		workspace.Baseplate,
+		settings.width,
+		settings.height,
+		settings.wallMaterial,
+		settings.groundMaterial
+	)
 end
 
 function App:render()

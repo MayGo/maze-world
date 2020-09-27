@@ -1,7 +1,6 @@
 local Root = script:FindFirstAncestor('MazeGenerator')
-local Plugin = Root.Plugin
-
 local Roact = require(Root.Roact)
+local Plugin = Root.Plugin
 
 local Config = require(Plugin.Config)
 
@@ -12,6 +11,7 @@ local FitText = require(Plugin.Components.FitText)
 local FormButton = require(Plugin.Components.FormButton)
 local FormTextInput = require(Plugin.Components.FormTextInput)
 local PluginSettings = require(Plugin.Components.PluginSettings)
+local MaterialsDropdown = require(Plugin.Components.MaterialsDropdown)
 
 local e = Roact.createElement
 
@@ -19,21 +19,25 @@ local ConnectPanel = Roact.Component:extend('ConnectPanel')
 
 function ConnectPanel:init()
 	self:setState({
-		height = 0,
-		width = 0,
+		height = Config.defaultWidth,
+		width = Config.defaultWidth,
+		wallMaterial = Enum.Material.Grass,
+		groundMaterial = Enum.Material.Sand,
 	})
 end
 
 function ConnectPanel:render()
 	local generateMaze = self.props.generateMaze
 
+	local textFieldWidth = 200
+
 	return Theme.with(function(theme)
 		return PluginSettings.with(function(settings)
 			return e(Panel, nil, {
 				Layout = e('UIListLayout', {
 					SortOrder = Enum.SortOrder.LayoutOrder,
-					HorizontalAlignment = Enum.HorizontalAlignment.Center,
-					VerticalAlignment = Enum.VerticalAlignment.Center,
+					HorizontalAlignment = Enum.HorizontalAlignment.Left,
+					VerticalAlignment = Enum.VerticalAlignment.Top,
 				}),
 				Inputs = e(
 					FitList,
@@ -43,25 +47,30 @@ function ConnectPanel:render()
 							LayoutOrder = 1,
 						},
 						layoutProps = {
-							FillDirection = Enum.FillDirection.Horizontal,
+							FillDirection = Enum.FillDirection.Vertical,
 							Padding = UDim.new(0, 8),
 						},
 						paddingProps = {
-							PaddingTop = UDim.new(0, 20),
+							PaddingTop = UDim.new(0, 10),
 							PaddingBottom = UDim.new(0, 10),
-							PaddingLeft = UDim.new(0, 24),
-							PaddingRight = UDim.new(0, 24),
+							PaddingLeft = UDim.new(0, 10),
+							PaddingRight = UDim.new(0, 10),
 						},
 					},
 					{
 						Height = e(
 							FitList,
 							{
+								fitAxes = 'Y',
 								containerProps = {
 									LayoutOrder = 1,
 									BackgroundTransparency = 1,
+									Size = UDim2.new(1, 0, 0, 0),
 								},
-								layoutProps = { Padding = UDim.new(0, 4) },
+								layoutProps = {
+									FillDirection = Enum.FillDirection.Horizontal,
+									Padding = UDim.new(0, 10),
+								},
 							},
 							{
 								Label = e(FitText, {
@@ -71,12 +80,13 @@ function ConnectPanel:render()
 									TextXAlignment = Enum.TextXAlignment.Left,
 									Font = theme.TitleFont,
 									TextSize = 20,
-									Text = 'Height in blocks',
+									Text = 'Height',
 									TextColor3 = theme.Text1,
+									MinSize = Vector2.new(textFieldWidth, 0),
 								}),
 								Input = e(FormTextInput, {
 									layoutOrder = 2,
-									width = UDim.new(0, 220),
+									width = UDim.new(0, 70),
 									value = self.state.height,
 									placeholderValue = Config.defaultHeight,
 									onValueChange = function(newValue)
@@ -88,11 +98,16 @@ function ConnectPanel:render()
 						Width = e(
 							FitList,
 							{
+								fitAxes = 'Y',
 								containerProps = {
-									LayoutOrder = 1,
+									LayoutOrder = 2,
 									BackgroundTransparency = 1,
+									Size = UDim2.new(1, 0, 0, 0),
 								},
-								layoutProps = { Padding = UDim.new(0, 4) },
+								layoutProps = {
+									FillDirection = Enum.FillDirection.Horizontal,
+									Padding = UDim.new(0, 10),
+								},
 							},
 							{
 								Label = e(FitText, {
@@ -102,16 +117,89 @@ function ConnectPanel:render()
 									TextXAlignment = Enum.TextXAlignment.Left,
 									Font = theme.TitleFont,
 									TextSize = 20,
-									Text = 'Width in blocks',
+									Text = 'Width',
 									TextColor3 = theme.Text1,
+									MinSize = Vector2.new(textFieldWidth, 0),
 								}),
 								Input = e(FormTextInput, {
 									layoutOrder = 2,
-									width = UDim.new(0, 220),
+									width = UDim.new(0, 70),
 									value = self.state.width,
 									placeholderValue = Config.defaultWidth,
 									onValueChange = function(newValue)
 										self:setState({ width = newValue })
+									end,
+								}),
+							}
+						),
+						wallMaterial = e(
+							FitList,
+							{
+								fitAxes = 'Y',
+								containerProps = {
+									LayoutOrder = 3,
+									BackgroundTransparency = 1,
+									Size = UDim2.new(1, 0, 0, 0),
+								},
+								layoutProps = {
+									FillDirection = Enum.FillDirection.Horizontal,
+									Padding = UDim.new(0, 10),
+								},
+							},
+							{
+								Label = e(FitText, {
+									Kind = 'TextLabel',
+									LayoutOrder = 1,
+									BackgroundTransparency = 1,
+									TextXAlignment = Enum.TextXAlignment.Left,
+									Font = theme.TitleFont,
+									TextSize = 20,
+									Text = 'Wall Material',
+									TextColor3 = theme.Text1,
+									MinSize = Vector2.new(textFieldWidth, 0),
+								}),
+								MaterialsDropdown = e(MaterialsDropdown, {
+									Size = UDim2.new(0, 150, 0, 40),
+									LayoutOrder = 2,
+									onSelect = function(material)
+										warn('Selected material', material)
+										self:setState({ wallMaterial = material })
+									end,
+								}),
+							}
+						),
+						groundMaterial = e(
+							FitList,
+							{
+								fitAxes = 'Y',
+								containerProps = {
+									LayoutOrder = 4,
+									BackgroundTransparency = 1,
+									Size = UDim2.new(1, 0, 0, 0),
+								},
+								layoutProps = {
+									FillDirection = Enum.FillDirection.Horizontal,
+									Padding = UDim.new(0, 10),
+								},
+							},
+							{
+								Label = e(FitText, {
+									Kind = 'TextLabel',
+									LayoutOrder = 1,
+									BackgroundTransparency = 1,
+									TextXAlignment = Enum.TextXAlignment.Left,
+									Font = theme.TitleFont,
+									TextSize = 20,
+									Text = 'Ground Material',
+									TextColor3 = theme.Text1,
+									MinSize = Vector2.new(textFieldWidth, 0),
+								}),
+								MaterialsDropdown = e(MaterialsDropdown, {
+									Size = UDim2.new(0, 150, 0, 40),
+									LayoutOrder = 2,
+									onSelect = function(material)
+										warn('Selected ground material', material)
+										self:setState({ groundMaterial = material })
 									end,
 								}),
 							}
@@ -157,6 +245,8 @@ function ConnectPanel:render()
 								generateMaze({
 									width = width,
 									height = height,
+									wallMaterial = self.state.wallMaterial,
+									groundMaterial = self.state.groundMaterial,
 								})
 							end
 						end,

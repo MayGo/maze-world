@@ -1,17 +1,13 @@
-local root = script.Parent.Parent
-warn(root)
+local Root = script:FindFirstAncestor('MazeGenerator')
 
-local Modules = script.Parent.Parent.Modules
+local M = require(Root.M)
 
-local M = require(Modules.M)
-
-local Models = root:WaitForChild('Models')
+local Models = Root:WaitForChild('Models')
 
 local recursive_backtracker = require(script.Parent.MazeBacktrace)
 local Maze = require(script.Parent.Maze)
 
 local Prefabs = Models.Prefabs
-local Walls = Models.Walls
 local Misc = Models.Misc
 local Money = Models.Money
 
@@ -144,7 +140,7 @@ function AddRandomParts(x, y, z, folder)
 	end)
 end
 
-function DrawBlock(x, y, z, folder, vertical)
+function DrawBlock(x, y, z, folder, vertical, wallMaterial)
 	local newBlock = Instance.new('Part')
 
 	newBlock.Anchored = true
@@ -164,8 +160,8 @@ function DrawBlock(x, y, z, folder, vertical)
 	local region = partToRegion3(newBlock)
 	region = region:ExpandToGrid(4)
 
-	game.Workspace.Terrain:SetMaterialColor(Enum.Material.Grass, Color3.fromRGB(91, 154, 76))
-	game.Workspace.Terrain:FillRegion(region, 4, Enum.Material.Grass)
+	warn('Generating with wall material ', wallMaterial)
+	game.Workspace.Terrain:FillRegion(region, 4, wallMaterial)
 
 	-- make top walls not walkable, by killing
 	local killBlockName = 'Killbrick'
@@ -176,41 +172,7 @@ function DrawBlock(x, y, z, folder, vertical)
 	killBlock.Parent = folder
 end
 
-function DrawBlock2(x, y, z, folder, vertical, wallsFolder)
-	local walls = wallsFolder:GetChildren()
-	local randomWall = walls[math.random(1, #walls)]
-	local newBlock = randomWall:Clone()
-
-	newBlock.Parent = folder
-	-- newBlock.Size = Vector3.new(3,3,3)
-	-- newBlock.Orientation = Vector3.new(0, 0, 90)
-
-	local halfWidth = newBlock.PrimaryPart.Size.Z / 2
-	local halfHeight = newBlock.PrimaryPart.Size.Y / 2
-	local position = CFrame.new(x, z + halfHeight, y + halfWidth)
-
-	if vertical then
-		local angle = math.rad(90)
-		position = CFrame.new(x + halfWidth, z + halfHeight, y) * CFrame.Angles(0, angle, 0)
-	end
-
-	-- we are flipping y an z here, using x and y for Maze is simpler to read, z is height
-	-- x, y, z is correct order
-	newBlock:SetPrimaryPartCFrame(position)
-
-	local region = partToRegion3(newBlock.PrimaryPart)
-	region = region:ExpandToGrid(4)
-
-	game.Workspace.Terrain:FillRegion(region, 4, Enum.Material.Grass)
-	--[[
-	workspace.Terrain:FillBlock(
-		newBlock.PrimaryPart.CFrame,
-		newBlock.PrimaryPart.Size,
-		Enum.Material.WoodPlanks
-	)]]
-end
-
-function DrawFloor(x, y, z, folder, width, height)
+function DrawFloor(x, y, z, folder, width, height, groundMaterial)
 	local floor = Instance.new('Part')
 	floor.Parent = folder
 	floor.Size = Vector3.new(width, 1, height)
@@ -221,7 +183,8 @@ function DrawFloor(x, y, z, folder, width, height)
 	floor.Anchored = true
 	floor.CFrame = CFrame.new(x + width / 2, z, y + height / 2)
 
-	workspace.Terrain:FillBlock(floor.CFrame, floor.Size, Enum.Material.Sand)
+	warn('Generating with ground material ', groundMaterial)
+	workspace.Terrain:FillBlock(floor.CFrame, floor.Size, groundMaterial)
 end
 
 function DrawStart(x, y, z, folder, width, height)
@@ -242,7 +205,15 @@ function DrawFinish(x, y, z, folder, width, height)
 	newBlock.Parent = folder
 end
 
-local function draw_maze(maze, blockWidth, blockDepth, folder, locationPart, wallFolder)
+local function draw_maze(
+maze,
+	blockWidth,
+	blockDepth,
+	folder,
+	locationPart,
+	wallMaterial,
+	groundMaterial
+)
 	local blockHeight = 20
 
 	local maze_width = (blockWidth + blockDepth) * #maze[1] + blockDepth
@@ -261,7 +232,8 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, locationPart, wal
 	-- part can have max size 2048
 	warn('Size in studs:' .. tostring(maze_width) .. ', height:' .. tostring(maze_height))
 
-	DrawFloor(x, y, z, folder, maze_width, maze_height)
+	DrawFloor(x, y, z, folder, maze_width, maze_height, groundMaterial)
+
 	DrawStart(x, y, z + 1, folder, blockWidth, blockWidth)
 
 	local finisWidth = blockWidth - 2
@@ -283,19 +255,19 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, locationPart, wal
 			local cell = maze[yi][xi]
 
 			if not cell.north:IsOpened() then
-				DrawBlock(pos_x, pos_y - blockDepth, z, folder, true, wallFolder)
+				DrawBlock(pos_x, pos_y - blockDepth, z, folder, true, wallMaterial)
 			end
 
 			if not cell.east:IsOpened() then
-				DrawBlock(pos_x + blockWidth, pos_y, z, folder, false, wallFolder)
+				DrawBlock(pos_x + blockWidth, pos_y, z, folder, false, wallMaterial)
 			end
 
 			if not cell.south:IsOpened() then
-				DrawBlock(pos_x, pos_y + blockWidth, z, folder, true, wallFolder)
+				DrawBlock(pos_x, pos_y + blockWidth, z, folder, true, wallMaterial)
 			end
 
 			if not cell.west:IsOpened() then
-				DrawBlock(pos_x - blockDepth, pos_y, z, folder, false, wallFolder)
+				DrawBlock(pos_x - blockDepth, pos_y, z, folder, false, wallMaterial)
 			end
 
 			AddRandomParts(pos_x, z, pos_y, folder)
@@ -303,11 +275,11 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, locationPart, wal
 	end
 end
 
-local Root = {}
+local MazeGenerator = {}
 
 local mazeFolderName = 'Maze'
 
-function Root:generate(map, width, height)
+function MazeGenerator:generate(map, width, height, wallMaterial, groundMaterial)
 	warn('Generating maze  width:' .. width .. ', height:' .. height)
 	local locationPart = map
 
@@ -331,8 +303,7 @@ function Root:generate(map, width, height)
 	mazeFolder.Name = mazeFolderName
 	mazeFolder.Parent = map
 
-	local wallFolder = Walls.Walls_1
-	draw_maze(maze, blockWidth, blockDepth, mazeFolder, locationPart, wallFolder)
+	draw_maze(maze, blockWidth, blockDepth, mazeFolder, locationPart, wallMaterial, groundMaterial)
 end
 
-return Root
+return MazeGenerator

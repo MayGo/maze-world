@@ -24,13 +24,13 @@ function Panel:render()
 			},
 			{
 				Layout = Roact.createElement('UIListLayout', {
-					HorizontalAlignment = Enum.HorizontalAlignment.Center,
+					HorizontalAlignment = Enum.HorizontalAlignment.Left,
 					SortOrder = Enum.SortOrder.LayoutOrder,
 				}),
 				Body = e(
 					'Frame',
 					{
-						Size = UDim2.new(0, 360, 1, -32),
+						Size = UDim2.new(1, 0, 1, -32),
 						BackgroundTransparency = 1,
 					},
 					self.props[Roact.Children]

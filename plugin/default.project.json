@@ -11,8 +11,14 @@
         "Fmt": {
             "$path": "fmt"
         },
+        "Models": {
+            "$path": "../models"
+        },
         "Roact": {
             "$path": "../modules/roact/src"
+        },
+        "M": {
+            "$path": "../modules/moses/moses_min.lua"
         },
         "Promise": {
             "$path": "../modules/promise2/lib"
