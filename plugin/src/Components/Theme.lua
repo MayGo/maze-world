@@ -24,11 +24,11 @@ local Log = require(Root.Log)
 local strict = require(script.Parent.Parent.strict)
 
 local lightTheme = strict('Theme', {
-	ButtonFont = Enum.Font.GothamSemibold,
-	InputFont = Enum.Font.Code,
-	TitleFont = Enum.Font.GothamBold,
-	MainFont = Enum.Font.Gotham,
-	Brand1 = Color3.fromRGB(225, 56, 53),
+	ButtonFont = Enum.Font.SourceSans,
+	InputFont = Enum.Font.SourceSans,
+	TitleFont = Enum.Font.SourceSans,
+	MainFont = Enum.Font.SourceSans,
+	Brand1 = Color3.fromRGB(124, 0, 215),
 	Text1 = Color3.fromRGB(64, 64, 64),
 	Text2 = Color3.fromRGB(160, 160, 160),
 	TextOnAccent = Color3.fromRGB(235, 235, 235),
@@ -37,11 +37,11 @@ local lightTheme = strict('Theme', {
 })
 
 local darkTheme = strict('Theme', {
-	ButtonFont = Enum.Font.GothamSemibold,
-	InputFont = Enum.Font.Code,
-	TitleFont = Enum.Font.GothamBold,
-	MainFont = Enum.Font.Gotham,
-	Brand1 = Color3.fromRGB(225, 56, 53),
+	ButtonFont = Enum.Font.SourceSans,
+	InputFont = Enum.Font.SourceSans,
+	TitleFont = Enum.Font.SourceSans,
+	MainFont = Enum.Font.SourceSans,
+	Brand1 = Color3.fromRGB(124, 0, 215),
 	Text1 = Color3.fromRGB(235, 235, 235),
 	Text2 = Color3.fromRGB(200, 200, 200),
 	TextOnAccent = Color3.fromRGB(235, 235, 235),

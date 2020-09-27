@@ -5,10 +5,11 @@ local Roact = require(Root.Roact)
 local M = require(Root.M)
 
 local UICorner = require(Plugin.Components.UICorner)
-local createElement = Roact.createElement
+local e = Roact.createElement
 
 local materialIconsAsset = 'rbxassetid://3926305904'
 local materialIconsAsset2 = 'rbxassetid://3926307971'
+local Theme = require(Plugin.Components.Theme)
 
 local MaterialIcons = {
 	close = {
@@ -32,12 +33,12 @@ local function RoundButton(props)
 	local image
 	local aspect
 
-	local size = UDim2.new(0.5, 0, 0, 50)
+	local size = UDim2.new(1, 0, 0, 50)
 
 	if props.icon then
 		size = UDim2.new(0.7, 0, 0.7, 0)
-		aspect = createElement('UIAspectRatioConstraint')
-		image = createElement(
+		aspect = e('UIAspectRatioConstraint')
+		image = e(
 			'ImageButton',
 			M.extend(
 				{
@@ -54,30 +55,31 @@ local function RoundButton(props)
 			)
 		)
 	end
+	return Theme.with(function(theme)
+		return e(
+			'TextButton',
 
-	return createElement(
-		'TextButton',
-
-		M.extend(
+			M.extend(
+				{
+					Font = theme.ButtonFont,
+					Size = size,
+					BackgroundColor3 = theme.Brand1,
+					TextColor3 = theme.TextOnAccent,
+					TextSize = 26,
+					Text = '',
+					[Roact.Event.MouseButton1Click] = function()
+						props.onClicked()
+					end,
+				},
+				M.omit(props, 'icon', 'onClicked')
+			),
 			{
-				Font = Enum.Font.SourceSans,
-				Size = size,
-				BackgroundColor3 = Color3.fromRGB(124, 0, 215),
-				TextColor3 = Color3.fromRGB(255, 255, 255),
-				TextSize = 26,
-				Text = '',
-				[Roact.Event.MouseButton1Click] = function()
-					props.onClicked()
-				end,
-			},
-			M.omit(props, 'icon', 'onClicked')
-		),
-		{
-			UICorner = createElement(UICorner),
-			aspect,
-			image,
-		}
-	)
+				UICorner = e(UICorner),
+				aspect,
+				image,
+			}
+		)
+	end)
 end
 
 return RoundButton

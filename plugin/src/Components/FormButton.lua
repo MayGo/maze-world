@@ -3,62 +3,49 @@ local Plugin = Root.Plugin
 
 local Roact = require(Root.Roact)
 
-local Assets = require(Plugin.Assets)
 local Theme = require(Plugin.Components.Theme)
-local FitList = require(Plugin.Components.FitList)
-local FitText = require(Plugin.Components.FitText)
+local RoundButton = require(Plugin.Components.RoundButton)
+local UIPadding = require(Plugin.Components.UIPadding)
 
 local e = Roact.createElement
 
-local RoundBox = Assets.Slices.RoundBox
-
 local function FormButton(props)
 	local text = props.text
-	local layoutOrder = props.layoutOrder
 	local onClick = props.onClick
+	local LayoutOrder = props.LayoutOrder
 
-	local textColor
-	local backgroundColor
+	local TextColor3
+	local BackgroundColor3
 
 	return Theme.with(function(theme)
 		if props.secondary then
-			textColor = theme.Brand1
-			backgroundColor = theme.Background2
+			TextColor3 = theme.Brand1
+			BackgroundColor3 = theme.Background2
 		else
-			textColor = theme.TextOnAccent
-			backgroundColor = theme.Brand1
+			TextColor3 = theme.TextOnAccent
+			BackgroundColor3 = theme.Brand1
 		end
 
-		return e(
-			FitList,
+		local button = e(RoundButton, {
+			Text = text,
+			onClicked = onClick,
+			TextColor3 = TextColor3,
+			BackgroundColor3 = BackgroundColor3,
+		})
+
+		local frame = e(
+			'Frame',
 			{
-				containerKind = 'ImageButton',
-				containerProps = {
-					LayoutOrder = layoutOrder,
-					BackgroundTransparency = 1,
-					Image = RoundBox.asset,
-					ImageRectOffset = RoundBox.offset,
-					ImageRectSize = RoundBox.size,
-					SliceCenter = RoundBox.center,
-					ScaleType = Enum.ScaleType.Slice,
-					ImageColor3 = backgroundColor,
-					[Roact.Event.Activated] = function()
-						if onClick ~= nil then
-							onClick()
-						end
-					end,
-				},
-			},
-			{ Text = e(FitText, {
-				Kind = 'TextLabel',
-				Text = text,
-				TextSize = 18,
-				TextColor3 = textColor,
-				Font = theme.ButtonFont,
-				Padding = Vector2.new(16, 8),
+				Size = UDim2.new(1, 0, 1, 0),
 				BackgroundTransparency = 1,
-			}) }
+				LayoutOrder = LayoutOrder,
+			},
+			{
+				button,
+				UIPadding = e(UIPadding, { padding = 10 }),
+			}
 		)
+		return frame
 	end)
 end
 

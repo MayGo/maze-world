@@ -48,6 +48,7 @@ function SettingsForm:render()
 			local location = self.state.location
 			local locationName = 'workspace'
 			local locationPos = tostring(Vector3.new(0, 0, 0))
+
 			if location and location:IsA('BasePart') then
 				locationName = location.Name
 				locationPos = tostring(location.Position)
@@ -177,55 +178,33 @@ function SettingsForm:render()
 						}),
 					}
 				),
-				Buttons = e(
-					FitList,
-					{
-						fitAxes = 'Y',
-						containerProps = {
-							BackgroundTransparency = 1,
-							LayoutOrder = 2,
-							Size = UDim2.new(1, 0, 0, 0),
-						},
-						layoutProps = {
-							FillDirection = Enum.FillDirection.Horizontal,
-							HorizontalAlignment = Enum.HorizontalAlignment.Right,
-							Padding = UDim.new(0, 8),
-						},
-						paddingProps = {
-							PaddingTop = UDim.new(0, 0),
-							PaddingBottom = UDim.new(0, 20),
-							PaddingLeft = UDim.new(0, 24),
-							PaddingRight = UDim.new(0, 24),
-						},
-					},
-					{ e(FormButton, {
-						layoutOrder = 2,
-						text = 'Generate',
-						onClick = function()
-							if generateMaze ~= nil then
-								local height = self.state.height
-								if height:len() == 0 then
-									height = Config.defaultHeight
-								end
-
-								local width = self.state.width
-								if width:len() == 0 then
-									width = Config.defaultWidth
-								end
-
-								generateMaze({
-									width = width,
-									height = height,
-									wallMaterial = self.state.wallMaterial,
-									groundMaterial = self.state.groundMaterial,
-									addRandomModels = self.state.addRandomModels,
-									addStartAndFinish = self.state.addStartAndFinish,
-									location = self.state.location or workspace,
-								})
+				Button = e(FormButton, {
+					text = 'Generate',
+					LayoutOrder = 1,
+					onClick = function()
+						if generateMaze ~= nil then
+							local height = self.state.height
+							if height:len() == 0 then
+								height = Config.defaultHeight
 							end
-						end,
-					}) }
-				),
+
+							local width = self.state.width
+							if width:len() == 0 then
+								width = Config.defaultWidth
+							end
+
+							generateMaze({
+								width = width,
+								height = height,
+								wallMaterial = self.state.wallMaterial,
+								groundMaterial = self.state.groundMaterial,
+								addRandomModels = self.state.addRandomModels,
+								addStartAndFinish = self.state.addStartAndFinish,
+								location = self.state.location or workspace,
+							})
+						end
+					end,
+				}),
 			})
 		end)
 	end)
