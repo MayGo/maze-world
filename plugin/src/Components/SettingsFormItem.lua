@@ -1,6 +1,5 @@
 local Root = script:FindFirstAncestor('MazeGenerator')
 local Roact = require(Root.Roact)
-local M = require(Root.M)
 local Plugin = Root.Plugin
 local FitList = require(Plugin.Components.FitList)
 local FitText = require(Plugin.Components.FitText)

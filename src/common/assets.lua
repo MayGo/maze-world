@@ -2,6 +2,9 @@
 return {
 	brand = {
 		["loading-logo"] = "rbxassetid://5584664400",
+		logo = "rbxassetid://5747479619",
+		["logo-icon"] = "rbxassetid://5747421208",
+		["plugin-icon"] = "rbxassetid://5747497742",
 	},
 	faces = {
 		["cartoon-face-angry"] = "rbxassetid://5584664491",

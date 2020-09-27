@@ -3,6 +3,21 @@ hash = "9c565afd43be9e52ca200df04eee1963f4893a6a095336d555075459a7bd6591"
 id = 5584664400
 packable = false
 
+[inputs."assets/brand/logo-icon.png"]
+hash = "69ebb3aba4f215cdf1ae9f27b0d0bd7cdc8bf46d827c96beb454888e595f5e7c"
+id = 5747421208
+packable = false
+
+[inputs."assets/brand/logo.png"]
+hash = "3a7dc21774765148f9c647241297b62459c9b7362477941e27d158b0ba8d7582"
+id = 5747479619
+packable = false
+
+[inputs."assets/brand/plugin-icon.png"]
+hash = "e951dfede1bfcebab830c4f3763c721201fa9b4d47daa5f7c20152626d4e70fa"
+id = 5747497742
+packable = false
+
 [inputs."assets/faces/cartoon-face-angry.png"]
 hash = "8e0f99b8f26d83c3d5235faf82a5f3e735fe0d31288fa542d17bb7068f7bd819"
 id = 5584664491

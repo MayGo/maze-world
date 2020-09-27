@@ -43,10 +43,10 @@ function Footer:render()
 					},
 					{ Logo = e('ImageLabel', {
 						Image = Assets.Images.Logo,
-						Size = UDim2.new(0, 80, 0, 40),
+						Size = UDim2.new(0, 120, 0, 40),
 						ScaleType = Enum.ScaleType.Fit,
 						BackgroundTransparency = 1,
-						Position = UDim2.new(0, 0, 1, -10),
+						Position = UDim2.new(0, 0, 1, 0),
 						AnchorPoint = Vector2.new(0, 1),
 					}) }
 				),
