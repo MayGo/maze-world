@@ -21,9 +21,8 @@ function GamePasses:addAbility(player, productId)
 		if HIGH_JUMP_ID == productId then
 			logger:i('Adding High Jump ability to player')
 			humanoid.JumpPower = 100
-
-			--GhostAbility:addGhostAbility(char)
 		elseif GHOST_MODE_ID == productId then
+			logger:d('Has ghost mode')
 		end
 	else
 		logger:d('No Character found for player:' .. player.Name)

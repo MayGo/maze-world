@@ -2,6 +2,7 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local GamePasses = require(Modules.src.GamePasses)
+local DeveloperProducts = require(Modules.src.DeveloperProducts)
 local M = require(Modules.M)
 
 local HIGH_JUMP_ID = GamePasses.HIGH_JUMP_ID
@@ -12,6 +13,7 @@ local OBJECT_TYPES = {
 	PET = 'Pets',
 	COLLECTABLE = 'Collectables',
 	COIN = 'Coins',
+	COIN_PACK = 'Coin Packs',
 	ROOM = 'Rooms',
 }
 local PET_TYPES = {
@@ -24,9 +26,14 @@ local GamePassObjects = {
 	[GHOST_MODE_ID] = GamePasses:getGamePass(GHOST_MODE_ID),
 }
 
+local CoinPackObjects = {
+	[DeveloperProducts.COINS_1] = DeveloperProducts:getProduct(DeveloperProducts.COINS_1),
+	[DeveloperProducts.COINS_2] = DeveloperProducts:getProduct(DeveloperProducts.COINS_2),
+	[DeveloperProducts.COINS_3] = DeveloperProducts:getProduct(DeveloperProducts.COINS_3),
+	[DeveloperProducts.COINS_4] = DeveloperProducts:getProduct(DeveloperProducts.COINS_4),
+}
+
 local PetObjects = {
-	[HIGH_JUMP_ID] = GamePasses:getGamePass(HIGH_JUMP_ID),
-	[GHOST_MODE_ID] = GamePasses:getGamePass(GHOST_MODE_ID),
 	['10001'] = {
 		name = 'Speed Pet 1',
 		price = 300,
@@ -257,14 +264,24 @@ local remappedWorld = M.map(WorldObjects, keyById(OBJECT_TYPES.COLLECTABLE))
 local remappedRoom = M.map(RoomObjects, keyById(OBJECT_TYPES.ROOM))
 local remappedCoins = M.map(CoinObjects, keyById(OBJECT_TYPES.COIN))
 local remappedGamePasses = M.map(GamePassObjects, keyById(OBJECT_TYPES.GAME_PASS))
+local remappedCoinPackObjects = M.map(CoinPackObjects, keyById(OBJECT_TYPES.COIN_PACK))
 
 local AllObjects = {}
 local ShopObjects = {}
 local BuyObjects = {}
 
-M.extend(AllObjects, remappedPet, remappedWorld, remappedGamePasses, remappedRoom)
-M.extend(ShopObjects, remappedPet, remappedGamePasses)
-M.extend(BuyObjects, remappedPet, remappedGamePasses, remappedRoom)
+M.extend(
+	AllObjects,
+	remappedPet,
+	remappedWorld,
+	remappedGamePasses,
+	remappedRoom,
+	remappedCoinPackObjects
+)
+
+M.extend(ShopObjects, remappedPet, remappedGamePasses, remappedCoinPackObjects)
+
+M.extend(BuyObjects, remappedPet, remappedGamePasses, remappedRoom, remappedCoinPackObjects)
 
 return {
 	OBJECT_TYPES = OBJECT_TYPES,
@@ -272,6 +289,7 @@ return {
 	HIGH_JUMP_ID = HIGH_JUMP_ID,
 	PetObjects = remappedPet,
 	GamePassObjects = remappedGamePasses,
+	CoinPackObjects = remappedCoinPackObjects,
 	RoomObjects = remappedRoom,
 	WorldObjects = remappedWorld,
 	CoinObjects = remappedCoins,

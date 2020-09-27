@@ -14,6 +14,7 @@ local Frame = require(clientSrc.Components.common.Frame)
 
 local OBJECT_TYPES = InventoryObjects.OBJECT_TYPES
 local GamePasses = require(Modules.src.GamePasses)
+local DeveloperProducts = require(Modules.src.DeveloperProducts)
 local Roact = require(Modules.Roact)
 local RoactMaterial = require(Modules.RoactMaterial)
 
@@ -43,7 +44,9 @@ function ShopItem:render()
 	local stopGhosting = props.stopGhosting
 
 	local onClick = function()
-		if item.isGamePass then
+		if item.isDeveloperProduct then
+			DeveloperProducts:promptPurchase(item.id)
+		elseif item.isGamePass then
 			if not isOwned then
 				GamePasses:promptPurchase(item.id)
 			elseif item.isGhost and isGhosting then
@@ -127,8 +130,10 @@ function ShopItem:render()
 		end
 	elseif item.type == OBJECT_TYPES.COLLECTABLE then
 		buttonText = 'Collected'
-	elseif item.type == OBJECT_TYPES.COIN then
-		buttonText = 'UNUSED'
+	elseif item.type == OBJECT_TYPES.COIN_PACK then
+		if item.price then
+			buttonText = item.price .. ' Robux'
+		end
 	elseif item.type == OBJECT_TYPES.GAME_PASS then
 		if item.isGhost and isGhosting then
 			buttonText = 'Stop ghosting'

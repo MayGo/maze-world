@@ -16,7 +16,7 @@ local GlobalConfig = require(Modules.src.GlobalConfig)
 
 local commonReducers = require(Modules.src.commonReducers)
 local Dict = require(Modules.src.utils.Dict)
-local Item = require(Modules.src.objects.Item)
+local DeveloperProducts = require(Modules.src.DeveloperProducts)
 local clientSendNotification = require(Modules.src.actions.toClient.clientSendNotification)
 local assets = require(Modules.src.assets)
 -- These imports are pretty darn verbose.
@@ -484,6 +484,9 @@ return function(context)
 			logger:d(player.Name .. ' did not purchase game pass with ID ' .. productId)
 		end
 	end)
+
+	-- Set Developer Products purchase callback
+	MarketplaceService.ProcessReceipt = DeveloperProducts.processReceipt
 
 	Players.PlayerRemoving:Connect(function(player)
 		logger:d(player.Name .. ' left the game!')

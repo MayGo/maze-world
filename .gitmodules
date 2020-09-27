@@ -22,3 +22,6 @@
 [submodule "modules/rodux"]
 	path = modules/rodux
 	url = https://github.com/Roblox/rodux.git
+[submodule "modules/t"]
+	path = modules/t
+	url = https://github.com/osyrisrblx/t

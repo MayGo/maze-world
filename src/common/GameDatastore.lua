@@ -4,6 +4,7 @@ local logger = require(Modules.src.utils.Logger)
 
 local STORE_COINS = 'coins'
 local STORE_EQUIPPED = 'equipped2'
+local STORE_PURCHASE_HISTORY = 'purchase_history'
 local STORE_INVENTORY = 'inventory'
 local STORE_SLOTS_COUNT = 'slotsCount'
 local STORE_LAST_LOGIN = 'lastLogin'
@@ -18,6 +19,7 @@ DataStore2.Combine('DATA', STORE_EQUIPPED)
 DataStore2.Combine('DATA', STORE_INVENTORY)
 DataStore2.Combine('DATA', STORE_SLOTS_COUNT)
 DataStore2.Combine('DATA', STORE_LAST_LOGIN)
+DataStore2.Combine('DATA', STORE_PURCHASE_HISTORY)
 
 local GameDatastore = {}
 
@@ -177,6 +179,20 @@ function GameDatastore:onInventoryUpdated(player, inventoryUpdated)
 	logger:d('DataStore: player ' .. player.Name .. ' inventory updated')
 	datastore:OnUpdate(inventoryUpdated)
 end
---
+-- Developer product purchase history
+
+function GameDatastore:setProductPurchased(player, purchaseId)
+	local datastore = DataStore2(STORE_PURCHASE_HISTORY, player, purchaseId)
+	datastore:Update(function(current)
+		logger:d('DataStore: player ' .. player.Name .. ' adding receipt', purchaseId)
+		return M.push(current, purchaseId)
+	end)
+end
+
+function GameDatastore:hasProductPurchased(player, purchaseId)
+	local datastore = DataStore2(STORE_PURCHASE_HISTORY, player, purchaseId)
+	local current = datastore:Get({})
+	return M.include(current, purchaseId)
+end
 
 return GameDatastore

@@ -137,6 +137,9 @@
                 },
                 "RoactAnimate": {
                     "$path": "modules/roact-animate/src"
+                },
+                "t": {
+                    "$path": "modules/t/lib"
                 }
             },
             "HotReloadServer": {

@@ -1,0 +1,24 @@
+{
+    "name": "MazeGenerator",
+    "tree": {
+        "$className": "Folder",
+        "Plugin": {
+            "$path": "src"
+        },
+        "Log": {
+            "$path": "log"
+        },
+        "Fmt": {
+            "$path": "fmt"
+        },
+        "Roact": {
+            "$path": "../modules/roact/src"
+        },
+        "Promise": {
+            "$path": "../modules/promise2/lib"
+        },
+        "t": {
+            "$path": "../modules/t/lib"
+        }
+    }
+}
