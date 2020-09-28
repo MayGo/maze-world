@@ -29,6 +29,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-8.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-9.png 'Maze World')
 ![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-world-10.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-generator.png 'Maze World')
 
 # Used libraries
 

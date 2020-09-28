@@ -15,8 +15,6 @@ local SettingsForm = require(Plugin.Components.SettingsForm)
 
 local e = Roact.createElement
 
-local selection = game:GetService('Selection')
-
 local AppStatus = strict('AppStatus', {
 	NotStarted = 'NotStarted',
 	Connecting = 'Connecting',
@@ -26,6 +24,10 @@ local AppStatus = strict('AppStatus', {
 })
 
 local App = Roact.Component:extend('App')
+
+local WIDGET_ID = 'MazeGenerator'
+local PLUGIN_TITLE = 'Maze Generator'
+local PLUGIN_DESC = 'Show or hide the Maze Generator panel'
 
 function App:init()
 	self:setState({
@@ -39,12 +41,12 @@ function App:init()
 
 	local toolbar = self.props.plugin:CreateToolbar('Maze Generator ' .. self.displayedVersion)
 
-	self.toggleButton =
-		toolbar:CreateButton(
-			'Maze Generator',
-			'Show or hide the Maze Generator panel',
-			Assets.Images.Icon
-		)
+	if self.props.plugin.Name:find('.rbxm') then
+		WIDGET_ID = WIDGET_ID .. '_Local'
+		PLUGIN_TITLE = PLUGIN_TITLE .. ' (LOCAL)'
+	end
+
+	self.toggleButton = toolbar:CreateButton(PLUGIN_TITLE, PLUGIN_DESC, Assets.Images.Icon)
 	self.toggleButton.ClickableWhenViewportHidden = true
 	self.toggleButton.Click:Connect(function()
 		self.dockWidget.Enabled = not self.dockWidget.Enabled
@@ -62,9 +64,12 @@ function App:init()
 	)
 
 	self.dockWidget =
-		self.props.plugin:CreateDockWidgetPluginGui('Root-' .. self.displayedVersion, widgetInfo)
-	self.dockWidget.Name = 'Maze Generator ' .. self.displayedVersion
-	self.dockWidget.Title = 'Maze Generator ' .. self.displayedVersion
+		self.props.plugin:CreateDockWidgetPluginGui(
+			WIDGET_ID .. '-' .. self.displayedVersion,
+			widgetInfo
+		)
+	self.dockWidget.Name = PLUGIN_TITLE .. ' ' .. self.displayedVersion
+	self.dockWidget.Title = PLUGIN_TITLE .. '' .. self.displayedVersion
 	self.dockWidget.AutoLocalize = false
 	self.dockWidget.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 

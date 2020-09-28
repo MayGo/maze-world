@@ -8,6 +8,8 @@ local Version = require(Plugin.Version)
 local Assets = require(Plugin.Assets)
 local Theme = require(Plugin.Components.Theme)
 
+local url = 'https://www.roblox.com/games/3376915546/Maze-World'
+local gameId = '3376915546'
 local e = Roact.createElement
 
 local Footer = Roact.Component:extend('Footer')
@@ -41,7 +43,7 @@ function Footer:render()
 						BackgroundTransparency = 1,
 						Size = UDim2.new(0, 0, 0, 32),
 					},
-					{ Logo = e('ImageLabel', {
+					{ Logo = e('ImageButton', {
 						Image = Assets.Images.Logo,
 						Size = UDim2.new(0, 120, 0, 40),
 						ScaleType = Enum.ScaleType.Fit,
@@ -50,6 +52,17 @@ function Footer:render()
 						AnchorPoint = Vector2.new(0, 1),
 					}) }
 				),
+				Link = e('TextLabel', {
+					Position = UDim2.new(0.4, 0, 0, 0),
+					Size = UDim2.new(0, 100, 1, 0),
+					AnchorPoint = Vector2.new(0, 0),
+					Font = theme.TitleFont,
+					TextSize = 14,
+					Text = 'Game id: ' .. gameId,
+					TextXAlignment = Enum.TextXAlignment.Right,
+					TextColor3 = theme.Text2,
+					BackgroundTransparency = 1,
+				}),
 				Version = e('TextLabel', {
 					Position = UDim2.new(1, 0, 0, 0),
 					Size = UDim2.new(0, 0, 1, 0),
