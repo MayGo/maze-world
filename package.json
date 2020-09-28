@@ -4,7 +4,7 @@
         "prettier": "^1.19.1"
     },
     "scripts": {
-        "model": "remodel run get-models.lua",
-        "start": "./script/build-and-open.sh"
+        "models": "remodel run ./get-models.lua",
+        "start": "./scripts/build-and-open.sh"
     }
 }

@@ -40,6 +40,7 @@
         <Z>0</Z>
       </Vector3>
       <Ref name="PrimaryPart">1</Ref>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
     </Properties>
@@ -107,6 +108,7 @@
           <Y>0.6000000238418579</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -185,6 +187,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -263,6 +266,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -312,6 +316,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">6</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -352,6 +357,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">8</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -392,6 +398,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">1</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -432,6 +439,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">11</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -472,6 +480,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">2</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -512,6 +521,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">14</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -552,6 +562,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">16</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -592,6 +603,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">18</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -632,6 +644,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">20</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -672,6 +685,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">22</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -712,6 +726,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">3</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -752,6 +767,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">25</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -792,6 +808,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">27</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -832,6 +849,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">29</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -872,6 +890,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">31</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -912,6 +931,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">33</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -952,6 +972,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">35</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -992,6 +1013,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">4</Ref>
           <Ref name="Part1">37</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -1061,6 +1083,7 @@
           <Y>0.5999999046325684</Y>
           <Z>4.000000476837158</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1139,6 +1162,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1217,6 +1241,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1295,6 +1320,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1373,6 +1399,7 @@
           <Y>0.6000000238418579</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1451,6 +1478,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1529,6 +1557,7 @@
           <Y>0.6000000238418579</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1607,6 +1636,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1685,6 +1715,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1763,6 +1794,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1841,6 +1873,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1919,6 +1952,7 @@
           <Y>0.6000000238418579</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -1997,6 +2031,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -2075,6 +2110,7 @@
           <Y>0.6000001430511475</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -2153,6 +2189,7 @@
           <Y>3.5999999046325684</Y>
           <Z>3.5999999046325684</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -2231,6 +2268,7 @@
           <Y>0.5999999046325684</Y>
           <Z>0.6000000238418579</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>

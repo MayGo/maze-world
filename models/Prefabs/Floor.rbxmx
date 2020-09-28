@@ -63,6 +63,7 @@
         <Y>20</Y>
         <Z>15</Z>
       </Vector3>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
       <float name="TopParamA">-0.5</float>

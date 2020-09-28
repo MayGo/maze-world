@@ -40,6 +40,7 @@
         <Z>0</Z>
       </Vector3>
       <Ref name="PrimaryPart">1</Ref>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
     </Properties>
@@ -107,6 +108,7 @@
           <Y>2.299999952316284</Y>
           <Z>2.299999952316284</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -156,6 +158,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">1</Ref>
           <Ref name="Part1">3</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -196,6 +199,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">1</Ref>
           <Ref name="Part1">5</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -226,6 +230,7 @@
             <Z>2000000</Z>
           </Vector3>
           <float name="P">3000</float>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -247,6 +252,7 @@
             <Y>0</Y>
             <Z>0</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -273,6 +279,7 @@
           <NumberRange name="RotSpeed">199 199 </NumberRange>
           <NumberRange name="Rotation">0 0 </NumberRange>
           <NumberSequence name="Size">0 1.56442 0.521473 1 1.53374 0.521473 </NumberSequence>
+          <int64 name="SourceAssetId">-1</int64>
           <NumberRange name="Speed">2 6 </NumberRange>
           <Vector2 name="SpreadAngle">
             <X>0</X>
@@ -353,6 +360,7 @@
           <Y>1.7200000286102295</Y>
           <Z>0.05000000074505806</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -377,6 +385,7 @@
             <B>1</B>
           </Color3>
           <token name="Face">5</token>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <Content name="Texture">
@@ -450,6 +459,7 @@
           <Y>2</Y>
           <Z>2</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>

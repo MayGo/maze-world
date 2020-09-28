@@ -1,16 +1,18 @@
-local game = remodel.readPlaceFile('raw-assets/game-models-and-place.rbxlx')
+local gameModels = remodel.readPlaceFile('./raw-assets/game-models.rbxlx')
+local gamePlace = remodel.readPlaceFile('./raw-assets/game-place.rbxlx')
 
 -- If the directory does not exist yet, we'll create it.
-remodel.createDirAll('models')
+local modelDir = './models'
+remodel.createDirAll(modelDir)
 
 local folders = { 'Money', 'Pets', 'Prefabs', 'Walls', 'Collectables', 'Misc', 'Trails' }
 
 for _, folder in ipairs(folders) do
-	for _, model in ipairs(game.Workspace[folder]:GetChildren()) do
-		remodel.createDirAll('models/' .. folder)
+	for _, model in ipairs(gameModels.Workspace[folder]:GetChildren()) do
+		remodel.createDirAll(modelDir .. '/' .. folder)
 		-- Save out each child as an rbxmx model
-		remodel.writeModelFile(model, 'models/' .. folder .. '/' .. model.Name .. '.rbxmx')
+		remodel.writeModelFile(model, modelDir .. '/' .. folder .. '/' .. model.Name .. '.rbxmx')
 	end
 end
 
-remodel.writeModelFile(game.Workspace.Place, 'Place.rbxmx')
+remodel.writeModelFile(gamePlace.Workspace.Place, './Place.rbxmx')

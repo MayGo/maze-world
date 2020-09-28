@@ -4,6 +4,7 @@
       <string name="Name">Walls_1</string>
       <BinaryString name="AttributesSerialize">
       </BinaryString>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
     </Properties>
@@ -48,6 +49,7 @@
           <Z>0</Z>
         </Vector3>
         <Ref name="PrimaryPart">2</Ref>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
       </Properties>
@@ -115,6 +117,7 @@
             <Y>20</Y>
             <Z>15</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -193,6 +196,7 @@
             <Y>1</Y>
             <Z>15</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags"><![CDATA[S2lsbEJyaWNr]]></BinaryString>
           <float name="TopParamA">-0.5</float>
           <float name="TopParamB">0.5</float>
@@ -268,6 +272,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -344,6 +349,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -420,6 +426,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -496,6 +503,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -572,6 +580,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -648,6 +657,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -724,6 +734,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -800,6 +811,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -876,6 +888,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -952,6 +965,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1028,6 +1042,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1104,6 +1119,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1180,6 +1196,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1256,6 +1273,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1332,6 +1350,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1408,6 +1427,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1484,6 +1504,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1560,6 +1581,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1636,6 +1658,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1712,6 +1735,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>
@@ -1788,6 +1812,7 @@
             <Y>0.5999999642372131</Y>
             <Z>0.699999988079071</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <float name="TopParamA">-0.5</float>

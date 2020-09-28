@@ -40,6 +40,7 @@
         <Z>0</Z>
       </Vector3>
       <Ref name="PrimaryPart">1</Ref>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
     </Properties>
@@ -107,6 +108,7 @@
           <Y>1.5</Y>
           <Z>1.5</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -156,6 +158,7 @@
           <bool name="Enabled">true</bool>
           <Ref name="Part0">1</Ref>
           <Ref name="Part1">3</Ref>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -182,6 +185,7 @@
           <NumberRange name="RotSpeed">0 0 </NumberRange>
           <NumberRange name="Rotation">0 0 </NumberRange>
           <NumberSequence name="Size">0 0.6 0 1 0.6 0 </NumberSequence>
+          <int64 name="SourceAssetId">-1</int64>
           <NumberRange name="Speed">0 0 </NumberRange>
           <Vector2 name="SpreadAngle">
             <X>0</X>
@@ -223,6 +227,7 @@
             <Z>4000000</Z>
           </Vector3>
           <float name="P">3000</float>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -244,6 +249,7 @@
             <Y>0</Y>
             <Z>0</Z>
           </Vector3>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
         </Properties>
@@ -313,6 +319,7 @@
           <Y>1.1799999475479126</Y>
           <Z>0.05000000074505806</Z>
         </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
         <BinaryString name="Tags">
         </BinaryString>
         <float name="TopParamA">-0.5</float>
@@ -337,6 +344,7 @@
             <B>1</B>
           </Color3>
           <token name="Face">5</token>
+          <int64 name="SourceAssetId">-1</int64>
           <BinaryString name="Tags">
           </BinaryString>
           <Content name="Texture">

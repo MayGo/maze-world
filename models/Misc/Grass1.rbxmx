@@ -85,6 +85,7 @@
         <Y>6</Y>
         <Z>6</Z>
       </Vector3>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags">
       </BinaryString>
       <Content name="TextureID">

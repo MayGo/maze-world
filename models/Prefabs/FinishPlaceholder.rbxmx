@@ -63,6 +63,7 @@
         <Y>16</Y>
         <Z>16</Z>
       </Vector3>
+      <int64 name="SourceAssetId">-1</int64>
       <BinaryString name="Tags"><![CDATA[RmluaXNoQnJpY2s=]]></BinaryString>
       <float name="TopParamA">-0.5</float>
       <float name="TopParamB">0.5</float>
@@ -97,6 +98,7 @@
         <NumberRange name="RotSpeed">0 0 </NumberRange>
         <NumberRange name="Rotation">0 0 </NumberRange>
         <NumberSequence name="Size">0 0 0 0.158354 0.9375 0 1 10 0 </NumberSequence>
+        <int64 name="SourceAssetId">-1</int64>
         <NumberRange name="Speed">42 42 </NumberRange>
         <Vector2 name="SpreadAngle">
           <X>0</X>
