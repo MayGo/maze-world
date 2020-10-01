@@ -162,8 +162,6 @@ if useDevSource then
 	if devSource ~= nil then
 		source = devSource
 		currentRoot = source
-		PluginFacade:_load()
-		PluginFacade:_watch(source)
 	else
 		warn(
 			'MazeGenerator development source is not present, running using built-in source. Waiting for ' .. PluginFolderName .. ' into ServerStorage.'
@@ -182,3 +180,6 @@ if useDevSource then
 		end)
 	end
 end
+
+PluginFacade:_load()
+PluginFacade:_watch(source)

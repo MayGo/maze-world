@@ -21,7 +21,7 @@ local function SettingsFormItem(props)
 			containerProps = {
 				LayoutOrder = LayoutOrder,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(0, 0, 0, 10),
+				Size = UDim2.new(0, 0, 0, 45),
 			},
 			layoutProps = {
 				FillDirection = Enum.FillDirection.Horizontal,
