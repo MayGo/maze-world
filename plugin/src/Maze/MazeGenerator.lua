@@ -74,19 +74,16 @@ function AddRandomPart(x, y, z, folder)
 
 	local randomPosition = Vector3.new(randomPos(), 0, randomPos())
 
-	local halfY  --height
-	local halfX
-	local halfZ
-
+	local partSize
 	if newBlock:IsA('BasePart') then
-		halfY = newBlock.Size.Y / 2
-		halfX = blockWidth / 2 - newBlock.Size.X / 2
-		halfZ = blockWidth / 2 - newBlock.Size.Z / 2
+		partSize = newBlock.Size
 	else
-		halfY = newBlock.PrimaryPart.Size.Y / 2
-		halfX = blockWidth / 2 - newBlock.PrimaryPart.Size.X / 2
-		halfZ = blockWidth / 2 - newBlock.PrimaryPart.Size.Z / 2
+		partSize = newBlock.PrimaryPart.Size
 	end
+
+	local halfX = blockWidth / 2 - partSize.X / 2
+	local halfY = partSize.Y / 2
+	local halfZ = blockWidth / 2 - partSize.Z / 2
 
 	local position = randomRotation(Vector3.new(x + halfX, y + halfY, z + halfZ) + randomPosition)
 
@@ -104,18 +101,16 @@ function AddCoinPart(x, y, z, folder)
 	local randomPart = parts[math.random(1, #parts)]
 	local newBlock = randomPart:Clone()
 
-	local halfY  --height
-	local halfX
-	local halfZ
+	local partSize
 	if newBlock:IsA('BasePart') then
-		halfY = newBlock.Size.Y / 2
-		halfX = blockWidth / 2 - newBlock.Size.X / 2
-		halfZ = blockWidth / 2 - newBlock.Size.Z / 2
+		partSize = newBlock.Size
 	else
-		halfY = newBlock.PrimaryPart.Size.Y / 2
-		halfX = blockWidth / 2 - newBlock.PrimaryPart.Size.X / 2
-		halfZ = blockWidth / 2 - newBlock.PrimaryPart.Size.Z / 2
+		partSize = newBlock.PrimaryPart.Size
 	end
+
+	local halfX = blockWidth / 2 - partSize.X / 2
+	local halfY = partSize.Y / 2
+	local halfZ = blockWidth / 2 - partSize.Z / 2
 
 	local position = randomRotation(Vector3.new(x + halfX, y + halfY, z + halfZ))
 
@@ -131,11 +126,12 @@ end
 function AddRandomParts(x, y, z, folder)
 	local times = M.range(1, 5)
 
-	AddCoinPart(x, y, z, folder)
+	local fromGround = 2.5
+	AddCoinPart(x, y + fromGround, z, folder)
 	M.map(times, function()
 		local willAdd = math.random(1, 10)
 		if willAdd == 1 then
-			AddRandomPart(x, y, z, folder)
+			AddRandomPart(x, y + fromGround, z, folder)
 		end
 	end)
 end
@@ -145,14 +141,15 @@ function DrawBlock(x, y, z, folder, vertical, settings)
 
 	newBlock.Anchored = true
 	newBlock.Size = Vector3.new(1, blockHeight, blockWidth)
-	local halfWidth = newBlock.Size.Z / 2
-	local halfHeight = newBlock.Size.Y / 2
 
-	local position = CFrame.new(x, z + halfHeight, y + halfWidth)
+	local halfHeight = newBlock.Size.Y / 2
+	local halfWidth = newBlock.Size.Z / 2
+
+	local position = CFrame.new(x, y + halfHeight, z + halfWidth)
 
 	if vertical then
 		local angle = math.rad(90)
-		position = CFrame.new(x + halfWidth, z + halfHeight, y) * CFrame.Angles(0, angle, 0)
+		position = CFrame.new(x + halfWidth, y + halfHeight, z) * CFrame.Angles(0, angle, 0)
 	end
 
 	newBlock.CFrame = position
@@ -163,13 +160,15 @@ function DrawBlock(x, y, z, folder, vertical, settings)
 	warn('Generating with wall material ', settings.wallMaterial)
 	game.Workspace.Terrain:FillRegion(region, 4, settings.wallMaterial)
 
-	-- make top walls not walkable, by killing
-	local killBlockName = 'Killbrick'
-	local killBlock = Prefabs[killBlockName]:Clone()
-	killBlock.Size = Vector3.new(3, 4, blockWidth)
-	killBlock.CFrame = newBlock.CFrame + Vector3.new(0, blockHeight - 7, 0)
-	killBlock.Transparency = 1
-	killBlock.Parent = folder
+	if settings.addKillBlocks then
+		-- make top walls not walkable, by killing
+		local killBlockName = 'Killbrick'
+		local killBlock = Prefabs[killBlockName]:Clone()
+		killBlock.Size = Vector3.new(3, 4, blockWidth)
+		killBlock.CFrame = newBlock.CFrame + Vector3.new(0, blockHeight - 7, 0)
+		killBlock.Transparency = 1
+		killBlock.Parent = folder
+	end
 end
 
 function DrawFloor(x, y, z, folder, width, height, settings)
@@ -181,26 +180,39 @@ function DrawFloor(x, y, z, folder, width, height, settings)
 	floor.CanCollide = false
 	floor.Transparency = 1
 	floor.Anchored = true
-	floor.CFrame = CFrame.new(x + width / 2, z, y + height / 2)
+	floor.CFrame = CFrame.new(x + width / 2, y, z + height / 2)
 
-	warn('Generating with ground material ', settings.groundMaterial)
 	workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.groundMaterial)
 end
 
-function DrawStart(x, y, z, folder, width, height)
+function DrawCeiling(x, y, z, folder, width, height, settings)
+	local floor = Instance.new('Part')
+	floor.Parent = folder
+	floor.Size = Vector3.new(width, 1, height)
+
+	floor.Name = floorPartName
+	floor.CanCollide = false
+	floor.Transparency = 1
+	floor.Anchored = true
+	floor.CFrame = CFrame.new(x + width / 2, y, z + height / 2)
+
+	workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.wallMaterial)
+end
+
+function DrawStart(x, y, z, folder, width, depth)
 	local block = 'SpawnPlaceholder'
 	local newBlock = Prefabs[block]:Clone()
 
-	local position = Vector3.new(x + width / 2, z + 4, y + height / 2)
+	local position = Vector3.new(x + width / 2, y, z + depth / 2)
 	newBlock.Position = position
 	newBlock.Parent = folder
 end
 
-function DrawFinish(x, y, z, folder, width, height)
+function DrawFinish(x, y, z, folder, width, depth)
 	local block = 'FinishPlaceholder'
 	local newBlock = Prefabs[block]:Clone()
 
-	local position = Vector3.new(x + width / 2, z, y + height / 2)
+	local position = Vector3.new(x + width / 2, y, z + depth / 2)
 	newBlock.Position = position
 	newBlock.Parent = folder
 end
@@ -210,8 +222,8 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, position, setting
 	local maze_height = (blockWidth + blockDepth) * #maze + blockDepth
 
 	local x = position.X
-	local y = position.Z
-	local z = position.Y
+	local y = position.Y
+	local z = position.Z
 
 	warn('Positioning Maze: ' .. x .. ' ' .. y)
 	-- part can have max size 2048
@@ -219,46 +231,50 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, position, setting
 
 	DrawFloor(x, y, z, folder, maze_width, maze_height, settings)
 
+	if settings.addCeiling then
+		DrawCeiling(x, y + blockHeight, z, folder, maze_width, maze_height, settings)
+	end
+
 	if settings.addStartAndFinish then
-		DrawStart(x, y, z + 1, folder, blockWidth, blockWidth)
+		DrawStart(x + 2, y + 6, z + 2, folder, blockWidth, blockWidth)
 
 		local finisWidth = blockWidth - 2
 
 		DrawFinish(
 			x + maze_width - finisWidth,
-			y + maze_height - finisWidth,
-			z + 1,
+			y,
+			z + maze_height - finisWidth,
 			folder,
 			finisWidth,
 			finisWidth
 		)
 	end
 
-	for yi = 1, #maze do
+	for zi = 1, #maze do
 		for xi = 1, #maze[1] do
 			local pos_x = x + (blockWidth + blockDepth) * (xi - 1) + blockDepth
-			local pos_y = y + (blockWidth + blockDepth) * (yi - 1) + blockDepth
+			local pos_z = z + (blockWidth + blockDepth) * (zi - 1) + blockDepth
 
-			local cell = maze[yi][xi]
+			local cell = maze[zi][xi]
 
 			if not cell.north:IsOpened() then
-				DrawBlock(pos_x, pos_y - blockDepth, z, folder, true, settings)
+				DrawBlock(pos_x, y, pos_z - blockDepth, folder, true, settings)
 			end
 
 			if not cell.east:IsOpened() then
-				DrawBlock(pos_x + blockWidth, pos_y, z, folder, false, settings)
+				DrawBlock(pos_x + blockWidth, y, pos_z, folder, false, settings)
 			end
 
 			if not cell.south:IsOpened() then
-				DrawBlock(pos_x, pos_y + blockWidth, z, folder, true, settings)
+				DrawBlock(pos_x, y, pos_z + blockWidth, folder, true, settings)
 			end
 
 			if not cell.west:IsOpened() then
-				DrawBlock(pos_x - blockDepth, pos_y, z, folder, false, settings)
+				DrawBlock(pos_x - blockDepth, y, pos_z, folder, false, settings)
 			end
 
 			if settings.addRandomModels then
-				AddRandomParts(pos_x, z, pos_y, folder)
+				AddRandomParts(pos_x, y, pos_z, folder)
 			end
 		end
 	end

@@ -6,7 +6,7 @@ local Config = require(Plugin.Config)
 
 local Theme = require(Plugin.Components.Theme)
 local Panel = require(Plugin.Components.Panel)
-local FitList = require(Plugin.Components.FitList)
+local FitScrollingFrame = require(Plugin.Components.FitScrollingFrame)
 local FitText = require(Plugin.Components.FitText)
 local FormButton = require(Plugin.Components.FormButton)
 local FormTextInput = require(Plugin.Components.FormTextInput)
@@ -14,6 +14,7 @@ local PluginSettings = require(Plugin.Components.PluginSettings)
 local MaterialsDropdown = require(Plugin.Components.MaterialsDropdown)
 local Checkbox = require(Plugin.Components.Checkbox)
 local SettingsFormItem = require(Plugin.Components.SettingsFormItem)
+local UIPadding = require(Plugin.Components.UIPadding)
 
 local selection = game:GetService('Selection')
 local e = Roact.createElement
@@ -28,6 +29,8 @@ function SettingsForm:init()
 		groundMaterial = Enum.Material.Sand,
 		addRandomModels = true,
 		addStartAndFinish = true,
+		addKillBlocks = true,
+		addCeiling = false,
 		location = workspace,
 	})
 
@@ -61,16 +64,15 @@ function SettingsForm:render()
 					VerticalAlignment = Enum.VerticalAlignment.Top,
 				}),
 				Inputs = e(
-					FitList,
+					FitScrollingFrame,
 					{
+						fitAxes = 'Y',
 						containerProps = {
 							BackgroundTransparency = 1,
 							LayoutOrder = 0,
+							Size = UDim2.new(1, 0, 1, 0),
 						},
-						layoutProps = {
-							FillDirection = Enum.FillDirection.Vertical,
-							Padding = UDim.new(0, 8),
-						},
+						layoutProps = { Padding = UDim.new(0, 8) },
 						paddingProps = {
 							PaddingTop = UDim.new(0, 10),
 							PaddingBottom = UDim.new(0, 10),
@@ -79,8 +81,9 @@ function SettingsForm:render()
 						},
 					},
 					{
+						UIPadding = e(UIPadding, { padding = 10 }),
 						Location = e(SettingsFormItem, {
-							LayoutOrder = 1,
+							LayoutOrder = 0,
 							Text = 'Selection/Location',
 							theme = theme,
 							Input = e(FitText, {
@@ -176,35 +179,63 @@ function SettingsForm:render()
 								end,
 							}),
 						}),
+						addKillBlocks = e(SettingsFormItem, {
+							LayoutOrder = 6,
+							Text = 'Killblocks',
+							theme = theme,
+							Input = e(Checkbox, {
+								layoutOrder = 2,
+								checked = self.state.addKillBlocks,
+								onChange = function(newValue)
+									warn('Add addKillBlocks', newValue)
+									self:setState({ addKillBlocks = newValue })
+								end,
+							}),
+						}),
+						addCeiling = e(SettingsFormItem, {
+							LayoutOrder = 7,
+							Text = 'Ceiling',
+							theme = theme,
+							Input = e(Checkbox, {
+								layoutOrder = 2,
+								checked = self.state.addCeiling,
+								onChange = function(newValue)
+									warn('Add addCeiling', newValue)
+									self:setState({ addCeiling = newValue })
+								end,
+							}),
+						}),
+						Button = e(FormButton, {
+							text = 'Generate',
+							LayoutOrder = 8,
+							onClick = function()
+								if generateMaze ~= nil then
+									local height = self.state.height
+									if height:len() == 0 then
+										height = Config.defaultHeight
+									end
+
+									local width = self.state.width
+									if width:len() == 0 then
+										width = Config.defaultWidth
+									end
+
+									generateMaze({
+										width = width,
+										height = height,
+										wallMaterial = self.state.wallMaterial,
+										groundMaterial = self.state.groundMaterial,
+										addRandomModels = self.state.addRandomModels,
+										addStartAndFinish = self.state.addStartAndFinish,
+										addKillBlocks = self.state.addKillBlocks,
+										addCeiling = self.state.addCeiling,
+										location = self.state.location or workspace,
+									})
+								end
+							end,
+						}),
 					}
 				),
-				Button = e(FormButton, {
-					text = 'Generate',
-					LayoutOrder = 1,
-					onClick = function()
-						if generateMaze ~= nil then
-							local height = self.state.height
-							if height:len() == 0 then
-								height = Config.defaultHeight
-							end
-
-							local width = self.state.width
-							if width:len() == 0 then
-								width = Config.defaultWidth
-							end
-
-							generateMaze({
-								width = width,
-								height = height,
-								wallMaterial = self.state.wallMaterial,
-								groundMaterial = self.state.groundMaterial,
-								addRandomModels = self.state.addRandomModels,
-								addStartAndFinish = self.state.addStartAndFinish,
-								location = self.state.location or workspace,
-							})
-						end
-					end,
-				}),
 			})
 		end)
 	end)

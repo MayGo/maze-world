@@ -1,6 +1,6 @@
 local Root = script:FindFirstAncestor('MazeGenerator')
 local Plugin = Root.Plugin
-
+local ChangeHistoryService = game:GetService('ChangeHistoryService')
 local Roact = require(Root.Roact)
 local Log = require(Root.Log)
 
@@ -82,6 +82,7 @@ end
 
 function App:generateMaze(settings)
 	MazeGenerator:generate(settings)
+	ChangeHistoryService:SetWaypoint('Generated Maze')
 end
 
 function App:render()

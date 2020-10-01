@@ -36,14 +36,11 @@ local function FormButton(props)
 		local frame = e(
 			'Frame',
 			{
-				Size = UDim2.new(1, 0, 1, 0),
+				Size = UDim2.new(1, 0, 0, 60),
 				BackgroundTransparency = 1,
 				LayoutOrder = LayoutOrder,
 			},
-			{
-				button,
-				UIPadding = e(UIPadding, { padding = 10 }),
-			}
+			{ button }
 		)
 		return frame
 	end)
