@@ -1,5 +1,14 @@
 #!/bin/sh
 
-rojo build --output "./MazeGenerator.rbxmx"
-rojo build --output "/Users/$USER/Documents/Roblox/Plugins/MazeGenerator.rbxmx"
-echo "Plugin saved to: /User/$USER/Documents/Roblox/Plugins/MazeGenerator.rbxmx"
+PLUGIN_FILE="./MazeGenerator.rbxmx"
+LOCAL_PLUGIN_FILE="/Users/$USER/Documents/Roblox/Plugins/MazeGenerator.rbxmx"
+
+
+rojo build build.project.json -o "$PLUGIN_FILE"
+rojo build build.project.json -o "$LOCAL_PLUGIN_FILE"
+
+remodel run script/mark-plugin-as-dev.lua "$LOCAL_PLUGIN_FILE" "$LOCAL_PLUGIN_FILE" 
+
+
+
+echo "Plugin saved to: $LOCAL_PLUGIN_FILE"

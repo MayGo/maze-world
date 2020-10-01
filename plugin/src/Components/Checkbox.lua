@@ -1,7 +1,7 @@
-local Root = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 local Plugin = Root.Plugin
 
-local Roact = require(Root.Roact)
+local Roact = require(Root:WaitForChild('Roact'))
 
 local Theme = require(Plugin.Components.Theme)
 

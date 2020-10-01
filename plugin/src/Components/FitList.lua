@@ -1,4 +1,4 @@
-local Roact = require(script:FindFirstAncestor('MazeGenerator').Roact)
+local Roact = require(script:FindFirstAncestor('MazeGeneratorPlugin').Roact)
 
 local Dictionary = require(script.Parent.Parent.Dictionary)
 

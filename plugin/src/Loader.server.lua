@@ -1,6 +1,5 @@
 -- Taken from https://github.com/tiffany352/Roblox-Tag-Editor/blob/bd48fb7ceea6bcd1cd9c515891ae4eb4eb9d1a71/src/Loader.server.lua#L24
 
-warn('loading....')
 -- Sanity check.
 if not plugin then
 	error('Hot reloader must be executed as a plugin!')
@@ -12,7 +11,8 @@ end
 local Config = require(script.Parent.Config)
 local useDevSource = Config.isDevBuild
 local ServerStorage = game:GetService('ServerStorage')
-local devSource = ServerStorage:FindFirstChild('MazeGenerator')
+local PluginFolderName = 'MazeGeneratorPlugin'
+local devSource = ServerStorage:FindFirstChild(PluginFolderName)
 
 -- The source that's shipped integrated into the plugin.
 local builtinSource = script.Parent.Parent
@@ -23,22 +23,12 @@ local builtinSource = script.Parent.Parent
 local source = builtinSource
 local currentRoot = source
 
-if useDevSource then
-	if devSource ~= nil then
-		source = devSource
-		currentRoot = source
-	else
-		warn('MazeGenerator development source is not present, running using built-in source.')
-	end
-end
-
 local PluginFacade = {
 	_toolbars = {},
 	_pluginGuis = {},
 	_buttons = {},
 	_watching = {},
 	_beforeUnload = nil,
-	isDev = useDevSource and devSource ~= nil,
 }
 
 --[[
@@ -108,16 +98,18 @@ function PluginFacade:beforeUnload(callback)
 end
 
 function PluginFacade:_load(savedState)
-	local ok, result = pcall(require, currentRoot.Plugin.Main)
+	local Plugin = currentRoot:WaitForChild('Plugin')
+	local Main = Plugin:WaitForChild('Main')
+	local ok, result = pcall(require, Main)
 
 	if not ok then
 		warn('Plugin failed to load: ' .. result)
 		return
 	end
 
-	local Plugin = result
+	local MainPluginScript = result
 
-	ok, result = pcall(Plugin, PluginFacade, savedState)
+	ok, result = pcall(MainPluginScript, PluginFacade, savedState)
 
 	if not ok then
 		warn('Plugin failed to run: ' .. result)
@@ -166,5 +158,27 @@ function PluginFacade:_watch(instance)
 	end
 end
 
-PluginFacade:_load()
-PluginFacade:_watch(source)
+if useDevSource then
+	if devSource ~= nil then
+		source = devSource
+		currentRoot = source
+		PluginFacade:_load()
+		PluginFacade:_watch(source)
+	else
+		warn(
+			'MazeGenerator development source is not present, running using built-in source. Waiting for ' .. PluginFolderName .. ' into ServerStorage.'
+		)
+		local connection
+		connection = ServerStorage.ChildAdded:Connect(function(child)
+			print('ServerStorage changed', child.Name)
+			if child.Name == PluginFolderName then
+				print('Got ' .. PluginFolderName .. 'Reloading plugin.', child.Name)
+				connection:Disconnect()
+				source = ServerStorage:WaitForChild(PluginFolderName)
+				currentRoot = source
+				PluginFacade:_load()
+				PluginFacade:_watch(source)
+			end
+		end)
+	end
+end

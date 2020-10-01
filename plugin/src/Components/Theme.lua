@@ -16,9 +16,9 @@ local function getStudio()
 	return _Studio
 end
 
-local Root = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 
-local Roact = require(Root.Roact)
+local Roact = require(Root:WaitForChild('Roact'))
 local Log = require(Root.Log)
 
 local strict = require(script.Parent.Parent.strict)

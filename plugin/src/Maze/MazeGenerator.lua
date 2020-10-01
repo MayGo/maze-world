@@ -1,6 +1,6 @@
-local Root = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 
-local M = require(Root.M)
+local M = require(Root:WaitForChild('M'))
 
 local Models = Root:WaitForChild('Models')
 

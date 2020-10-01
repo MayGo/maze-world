@@ -12,7 +12,7 @@
         "ServerStorage": {
             "$className": "ServerStorage",
 
-            "MazeGenerator": {
+            "MazeGeneratorPlugin": {
                 "$className": "Folder",
                 "Plugin": {
                     "$path": "src"

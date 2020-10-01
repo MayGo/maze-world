@@ -1,11 +1,9 @@
-local Root = script:FindFirstAncestor('MazeGenerator')
-
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
+local Roact = require(Root:WaitForChild('Roact'))
 local Plugin = Root.Plugin
 local Log = require(Root.Log)
 
 local DevSettings = require(Plugin.DevSettings)
-
-local Roact = require(Root.Roact)
 
 local App = require(Plugin.Components.App)
 local Theme = require(Plugin.Components.Theme)
@@ -78,6 +76,7 @@ local function Main(pluginFacade, savedState)
 			),
 		})
 
+	warn('app', app, dockWidget)
 	local instance = Roact.mount(app, dockWidget, 'APP-UI')
 
 	pluginFacade:beforeUnload(function()

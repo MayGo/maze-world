@@ -1,4 +1,4 @@
-local Root = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 local Roact = require(Root.Roact)
 local Plugin = Root.Plugin
 local FitList = require(Plugin.Components.FitList)
@@ -21,7 +21,7 @@ local function SettingsFormItem(props)
 			containerProps = {
 				LayoutOrder = LayoutOrder,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(0, 0, 0, 50),
+				Size = UDim2.new(0, 0, 0, 10),
 			},
 			layoutProps = {
 				FillDirection = Enum.FillDirection.Horizontal,

@@ -1,6 +1,6 @@
-local Root = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 
-local Roact = require(Root.Roact)
+local Roact = require(Root:WaitForChild('Roact'))
 
 return function(props)
 	local option = props.option

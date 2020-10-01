@@ -2,9 +2,9 @@
 	Persistent plugin settings that can be accessed via Roact context.
 ]]
 
-local Root = script:FindFirstAncestor('MazeGenerator')
+local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 
-local Roact = require(Root.Roact)
+local Roact = require(Root:WaitForChild('Roact'))
 
 local defaultSettings = {
 	openScriptsExternally = false,

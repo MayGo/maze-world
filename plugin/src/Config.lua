@@ -1,4 +1,5 @@
 local strict = require(script.Parent.strict)
+local isDevBuild = script.Parent.Parent.Parent ~= nil
 
 return strict('Config', {
 	isDevBuild = true,
