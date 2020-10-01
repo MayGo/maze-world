@@ -13,3 +13,9 @@ This is a Roblox plugin where you can generate maze with configurable size and m
 # Publish plugin
 
 -   drag created .rbxm file to empty project Explorer. Right click and 'Publish as plugin'
+
+# Development
+
+Open new place and start up Rojo.
+Right click on ServerStorage.MazeGenerator folder and 'Save as Local plugin'
+Now plugin reloads on code change.

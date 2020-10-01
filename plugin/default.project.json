@@ -1,30 +1,44 @@
 {
     "name": "MazeGenerator",
     "tree": {
-        "$className": "Folder",
-        "Plugin": {
-            "$path": "src"
+        "$className": "DataModel",
+        "HttpService": {
+            "$className": "HttpService",
+            "$properties": {
+                "HttpEnabled": true
+            }
         },
-        "Log": {
-            "$path": "log"
-        },
-        "Fmt": {
-            "$path": "fmt"
-        },
-        "Models": {
-            "$path": "../models"
-        },
-        "Roact": {
-            "$path": "../modules/roact/src"
-        },
-        "M": {
-            "$path": "../modules/moses/moses_min.lua"
-        },
-        "Promise": {
-            "$path": "../modules/promise2/lib"
-        },
-        "t": {
-            "$path": "../modules/t/lib"
+
+        "ServerStorage": {
+            "$className": "ServerStorage",
+
+            "MazeGenerator": {
+                "$className": "Folder",
+                "Plugin": {
+                    "$path": "src"
+                },
+                "Log": {
+                    "$path": "log"
+                },
+                "Fmt": {
+                    "$path": "fmt"
+                },
+                "Models": {
+                    "$path": "../models"
+                },
+                "Roact": {
+                    "$path": "../modules/roact/src"
+                },
+                "M": {
+                    "$path": "../modules/moses/moses_min.lua"
+                },
+                "Promise": {
+                    "$path": "../modules/promise2/lib"
+                },
+                "t": {
+                    "$path": "../modules/t/lib"
+                }
+            }
         }
     }
 }
