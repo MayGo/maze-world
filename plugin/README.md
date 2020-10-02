@@ -16,6 +16,14 @@ This is a Roblox plugin where you can generate maze with configurable size and m
 
 # Development
 
-Open new place and start up Rojo.
-Right click on ServerStorage.MazeGenerator folder and 'Save as Local plugin'
-Now plugin reloads on code change.
+### Option 1
+
+-   Open new place and start up Rojo.
+-   Right click on ServerStorage.MazeGenerator folder and 'Save as Local plugin'
+-   Now local plugin reloads on code change.
+
+### Option 2
+
+-   run `yarn build` or `npm build` or `./script/build.sh`
+-   Open new place and start up Rojo.
+-   Now local plugin reloads on code change.

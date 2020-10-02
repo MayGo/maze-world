@@ -157,8 +157,12 @@ function DrawBlock(x, y, z, folder, vertical, settings)
 	local region = partToRegion3(newBlock)
 	region = region:ExpandToGrid(4)
 
-	warn('Generating with wall material ', settings.wallMaterial)
-	game.Workspace.Terrain:FillRegion(region, 4, settings.wallMaterial)
+	if not settings.onlyBlocks then
+		warn('Generating with wall material ', settings.wallMaterial)
+		game.Workspace.Terrain:FillRegion(region, 4, settings.wallMaterial)
+	else
+		newBlock.Parent = folder
+	end
 
 	if settings.addKillBlocks then
 		-- make top walls not walkable, by killing
@@ -177,12 +181,15 @@ function DrawFloor(x, y, z, folder, width, height, settings)
 	floor.Size = Vector3.new(width, 1, height)
 
 	floor.Name = floorPartName
-	floor.CanCollide = false
-	floor.Transparency = 1
+	floor.CanCollide = true
 	floor.Anchored = true
 	floor.CFrame = CFrame.new(x + width / 2, y, z + height / 2)
 
-	workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.groundMaterial)
+	if not settings.onlyBlocks then
+		workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.groundMaterial)
+	else
+		floor.Parent = folder
+	end
 end
 
 function DrawCeiling(x, y, z, folder, width, height, settings)
@@ -190,13 +197,16 @@ function DrawCeiling(x, y, z, folder, width, height, settings)
 	floor.Parent = folder
 	floor.Size = Vector3.new(width, 1, height)
 
-	floor.Name = floorPartName
-	floor.CanCollide = false
-	floor.Transparency = 1
+	floor.Name = 'Ceiling'
+	floor.CanCollide = true
 	floor.Anchored = true
 	floor.CFrame = CFrame.new(x + width / 2, y, z + height / 2)
 
-	workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.wallMaterial)
+	if not settings.onlyBlocks then
+		workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.wallMaterial)
+	else
+		floor.Parent = folder
+	end
 end
 
 function DrawStart(x, y, z, folder, width, depth)
@@ -227,7 +237,11 @@ local function draw_maze(maze, blockWidth, blockDepth, folder, position, setting
 
 	warn('Positioning Maze: ' .. x .. ' ' .. y)
 	-- part can have max size 2048
+	local maxPartSize = 2048
 	warn('Size in studs:' .. tostring(maze_width) .. ', height:' .. tostring(maze_height))
+	if maxPartSize > maze_width or maxPartSize > maze_height then
+		warn('Floor or Ceiling part is over max size:' .. tostring(maxPartSize))
+	end
 
 	DrawFloor(x, y, z, folder, maze_width, maze_height, settings)
 

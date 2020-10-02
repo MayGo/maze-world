@@ -29,6 +29,12 @@
                 "Roact": {
                     "$path": "../modules/roact/src"
                 },
+                "RoactRodux": {
+                    "$path": "../modules/roact-rodux/src"
+                },
+                "Rodux": {
+                    "$path": "../modules/rodux/src"
+                },
                 "M": {
                     "$path": "../modules/moses/moses_min.lua"
                 },

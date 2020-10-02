@@ -1,9 +1,8 @@
 local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 local Roact = require(Root:WaitForChild('Roact'))
 local Plugin = Root.Plugin
-
+local RoactRodux = require(Root.RoactRodux)
 local Config = require(Plugin.Config)
-
 local Theme = require(Plugin.Components.Theme)
 local Panel = require(Plugin.Components.Panel)
 local FitScrollingFrame = require(Plugin.Components.FitScrollingFrame)
@@ -15,6 +14,7 @@ local MaterialsDropdown = require(Plugin.Components.MaterialsDropdown)
 local Checkbox = require(Plugin.Components.Checkbox)
 local SettingsFormItem = require(Plugin.Components.SettingsFormItem)
 local UIPadding = require(Plugin.Components.UIPadding)
+local SetSettings = require(Plugin.Actions.SetSettings)
 
 local selection = game:GetService('Selection')
 local e = Roact.createElement
@@ -22,33 +22,25 @@ local e = Roact.createElement
 local SettingsForm = Roact.Component:extend('SettingsForm')
 
 function SettingsForm:init()
-	self:setState({
-		height = Config.defaultWidth,
-		width = Config.defaultWidth,
-		wallMaterial = Enum.Material.Grass,
-		groundMaterial = Enum.Material.Sand,
-		addRandomModels = true,
-		addStartAndFinish = true,
-		addKillBlocks = true,
-		addCeiling = false,
-		location = workspace,
-	})
-
+	local changeSettings = self.props.changeSettings
+	local settings = self.props.settings
 	selection.SelectionChanged:Connect(function()
 		if #selection:Get() > 0 then
-			self:setState({ location = selection:Get()[1] })
+			changeSettings({ location = selection:Get()[1] })
 		else
-			self:setState({ location = nil })
+			changeSettings({ location = nil })
 		end
 	end)
 end
 
 function SettingsForm:render()
 	local generateMaze = self.props.generateMaze
+	local changeSettings = self.props.changeSettings
+	local settings = self.props.settings
 
 	return Theme.with(function(theme)
-		return PluginSettings.with(function(settings)
-			local location = self.state.location
+		return PluginSettings.with(function()
+			local location = settings.location
 			local locationName = 'workspace'
 			local locationPos = tostring(Vector3.new(0, 0, 0))
 
@@ -104,10 +96,10 @@ function SettingsForm:render()
 							Input = e(FormTextInput, {
 								layoutOrder = 2,
 								width = UDim.new(0, 70),
-								value = self.state.height,
+								value = settings.height,
 								placeholderValue = Config.defaultHeight,
 								onValueChange = function(newValue)
-									self:setState({ height = newValue })
+									changeSettings({ height = newValue })
 								end,
 							}),
 						}),
@@ -118,10 +110,10 @@ function SettingsForm:render()
 							Input = e(FormTextInput, {
 								layoutOrder = 2,
 								width = UDim.new(0, 70),
-								value = self.state.width,
+								value = settings.width,
 								placeholderValue = Config.defaultWidth,
 								onValueChange = function(newValue)
-									self:setState({ width = newValue })
+									changeSettings({ width = newValue })
 								end,
 							}),
 						}),
@@ -132,10 +124,10 @@ function SettingsForm:render()
 							Input = e(MaterialsDropdown, {
 								Size = UDim2.new(0, 150, 1, 0),
 								LayoutOrder = 2,
-								value = self.state.wallMaterial,
+								value = settings.wallMaterial,
 								onSelect = function(material)
 									warn('Selected material', material)
-									self:setState({ wallMaterial = material })
+									changeSettings({ wallMaterial = material })
 								end,
 							}),
 						}),
@@ -146,76 +138,89 @@ function SettingsForm:render()
 							Input = e(MaterialsDropdown, {
 								Size = UDim2.new(0, 150, 1, 0),
 								LayoutOrder = 2,
-								value = self.state.groundMaterial,
+								value = settings.groundMaterial,
 								onSelect = function(material)
 									warn('Selected ground material', material)
-									self:setState({ groundMaterial = material })
+									changeSettings({ groundMaterial = material })
+								end,
+							}),
+						}),
+						onlyBlocks = e(SettingsFormItem, {
+							LayoutOrder = 5,
+							Text = 'Use only blocks',
+							theme = theme,
+							Input = e(Checkbox, {
+								layoutOrder = 2,
+								checked = settings.onlyBlocks,
+								onChange = function(newValue)
+									warn('Use only blocks', newValue)
+									changeSettings({ onlyBlocks = newValue })
 								end,
 							}),
 						}),
 						addRandomModels = e(SettingsFormItem, {
-							LayoutOrder = 5,
+							LayoutOrder = 6,
 							Text = 'Random models',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
-								checked = self.state.addRandomModels,
+								checked = settings.addRandomModels,
 								onChange = function(newValue)
 									warn('Add random models', newValue)
-									self:setState({ addRandomModels = newValue })
+									changeSettings({ addRandomModels = newValue })
 								end,
 							}),
 						}),
 						addStartAndFinish = e(SettingsFormItem, {
-							LayoutOrder = 5,
+							LayoutOrder = 7,
 							Text = 'Start and Finish',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
-								checked = self.state.addStartAndFinish,
+								checked = settings.addStartAndFinish,
 								onChange = function(newValue)
 									warn('Add start and finish', newValue)
-									self:setState({ addStartAndFinish = newValue })
+									changeSettings({ addStartAndFinish = newValue })
 								end,
 							}),
 						}),
 						addKillBlocks = e(SettingsFormItem, {
-							LayoutOrder = 6,
+							LayoutOrder = 8,
 							Text = 'Killblocks',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
-								checked = self.state.addKillBlocks,
+								checked = settings.addKillBlocks,
 								onChange = function(newValue)
 									warn('Add addKillBlocks', newValue)
-									self:setState({ addKillBlocks = newValue })
+									changeSettings({ addKillBlocks = newValue })
 								end,
 							}),
 						}),
 						addCeiling = e(SettingsFormItem, {
-							LayoutOrder = 7,
+							LayoutOrder = 9,
 							Text = 'Ceiling',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
-								checked = self.state.addCeiling,
+								checked = settings.addCeiling,
 								onChange = function(newValue)
 									warn('Add addCeiling', newValue)
-									self:setState({ addCeiling = newValue })
+									changeSettings({ addCeiling = newValue })
 								end,
 							}),
 						}),
 						Button = e(FormButton, {
 							text = 'Generate',
-							LayoutOrder = 8,
+							LayoutOrder = 10,
 							onClick = function()
 								if generateMaze ~= nil then
-									local height = self.state.height
+									local height = settings.height
 									if height:len() == 0 then
 										height = Config.defaultHeight
 									end
 
-									local width = self.state.width
+									local width = settings.width
 									if width:len() == 0 then
 										width = Config.defaultWidth
 									end
@@ -223,13 +228,14 @@ function SettingsForm:render()
 									generateMaze({
 										width = width,
 										height = height,
-										wallMaterial = self.state.wallMaterial,
-										groundMaterial = self.state.groundMaterial,
-										addRandomModels = self.state.addRandomModels,
-										addStartAndFinish = self.state.addStartAndFinish,
-										addKillBlocks = self.state.addKillBlocks,
-										addCeiling = self.state.addCeiling,
-										location = self.state.location or workspace,
+										wallMaterial = settings.wallMaterial,
+										groundMaterial = settings.groundMaterial,
+										addRandomModels = settings.addRandomModels,
+										addStartAndFinish = settings.addStartAndFinish,
+										addKillBlocks = settings.addKillBlocks,
+										addCeiling = settings.addCeiling,
+										onlyBlocks = settings.onlyBlocks,
+										location = settings.location or workspace,
 									})
 								end
 							end,
@@ -241,4 +247,17 @@ function SettingsForm:render()
 	end)
 end
 
-return SettingsForm
+local SettingsFormConnected = RoactRodux.connect(
+	function(state)
+		local settings = state.settings
+
+		return { settings = settings }
+	end,
+	function(dispatch)
+		return { changeSettings = function(settings)
+			dispatch(SetSettings(settings))
+		end }
+	end
+)(SettingsForm)
+
+return SettingsFormConnected

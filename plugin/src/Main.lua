@@ -1,11 +1,14 @@
 local Root = script:FindFirstAncestor('MazeGeneratorPlugin')
 local Roact = require(Root:WaitForChild('Roact'))
 local Plugin = Root.Plugin
+local Rodux = require(Root.Rodux)
+local RoactRodux = require(Root.RoactRodux)
 local Log = require(Root.Log)
 
 local DevSettings = require(Plugin.DevSettings)
 
 local App = require(Plugin.Components.App)
+local Reducer = require(Plugin.Reducer)
 local Theme = require(Plugin.Components.Theme)
 local Assets = require(Plugin.Assets)
 
@@ -67,6 +70,7 @@ local function Main(pluginFacade, savedState)
 		return DevSettings:getLogLevel()
 	end)
 	--- APP UI
+	local store = Rodux.Store.new(Reducer, savedState)
 	local app =
 		e(Theme.StudioProvider, nil, {
 			e(
@@ -75,13 +79,14 @@ local function Main(pluginFacade, savedState)
 				{ RootUI = e(App, { root = dockWidget }) }
 			),
 		})
+	local element = Roact.createElement(RoactRodux.StoreProvider, { store = store }, { app = app })
 
-	warn('app', app, dockWidget)
-	local instance = Roact.mount(app, dockWidget, 'APP-UI')
+	local instance = Roact.mount(element, dockWidget, 'APP-UI')
 
 	pluginFacade:beforeUnload(function()
 		Roact.unmount(instance)
 		dockWidgetEnabled:Disconnect()
+		return store:getState()
 	end)
 end
 
