@@ -34,6 +34,7 @@
       <PhysicalProperties name="CustomPhysicalProperties">
         <CustomPhysics>false</CustomPhysics>
       </PhysicalProperties>
+      <bool name="DoubleSided">false</bool>
       <float name="FrontParamA">-0.5</float>
       <float name="FrontParamB">0.5</float>
       <token name="FrontSurface">0</token>

@@ -79,6 +79,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -273,6 +274,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -378,6 +380,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -483,6 +486,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -957,6 +961,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -1062,6 +1067,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -1167,6 +1173,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -1272,6 +1279,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -1377,6 +1385,7 @@
         <PhysicalProperties name="CustomPhysicalProperties">
           <CustomPhysics>false</CustomPhysics>
         </PhysicalProperties>
+        <bool name="DoubleSided">false</bool>
         <float name="FrontParamA">-0.5</float>
         <float name="FrontParamB">0.5</float>
         <token name="FrontSurface">0</token>
@@ -1449,7 +1458,7 @@
     </Item>
   </Item>
   <SharedStrings>
-    <SharedString md5="1B2M2Y8AsgTpgAmY7PhCfg=="></SharedString>
     <SharedString md5="+KXn2PVkmG8K5+S8Au8qxA==">Q1NHUEhTAAAAAEJMT0NL</SharedString>
+    <SharedString md5="1B2M2Y8AsgTpgAmY7PhCfg=="></SharedString>
   </SharedStrings>
 </roblox>

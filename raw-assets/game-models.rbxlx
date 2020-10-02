@@ -63,26 +63,28 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>48.1309776</X>
-					<Y>53.7198715</Y>
-					<Z>-480.864166</Z>
-					<R00>0.75979358</R00>
-					<R01>-0.35121271</R01>
-					<R02>0.547141016</R02>
-					<R10>-1.49011594e-08</R10>
-					<R11>0.841542602</R11>
-					<R12>0.540190697</R12>
-					<R20>-0.650164306</R20>
-					<R21>-0.410433412</R21>
-					<R22>0.639398754</R22>
+					<X>54.1599579</X>
+					<Y>10.8564339</Y>
+					<Z>-649.113098</Z>
+					<R00>-0.977195621</R00>
+					<R01>-0.0853284895</R01>
+					<R02>0.194442064</R02>
+					<R10>7.45057971e-09</R10>
+					<R11>0.915706933</R11>
+					<R12>0.401846707</R12>
+					<R20>-0.212340921</R20>
+					<R21>0.39268285</R21>
+					<R22>-0.894824862</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
+				<float name="DiagonalFieldOfView">0</float>
 				<float name="FieldOfView">70</float>
+				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-3.68807435</X>
-					<Y>2.55907607</Y>
-					<Z>-541.420837</Z>
+					<X>53.7710953</X>
+					<Y>10.0527849</Y>
+					<Z>-647.323547</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -95,6 +97,7 @@
 				</CoordinateFrame>
 				<bool name="HeadLocked">true</bool>
 				<float name="HeadScale">1</float>
+				<float name="MaxAxisFieldOfView">0</float>
 				<string name="Name">Camera</string>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
@@ -4353,15 +4356,15 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<X>76.0248413</X>
 						<Y>13.9246597</Y>
 						<Z>-651.649841</Z>
-						<R00>-4.37113883e-08</R00>
-						<R01>-1</R01>
+						<R00>1</R00>
+						<R01>0</R01>
 						<R02>0</R02>
-						<R10>1</R10>
-						<R11>-4.37113883e-08</R11>
+						<R10>0</R10>
+						<R11>1</R11>
 						<R12>0</R12>
 						<R20>0</R20>
 						<R21>0</R21>
-						<R22>0.99999994</R22>
+						<R22>1</R22>
 					</CoordinateFrame>
 					<bool name="CanCollide">false</bool>
 					<bool name="CastShadow">true</bool>
@@ -4408,8 +4411,8 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<token name="formFactorRaw">1</token>
 					<token name="shape">2</token>
 					<Vector3 name="size">
-						<X>2</X>
-						<Y>16</Y>
+						<X>16</X>
+						<Y>2</Y>
 						<Z>16</Z>
 					</Vector3>
 				</Properties>
@@ -4423,7 +4426,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<ColorSequence name="Color">0 1 1 1 0 1 1 1 1 0 </ColorSequence>
 						<float name="Drag">0</float>
-						<token name="EmissionDirection">0</token>
+						<token name="EmissionDirection">1</token>
 						<bool name="Enabled">true</bool>
 						<NumberRange name="Lifetime">0.5 0.5 </NumberRange>
 						<float name="LightEmission">0</float>
@@ -4464,15 +4467,15 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<X>59.3756714</X>
 						<Y>-1.38230824</Y>
 						<Z>-621.269714</Z>
-						<R00>-4.37113421e-08</R00>
-						<R01>-0.999998927</R01>
+						<R00>1</R00>
+						<R01>0</R01>
 						<R02>0</R02>
-						<R10>0.999998927</R10>
-						<R11>-4.37113421e-08</R11>
+						<R10>0</R10>
+						<R11>1</R11>
 						<R12>0</R12>
 						<R20>0</R20>
 						<R21>0</R21>
-						<R22>0.99999994</R22>
+						<R22>1</R22>
 					</CoordinateFrame>
 					<bool name="CanCollide">false</bool>
 					<bool name="CastShadow">true</bool>
@@ -4519,8 +4522,8 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<token name="formFactorRaw">1</token>
 					<token name="shape">2</token>
 					<Vector3 name="size">
-						<X>2</X>
-						<Y>16</Y>
+						<X>16</X>
+						<Y>2</Y>
 						<Z>16</Z>
 					</Vector3>
 				</Properties>
@@ -4534,7 +4537,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<ColorSequence name="Color">0 0.0588235 0.34902 0.658824 0 1 0.309804 1 0.898039 0 </ColorSequence>
 						<float name="Drag">0</float>
-						<token name="EmissionDirection">0</token>
+						<token name="EmissionDirection">1</token>
 						<bool name="Enabled">true</bool>
 						<NumberRange name="Lifetime">10 10 </NumberRange>
 						<float name="LightEmission">0.800000012</float>
@@ -4806,6 +4809,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -4978,6 +4982,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -7152,6 +7157,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -7376,6 +7382,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -7556,6 +7563,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -7650,6 +7658,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -7744,6 +7753,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8189,6 +8199,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8283,6 +8294,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8377,6 +8389,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8471,6 +8484,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8565,6 +8579,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8668,6 +8683,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<PhysicalProperties name="CustomPhysicalProperties">
 						<CustomPhysics>false</CustomPhysics>
 					</PhysicalProperties>
+					<bool name="DoubleSided">false</bool>
 					<float name="FrontParamA">-0.5</float>
 					<float name="FrontParamB">0.5</float>
 					<token name="FrontSurface">0</token>
@@ -8805,6 +8821,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -8899,6 +8916,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -9037,6 +9055,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -9252,6 +9271,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -9467,6 +9487,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<PhysicalProperties name="CustomPhysicalProperties">
 							<CustomPhysics>false</CustomPhysics>
 						</PhysicalProperties>
+						<bool name="DoubleSided">false</bool>
 						<float name="FrontParamA">-0.5</float>
 						<float name="FrontParamB">0.5</float>
 						<token name="FrontSurface">0</token>
@@ -12537,14 +12558,6 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">VirtualInputManager</string>
-			<int64 name="SourceAssetId">-1</int64>
-			<BinaryString name="Tags"></BinaryString>
-		</Properties>
-	</Item>
-	<Item class="PluginToolbarButton" referent="RBXcee0168b11844625a7f80d6a42498566">
-		<Properties>
-			<BinaryString name="AttributesSerialize"></BinaryString>
-			<string name="Name">Mesh EditorButton</string>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>

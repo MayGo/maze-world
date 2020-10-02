@@ -17,15 +17,15 @@
         <X>59.37567</X>
         <Y>-1.3823082</Y>
         <Z>-621.2697</Z>
-        <R00>-0.000000043711342</R00>
-        <R01>-0.9999989</R01>
+        <R00>1</R00>
+        <R01>0</R01>
         <R02>0</R02>
-        <R10>0.9999989</R10>
-        <R11>-0.000000043711342</R11>
+        <R10>0</R10>
+        <R11>1</R11>
         <R12>0</R12>
         <R20>0</R20>
         <R21>0</R21>
-        <R22>0.99999994</R22>
+        <R22>1</R22>
       </CoordinateFrame>
       <bool name="CanCollide">false</bool>
       <bool name="CastShadow">true</bool>
@@ -59,8 +59,8 @@
       </Vector3>
       <token name="shape">2</token>
       <Vector3 name="size">
-        <X>2</X>
-        <Y>16</Y>
+        <X>16</X>
+        <Y>2</Y>
         <Z>16</Z>
       </Vector3>
       <int64 name="SourceAssetId">-1</int64>
@@ -89,7 +89,7 @@
         </BinaryString>
         <ColorSequence name="Color">0 0.0588235 0.34902 0.658824 0 1 0.309804 1 0.898039 0 </ColorSequence>
         <float name="Drag">0</float>
-        <token name="EmissionDirection">0</token>
+        <token name="EmissionDirection">1</token>
         <bool name="Enabled">true</bool>
         <NumberRange name="Lifetime">10 10 </NumberRange>
         <float name="LightEmission">0.800000011920929</float>
