@@ -31,6 +31,16 @@ function getCorrectCframe(hingeCF, doorCF)
 	return hingeCF * offset
 end
 
+function partToTerrain(newBlock, material)
+	--[[
+	local region = partToRegion3(newBlock)
+	region = region:ExpandToGrid(4)
+	game.Workspace.Terrain:FillRegion(region, 4, settings.wallMaterial)
+	]]
+
+	workspace.Terrain:FillBlock(newBlock.CFrame, newBlock.Size, material)
+end
+
 function partToRegion3(obj)
 	local abs = math.abs
 
@@ -155,17 +165,17 @@ function AddRandomParts(pos, cframe, folder)
 	end)
 end
 
-function MakeBlock()
+function MakeBlock(settings)
 	local newBlock = Instance.new('Part')
 
 	newBlock.Anchored = true
-	newBlock.Size = Vector3.new(1, blockHeight, blockWidth)
+	newBlock.Size = Vector3.new(settings.partThickness, blockHeight, blockWidth)
 
 	return newBlock
 end
 
 function DrawBlock(pos, cframe, folder, vertical, settings)
-	local newBlock = MakeBlock()
+	local newBlock = MakeBlock(settings)
 
 	local x = pos.X
 	local y = pos.Y
@@ -185,12 +195,8 @@ function DrawBlock(pos, cframe, folder, vertical, settings)
 
 	newBlock.CFrame = getCorrectCframe(cframe, newBlock.CFrame)
 
-	local region = partToRegion3(newBlock)
-	region = region:ExpandToGrid(4)
-
 	if not settings.onlyBlocks then
-		warn('Generating with wall material ', settings.wallMaterial)
-		game.Workspace.Terrain:FillRegion(region, 4, settings.wallMaterial)
+		partToTerrain(newBlock, settings.wallMaterial)
 	else
 		newBlock.Parent = folder
 	end
@@ -220,7 +226,7 @@ function DrawFloor(pos, cframe, folder, width, height, settings)
 	floor.CFrame = getCorrectCframe(cframe, floor.CFrame)
 
 	if not settings.onlyBlocks then
-		workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.groundMaterial)
+		partToTerrain(floor, settings.groundMaterial)
 	else
 		floor.Parent = folder
 	end
@@ -238,7 +244,7 @@ function DrawCeiling(pos, cframe, folder, width, height, settings)
 	floor.CFrame = getCorrectCframe(cframe, floor.CFrame)
 
 	if not settings.onlyBlocks then
-		workspace.Terrain:FillBlock(floor.CFrame, floor.Size, settings.wallMaterial)
+		partToTerrain(floor, settings.wallMaterial)
 	else
 		floor.Parent = folder
 	end
@@ -249,7 +255,6 @@ function DrawStart(pos, cframe, folder)
 	local newBlock = Prefabs[block]:Clone()
 
 	newBlock.CFrame = CFrame.new(pos)
-
 	newBlock.CFrame = getCorrectCframe(cframe, newBlock.CFrame)
 	newBlock.Parent = folder
 end
@@ -300,6 +305,19 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 
 	local blockDepth = 0
 
+	local parts = {}
+	-- TODO: remove duplicate walls
+
+	function cachePart(p, vertical)
+		local key = tostring(p) .. tostring(vertical)
+		if not parts[key] then
+			parts[key] = true
+			DrawBlock(p, cframe, folder, vertical, settings)
+			-- warn('Has same part already')
+		else
+		end
+	end
+
 	for zi = 1, #maze do
 		for xi = 1, #maze[1] do
 			local pos_x = pos.X + (blockWidth + blockDepth) * (xi - 1) + blockDepth
@@ -308,25 +326,23 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 			local cell = maze[zi][xi]
 
 			if not cell.north:IsOpened() then
-				DrawBlock(Vector3.new(pos_x, 0, pos_z), cframe, folder, true, settings)
+				local p = Vector3.new(pos_x, 0, pos_z)
+				cachePart(p, true)
 			end
 
 			if not cell.east:IsOpened() then
-				DrawBlock(
-					Vector3.new(pos_x + blockWidth, 0, pos_z),
-					cframe,
-					folder,
-					false,
-					settings
-				)
+				local p = Vector3.new(pos_x + blockWidth, 0, pos_z)
+				cachePart(p, false)
 			end
 
 			if not cell.south:IsOpened() then
-				DrawBlock(Vector3.new(pos_x, 0, pos_z + blockWidth), cframe, folder, true, settings)
+				local p = Vector3.new(pos_x, 0, pos_z + blockWidth)
+				cachePart(p, true)
 			end
 
 			if not cell.west:IsOpened() then
-				DrawBlock(Vector3.new(pos_x, 0, pos_z), cframe, folder, false, settings)
+				local p = Vector3.new(pos_x, 0, pos_z)
+				cachePart(p, false)
 			end
 
 			if settings.addRandomModels then

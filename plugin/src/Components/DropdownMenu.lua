@@ -10,6 +10,8 @@ local DropdownItem = require(Plugin.Components.DropdownMenuItem)
 
 local DropdownMenu = Roact.Component:extend('DropdownMenu')
 
+local e = Roact.createElement
+
 local function noop()
 end
 
@@ -19,7 +21,9 @@ function DropdownMenu:init()
 
 	if value then
 		self:setState({
-			selectedIndex = M.find(options, value.Name),
+			selectedIndex = M.findIndex(options, function(v)
+				return v.value == value
+			end),
 			expanded = false,
 		})
 	else
@@ -47,19 +51,19 @@ function DropdownMenu:render()
 	local menuOptions = {}
 
 	for index, option in ipairs(options) do
-		menuOptions[option] = Roact.createElement(DropdownItem, {
+		menuOptions[option] = e(DropdownItem, {
 			option = option,
 			index = index,
 			color = color,
 			onActivated = function()
 				self:setState({ selectedIndex = index })
 				self:toggle()
-				onSelect(index)
+				onSelect(option.value)
 			end,
 		})
 	end
 
-	local menu = Roact.createElement(
+	local menu = e(
 		FitScrollingFrame,
 		{
 			fitAxes = 'Y',
@@ -80,9 +84,26 @@ function DropdownMenu:render()
 		menuOptions
 	)
 
-	local button = Roact.createElement(RoundButton, {
+	local text = defaultText or 'N/A'
+
+	local image = ''
+
+	if options[selectedIndex] then
+		text = options[selectedIndex].name
+		image = options[selectedIndex].image
+	end
+
+	local img = e('ImageButton', {
+		LayoutOrder = 1,
+		Image = image,
+		Size = UDim2.new(0, 40, 0, 40),
+		Position = UDim2.new(1, 45, 0, 0),
+		AnchorPoint = Vector2.new(1, 0),
+	})
+
+	local button = e(RoundButton, {
 		Size = UDim2.new(1, 0, 0, 40),
-		Text = options[selectedIndex] or defaultText or 'N/A',
+		Text = text,
 		onClicked = function()
 			self:toggle()
 		end,
@@ -96,8 +117,9 @@ function DropdownMenu:render()
 		BackgroundTransparency = 1,
 	}
 
-	return Roact.createElement('Frame', frameProps, {
+	return e('Frame', frameProps, {
 		button = button,
+		img = img,
 		menu = menu,
 	})
 end

@@ -182,4 +182,6 @@ if useDevSource then
 end
 
 PluginFacade:_load()
-PluginFacade:_watch(source)
+if useDevSource then
+	PluginFacade:_watch(source)
+end

@@ -6,6 +6,8 @@ local M = require(Root.M)
 
 local DropdownMenu = require(Plugin.Components.DropdownMenu)
 
+local TexturePath = 'rbxasset://textures/TerrainTools/'
+local MaterialDetails = require(Plugin.Components.MaterialDetails)
 local MaterialsDropdown = Roact.Component:extend('MaterialsDropdown')
 
 local function noop()
@@ -20,20 +22,19 @@ end
 function MaterialsDropdown:render()
 	local onSelect = self.props.onSelect or noop
 	local options = {}
-	local tagMap = {}
 
-	local materials = Enum.Material:GetEnumItems()
-	for index, material in pairs(materials) do
-		tagMap[index] = material
-
-		table.insert(options, material.Name)
+	for index, material in pairs(MaterialDetails) do
+		table.insert(options, {
+			value = material.enum,
+			name = material.enum.Name,
+			image = TexturePath .. material.image,
+		})
 	end
 
 	local mergedProps = M.extend(self.props, {
 		options = options,
-		onSelect = function(newIndex)
-			local tag = tagMap[newIndex]
-			onSelect(tag)
+		onSelect = function(newValue)
+			onSelect(newValue)
 		end,
 	})
 

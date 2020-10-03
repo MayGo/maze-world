@@ -15,6 +15,7 @@ return function(state, action)
 		addStartAndFinish = true,
 		addKillBlocks = true,
 		addCeiling = false,
+		partThickness = Config.defaultThickness,
 		location = workspace,
 	}
 

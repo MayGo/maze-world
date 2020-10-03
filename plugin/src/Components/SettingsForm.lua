@@ -75,8 +75,8 @@ function SettingsForm:render()
 					{
 						UIPadding = e(UIPadding, { padding = 10 }),
 						Location = e(SettingsFormItem, {
-							LayoutOrder = 0,
-							Text = 'Selection/Location',
+							LayoutOrder = 2,
+							Text = 'Selection/Location/Rotation',
 							theme = theme,
 							Input = e(FitText, {
 								Kind = 'TextLabel',
@@ -90,7 +90,7 @@ function SettingsForm:render()
 							}),
 						}),
 						Height = e(SettingsFormItem, {
-							LayoutOrder = 1,
+							LayoutOrder = 4,
 							Text = 'Height',
 							theme = theme,
 							Input = e(FormTextInput, {
@@ -104,7 +104,7 @@ function SettingsForm:render()
 							}),
 						}),
 						Width = e(SettingsFormItem, {
-							LayoutOrder = 2,
+							LayoutOrder = 6,
 							Text = 'Width',
 							theme = theme,
 							Input = e(FormTextInput, {
@@ -117,102 +117,109 @@ function SettingsForm:render()
 								end,
 							}),
 						}),
+						partThickness = e(SettingsFormItem, {
+							LayoutOrder = 8,
+							Text = 'Thickness',
+							theme = theme,
+							Input = e(FormTextInput, {
+								layoutOrder = 2,
+								width = UDim.new(0, 70),
+								value = settings.partThickness,
+								onValueChange = function(newValue)
+									changeSettings({ partThickness = newValue })
+								end,
+							}),
+						}),
 						wallMaterial = e(SettingsFormItem, {
-							LayoutOrder = 3,
+							LayoutOrder = 9,
 							Text = 'Wall Material',
 							theme = theme,
 							Input = e(MaterialsDropdown, {
-								Size = UDim2.new(0, 150, 1, 0),
+								Size = UDim2.new(0, 200, 1, 0),
 								LayoutOrder = 2,
 								value = settings.wallMaterial,
 								onSelect = function(material)
-									warn('Selected material', material)
+									warn(material)
 									changeSettings({ wallMaterial = material })
 								end,
 							}),
 						}),
 						groundMaterial = e(SettingsFormItem, {
-							LayoutOrder = 4,
+							LayoutOrder = 11,
 							Text = 'Ground Material',
 							theme = theme,
 							Input = e(MaterialsDropdown, {
-								Size = UDim2.new(0, 150, 1, 0),
+								Size = UDim2.new(0, 200, 1, 0),
 								LayoutOrder = 2,
 								value = settings.groundMaterial,
 								onSelect = function(material)
-									warn('Selected ground material', material)
 									changeSettings({ groundMaterial = material })
 								end,
 							}),
 						}),
 						onlyBlocks = e(SettingsFormItem, {
-							LayoutOrder = 5,
+							LayoutOrder = 14,
 							Text = 'Use only blocks',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
 								checked = settings.onlyBlocks,
 								onChange = function(newValue)
-									warn('Use only blocks', newValue)
 									changeSettings({ onlyBlocks = newValue })
 								end,
 							}),
 						}),
 						addRandomModels = e(SettingsFormItem, {
-							LayoutOrder = 6,
+							LayoutOrder = 16,
 							Text = 'Random models',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
 								checked = settings.addRandomModels,
 								onChange = function(newValue)
-									warn('Add random models', newValue)
 									changeSettings({ addRandomModels = newValue })
 								end,
 							}),
 						}),
 						addStartAndFinish = e(SettingsFormItem, {
-							LayoutOrder = 7,
+							LayoutOrder = 18,
 							Text = 'Start and Finish',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
 								checked = settings.addStartAndFinish,
 								onChange = function(newValue)
-									warn('Add start and finish', newValue)
 									changeSettings({ addStartAndFinish = newValue })
 								end,
 							}),
 						}),
 						addKillBlocks = e(SettingsFormItem, {
-							LayoutOrder = 8,
+							LayoutOrder = 20,
 							Text = 'Killblocks',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
 								checked = settings.addKillBlocks,
 								onChange = function(newValue)
-									warn('Add addKillBlocks', newValue)
 									changeSettings({ addKillBlocks = newValue })
 								end,
 							}),
 						}),
 						addCeiling = e(SettingsFormItem, {
-							LayoutOrder = 9,
+							LayoutOrder = 22,
 							Text = 'Ceiling',
 							theme = theme,
 							Input = e(Checkbox, {
 								layoutOrder = 2,
 								checked = settings.addCeiling,
 								onChange = function(newValue)
-									warn('Add addCeiling', newValue)
 									changeSettings({ addCeiling = newValue })
 								end,
 							}),
 						}),
 						Button = e(FormButton, {
 							text = 'Generate',
-							LayoutOrder = 10,
+							LayoutOrder = 30,
 							onClick = function()
 								if generateMaze ~= nil then
 									local height = settings.height
@@ -224,10 +231,15 @@ function SettingsForm:render()
 									if width:len() == 0 then
 										width = Config.defaultWidth
 									end
+									local partThickness = settings.partThickness
+									if partThickness:len() == 0 then
+										partThickness = Config.defaultThickness
+									end
 
 									generateMaze({
 										width = width,
 										height = height,
+										partThickness = partThickness,
 										wallMaterial = settings.wallMaterial,
 										groundMaterial = settings.groundMaterial,
 										addRandomModels = settings.addRandomModels,

@@ -12,9 +12,10 @@ end
 return strict('Config', {
 	isDevBuild = isDevBuild,
 	codename = 'Epiphany',
-	version = { 1, 0, 0 },
+	version = { 1, 0, 2 },
 	expectedServerVersionString = '1.0 or newer',
 	protocolVersion = 3,
 	defaultHeight = '10',
 	defaultWidth = '10',
+	defaultThickness = '3',
 })

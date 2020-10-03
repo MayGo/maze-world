@@ -20,6 +20,7 @@ local function SettingsFormItem(props)
 			fitAxes = 'X',
 			containerProps = {
 				LayoutOrder = LayoutOrder,
+				ZIndex = 1,
 				BackgroundTransparency = 1,
 				Size = UDim2.new(0, 0, 0, 45),
 			},

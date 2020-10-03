@@ -24,12 +24,14 @@ local function Main(pluginFacade, savedState)
 
 	-- PLUGIN CONFIGURATION
 	local displayedVersion = Version.display(Config.version)
-	local toolbar = pluginFacade:toolbar('Maze Generator ' .. displayedVersion)
 
 	if Config.isDevBuild then
-		WIDGET_ID = WIDGET_ID .. '_Local'
+		displayedVersion = displayedVersion .. '-local'
+		WIDGET_ID = WIDGET_ID .. displayedVersion
 		PLUGIN_TITLE = PLUGIN_TITLE .. ' (LOCAL)'
 	end
+
+	local toolbar = pluginFacade:toolbar('Maze Generator ' .. displayedVersion)
 
 	local widgetInfo = DockWidgetPluginGuiInfo.new(
 		-- Minimum size
@@ -42,8 +44,7 @@ local function Main(pluginFacade, savedState)
 		190
 	)
 
-	local widgetName = WIDGET_ID .. '-' .. displayedVersion
-	local dockWidget = pluginFacade:createDockWidgetPluginGui(widgetName, widgetInfo)
+	local dockWidget = pluginFacade:createDockWidgetPluginGui(WIDGET_ID, widgetInfo)
 	dockWidget.Name = PLUGIN_TITLE .. ' ' .. displayedVersion
 	dockWidget.Title = PLUGIN_TITLE .. '' .. displayedVersion
 	dockWidget.AutoLocalize = false

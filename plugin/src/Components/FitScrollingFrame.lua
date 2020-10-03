@@ -14,7 +14,7 @@ function FitScrollingFrame:render()
 	local containerProps = self.props.containerProps
 	local layoutProps = self.props.layoutProps
 
-	local children = Dictionary.merge(self.props[Roact.Children], { ['$Layout'] = e(
+	local children = Dictionary.merge(self.props[Roact.Children], { layout = e(
 		'UIListLayout',
 		Dictionary.merge(
 			{
