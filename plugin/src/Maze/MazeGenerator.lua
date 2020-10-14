@@ -214,7 +214,7 @@ end
 
 function DrawFloor(pos, cframe, folder, width, height, settings)
 	local floor = Instance.new('Part')
-	floor.Parent = folder
+
 	floor.Size = Vector3.new(width, 1, height)
 
 	floor.Name = floorPartName
@@ -226,6 +226,9 @@ function DrawFloor(pos, cframe, folder, width, height, settings)
 	floor.CFrame = getCorrectCframe(cframe, floor.CFrame)
 
 	if not settings.onlyBlocks then
+		floor.Parent = folder
+		floor.Transparency = 1
+		floor.CanCollide = false
 		partToTerrain(floor, settings.groundMaterial)
 	else
 		floor.Parent = folder
@@ -234,7 +237,7 @@ end
 
 function DrawCeiling(pos, cframe, folder, width, height, settings)
 	local floor = Instance.new('Part')
-	floor.Parent = folder
+
 	floor.Size = Vector3.new(width, 1, height)
 
 	floor.Name = 'Ceiling'
@@ -244,6 +247,9 @@ function DrawCeiling(pos, cframe, folder, width, height, settings)
 	floor.CFrame = getCorrectCframe(cframe, floor.CFrame)
 
 	if not settings.onlyBlocks then
+		floor.Parent = folder
+		floor.Transparency = 1
+		floor.CanCollide = false
 		partToTerrain(floor, settings.wallMaterial)
 	else
 		floor.Parent = folder
@@ -320,29 +326,29 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 
 	for zi = 1, #maze do
 		for xi = 1, #maze[1] do
-			local pos_x = pos.X + (blockWidth + blockDepth) * (xi - 1) + blockDepth
-			local pos_z = pos.Z + (blockWidth + blockDepth) * (zi - 1) + blockDepth
+			local pos_x = (blockWidth + blockDepth) * (xi - 1) + blockDepth
+			local pos_z = (blockWidth + blockDepth) * (zi - 1) + blockDepth
 
 			local cell = maze[zi][xi]
 
 			if not cell.north:IsOpened() then
 				local p = Vector3.new(pos_x, 0, pos_z)
-				cachePart(p, true)
+				cachePart(pos + p, true)
 			end
 
 			if not cell.east:IsOpened() then
 				local p = Vector3.new(pos_x + blockWidth, 0, pos_z)
-				cachePart(p, false)
+				cachePart(pos + p, false)
 			end
 
 			if not cell.south:IsOpened() then
 				local p = Vector3.new(pos_x, 0, pos_z + blockWidth)
-				cachePart(p, true)
+				cachePart(pos + p, true)
 			end
 
 			if not cell.west:IsOpened() then
 				local p = Vector3.new(pos_x, 0, pos_z)
-				cachePart(p, false)
+				cachePart(pos + p, false)
 			end
 
 			if settings.addRandomModels then
