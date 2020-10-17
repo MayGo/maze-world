@@ -4,7 +4,6 @@ local logger = require(Modules.src.utils.Logger)
 local GhostAbility = require(Modules.src.GhostAbility)
 local InventoryObjects = require(Modules.src.objects.InventoryObjects)
 local PET_TYPES = InventoryObjects.PET_TYPES
-local PetObjects = InventoryObjects.PetObjects
 local Models = ReplicatedStorage:WaitForChild('Models')
 
 local Pet = {}

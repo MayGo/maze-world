@@ -43,8 +43,6 @@ function Room:didMount()
 			return
 		end
 
-		logger:w('..........................2', config)
-
 		local roomObj = RoomsFolder:WaitForChild(modelName)
 		if not roomObj then
 			logger:w('Room object for ' .. modelName .. ' does not exists!')
@@ -52,11 +50,11 @@ function Room:didMount()
 		end
 
 		self.playingPlaceholder = roomObj.placeholders:WaitForChild('PlayingPlaceholder', math.huge)
+		self.waitingPlaceholder = roomObj.placeholders:WaitForChild('WaitingPlaceholder', math.huge)
+
 		if config.noTimer then
 			logger:d('No TimerPlaceholder needed for ' .. modelName)
 		else
-			self.waitingPlaceholder =
-				roomObj.placeholders:WaitForChild('WaitingPlaceholder', math.huge)
 			self.timerPlaceholder = roomObj.placeholders:WaitForChild('TimerPlaceholder', math.huge)
 		end
 

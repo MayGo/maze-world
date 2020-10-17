@@ -33,8 +33,6 @@ local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItems
 local removeItemFromPlayerInventory =
 	require(Modules.src.actions.inventory.removeItemFromPlayerInventory)
 
-local TouchItem = require(Modules.src.TouchItem)
-
 local serverReducers = require(script.Parent.serverReducers)
 local ServerApi = require(script.Parent.ServerApi)
 local networkMiddleware = require(script.Parent.networkMiddleware)
@@ -417,7 +415,7 @@ return function(context)
 					store:dispatch(removePlayerFromRoom(player, roomId))
 				end)
 				logger:w('Creating init loop!!')
-				zone:initLoop() -- Initiates loop (default 0.5) which enables the events to work
+				-- zone:initLoop() -- Initiates loop (default 0.5) which enables the events to work
 			else
 				logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
 			end
@@ -433,6 +431,8 @@ return function(context)
 		hit.parent.Humanoid.Health = 0
 	end)
 
+	local collectedByPlayer = {}
+
 	TagItemOnce.create(nil, 'CoinBrick', function(player, hit, part)
 		if part:FindFirstChild('itemId') then
 			logger:d('Player got coin with value: ' .. part.itemId.Value)
@@ -441,21 +441,40 @@ return function(context)
 
 			logger:d('Player ' .. player.Name .. ' picked up coin ' .. itemId)
 			local coinItem = InventoryObjects.CoinObjects[itemId]
+
 			if coinItem then
-				GameDatastore:incrementCoins(player, coinItem.value)
+				if coinItem.onePerPlayer then
+					local key = tostring(coinItem.id) .. '_' .. tostring(player.UserId)
+
+					if not collectedByPlayer[key] then
+						collectedByPlayer[key] = true
+						GameDatastore:incrementCoins(player, coinItem.value)
+						api:clientPlaySound(player, 'Coin_Collect')
+						store:dispatch(
+							clientSendNotification(
+								player,
+								'Collected treasure with ' .. tostring(coinItem.value) .. ' coins',
+								assets.money['coins-pile']
+							)
+						)
+					end
+				else
+					GameDatastore:incrementCoins(player, coinItem.value)
+					api:clientPlaySound(player, 'Coin_Collect')
+				end
 			else
 				logger:e('No coinItem found', itemId)
 			end
 
-			api:clientPlaySound(player, 'Coin_Collect')
-
-			if part.Name == 'PrimaryPart' then
-				local model = part:FindFirstAncestorOfClass('Model')
-				model:Destroy()
-			else
-				part.Parent = nil
-				wait(10)
-				part.Parent = game.workspace
+			if not coinItem.onePerPlayer then
+				if part.Name == 'PrimaryPart' then
+					local model = part:FindFirstAncestorOfClass('Model')
+					model:Destroy()
+				else
+					part.Parent = nil
+					wait(10)
+					part.Parent = game.workspace
+				end
 			end
 		else
 			logger:w('No itemId Value for coin part')

@@ -257,12 +257,14 @@ local CoinObjects = {
 		value = 8,
 	},
 	['9002008'] = {
-		name = 'coins 2008',
-		value = 2008,
+		name = 'coins 2418',
+		value = 2418,
+		onePerPlayer = true,
 	},
 	['9002009'] = {
-		name = 'coins 2009',
+		name = 'coins 14628',
 		value = 14628,
+		onePerPlayer = true,
 	},
 }
 
