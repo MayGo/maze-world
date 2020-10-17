@@ -25,3 +25,6 @@
 [submodule "modules/t"]
 	path = modules/t
 	url = https://github.com/osyrisrblx/t
+[submodule "modules/HDAdmin"]
+	path = modules/HDAdmin
+	url = https://github.com/1ForeverHD/HDAdmin

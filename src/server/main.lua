@@ -7,6 +7,9 @@ local Players = game:GetService('Players')
 local M = require(Modules.M)
 local Rodux = require(Modules.Rodux)
 
+local ZonePlus = require(Modules.ZonePlus)
+local ZoneService = require(ZonePlus.ZoneService)
+
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
 local clientSlotsCount = require(Modules.src.actions.toClient.clientSlotsCount)
 local GlobalConfig = require(Modules.src.GlobalConfig)
@@ -24,6 +27,7 @@ local connectPlayer = require(Modules.src.thunks.connectPlayer)
 local playerEnteredRoom = require(Modules.src.thunks.playerEnteredRoom)
 local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
 local startRoomGameLoop = require(Modules.src.thunks.startRoomGameLoop)
+local startInfiniteGame = require(Modules.src.thunks.startInfiniteGame)
 local removePlayerFromRoom = require(Modules.src.actions.rooms.removePlayerFromRoom)
 local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItemsToPlayerInventory)
 local removeItemFromPlayerInventory =
@@ -387,27 +391,36 @@ return function(context)
 	logger:i('Initializing rooms')
 	if RoomsFolder then
 		for roomId, room in pairs(store:getState().rooms) do
-			logger:i('Initializing room ', roomId, room)
-			store:dispatch(startRoomGameLoop(roomId))
+			logger:i('Initializing room:', roomId, room)
 
-			spawn(function()
-				local roomObj = RoomsFolder:findFirstChild(room.modelName)
+			if room.config.noTimer then
+				logger:i('Init no timer room. Start infinite room')
 
-				if roomObj then
-					local roomPlaceholder = roomObj.placeholders:WaitForChild('RoomPlaceholder')
-					TouchItem.create(
-						roomPlaceholder,
-						function(player)
-							store:dispatch(playerEnteredRoom(player, roomId))
-						end,
-						function(player)
-							store:dispatch(removePlayerFromRoom(player, roomId))
-						end
-					)
-				else
-					logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
-				end
-			end)
+				store:dispatch(startInfiniteGame(roomId))
+			else
+				store:dispatch(startRoomGameLoop(roomId))
+			end
+
+			local roomObj = RoomsFolder:findFirstChild(room.modelName)
+
+			if roomObj then
+				local roomPlaceholder = roomObj.placeholders:WaitForChild('RoomPlaceholder')
+				logger:w('Creating zone', roomPlaceholder)
+				local zone = ZoneService:createZone('Zone' .. room.modelName, roomPlaceholder)
+
+				zone.playerAdded:Connect(function(player) -- Fires when a player enters the zone
+					print(player.Name .. ' entered!')
+					store:dispatch(playerEnteredRoom(player, roomId))
+				end)
+				zone.playerRemoving:Connect(function(player) -- Fires when a player exits the zone
+					print(player.Name .. ' left!')
+					store:dispatch(removePlayerFromRoom(player, roomId))
+				end)
+				logger:w('Creating init loop!!')
+				zone:initLoop() -- Initiates loop (default 0.5) which enables the events to work
+			else
+				logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
+			end
 		end
 	else
 		logger:w('Rooms Folder does not exists!!')

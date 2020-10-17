@@ -15,4 +15,5 @@ for _, folder in ipairs(folders) do
 	end
 end
 
+remodel.writeModelFile(gamePlace.Workspace.Terrain, './PlaceTerrain.rbxmx')
 remodel.writeModelFile(gamePlace.Workspace.Place, './Place.rbxmx')

@@ -8,8 +8,6 @@ local setRoomEndTime = require(Modules.src.actions.rooms.setRoomEndTime)
 local resetRoom = require(Modules.src.actions.rooms.resetRoom)
 local clientStartGame = require(Modules.src.actions.toClient.clientStartGame)
 local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
-local addPlayerFinishToRoom = require(Modules.src.actions.rooms.addPlayerFinishToRoom)
-local clientFinishGame = require(Modules.src.actions.toClient.clientFinishGame)
 
 local Transporter = require(Modules.src.Transporter)
 local M = require(Modules.M)
@@ -23,14 +21,6 @@ local MapsFolder = Place:findFirstChild('Maps')
 
 local function isPlayerPlaying(player)
 	return player.finishTime == nil
-end
-local function addPlayerDiedListener(store, roomId, player)
-	player.Character:WaitForChild('Humanoid').Died:Connect(function()
-		logger:i(player.Name .. ' has died in room!')
-
-		store:dispatch(addPlayerFinishToRoom(player, roomId, os.time(), 0, true))
-		store:dispatch(clientFinishGame(player, roomId, os.time(), 0, true))
-	end)
 end
 
 local function startGame(roomId)

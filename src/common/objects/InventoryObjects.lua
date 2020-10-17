@@ -233,20 +233,36 @@ local RoomObjects = {
 			playTime = 3 * 60 * 60,
 		},
 	},
+	['10000666'] = {
+		name = 'ScaryMaze',
+		modelName = 'ScaryMaze',
+		config = {
+			noTimer = true,
+			prizeCoins = 20000000,
+		},
+	},
 }
 
 local CoinObjects = {
 	['9000001'] = {
-		name = '1 coin',
+		name = 'coin 1',
 		value = 1,
 	},
 	['9000005'] = {
-		name = '5 coins',
+		name = 'coins 5',
 		value = 5,
 	},
 	['9000008'] = {
-		name = '8 coins',
+		name = 'coins 8',
 		value = 8,
+	},
+	['9002008'] = {
+		name = 'coins 2008',
+		value = 2008,
+	},
+	['9002009'] = {
+		name = 'coins 2009',
+		value = 14628,
 	},
 }
 

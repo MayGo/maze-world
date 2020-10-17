@@ -5,6 +5,9 @@
         "$className": "DataModel",
         "Workspace": {
             "$className": "Workspace",
+            "Terrain": {
+                "$path": "PlaceTerrain.rbxmx"
+            },
             "Place": {
                 "$path": "Place.rbxmx"
             },
@@ -140,6 +143,9 @@
                 },
                 "t": {
                     "$path": "modules/t/lib"
+                },
+                "ZonePlus": {
+                    "$path": "modules/HDAdmin/Projects/Zone+/src"
                 }
             },
             "HotReloadServer": {

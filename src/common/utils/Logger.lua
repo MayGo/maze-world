@@ -4,7 +4,7 @@ local Print = require(Modules.src.utils.Print)
 local RunService = game:GetService('RunService')
 
 local logger = {
-	_infoLogEnabled = false,
+	_infoLogEnabled = true,
 	_infoLogAdvancedEnabled = false,
 	_debugEnabled = RunService:IsStudio(),
 }
