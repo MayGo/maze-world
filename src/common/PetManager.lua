@@ -4,7 +4,7 @@ local src = Modules:WaitForChild('src')
 local logger = require(src.utils.Logger)
 local InventoryObjects = require(src.objects.InventoryObjects)
 local PET_TYPES = InventoryObjects.PET_TYPES
-local Pet = require(src:WaitForChild('Pet'))
+local Pet = require(src:WaitForChild('Pet', 30))
 local Print = require(src.utils.Print)
 local M = require(Modules.M)
 

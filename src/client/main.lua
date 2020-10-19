@@ -103,9 +103,15 @@ return function(context)
 			store:dispatch(clientReset(LocalPlayer))
 		end)
 	end
+
 	local clientPlaySound = function(soundName)
 		logger:d('clientPlaySound.' .. soundName)
 		AudioPlayer.playAudio(soundName)
+	end
+	local clientPlayBackgroundSound = function(soundName)
+		logger:d('clientPlayBackgroundSound.' .. soundName)
+
+		AudioPlayer.playBackgroundAudio(soundName)
 	end
 
 	api = ClientApi.connect({
@@ -143,6 +149,7 @@ return function(context)
 		storeAction = storeAction,
 		clientStartGhosting = clientStartGhosting,
 		clientPlaySound = clientPlaySound,
+		clientPlayBackgroundSound = clientPlayBackgroundSound,
 	})
 
 	api:clientStart()

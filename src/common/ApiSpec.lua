@@ -38,6 +38,9 @@ return {
 		initialStoreState = { arguments = Typer.args({ 'state', Typer.any() }) },
 		clientStartGhosting = { arguments = Typer.args() },
 		clientPlaySound = { arguments = Typer.args({ 'soundName', Typer.type('string') }) },
+		clientPlayBackgroundSound = {
+			arguments = Typer.args({ 'soundName', Typer.type('string') }),
+		},
 		storeAction = { arguments = Typer.args({ 'action', Typer.type('table') }) },
 	},
 }

@@ -13,6 +13,7 @@ local AudioPlayer = require(Modules.src.AudioPlayer)
 
 AudioPlayer.preloadAudio({
 --Lucid_Dream = 1837103530,
+	Scary_bg = 1838699126,
 	Desert_Sands = 1848350335,
 	Simple_Click = 3061551819,
 	Notification = 2296072875,
@@ -20,7 +21,7 @@ AudioPlayer.preloadAudio({
 	Coin_Collect = 930700226,
 })
 
-AudioPlayer.playAudio('Desert_Sands')
+AudioPlayer.playBackgroundAudio('Desert_Sands')
 
 local loadingScreen = require(Modules.src.gui.LoadingScreen)
 local Players = game:GetService('Players')

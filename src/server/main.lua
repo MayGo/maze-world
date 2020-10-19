@@ -7,7 +7,7 @@ local Players = game:GetService('Players')
 local M = require(Modules.M)
 local Rodux = require(Modules.Rodux)
 
-local ZonePlus = require(Modules.ZonePlus)
+local ZonePlus = require(4664437268) --require(Modules.ZonePlus)
 local ZoneService = require(ZonePlus.ZoneService)
 
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
@@ -409,13 +409,17 @@ return function(context)
 				zone.playerAdded:Connect(function(player) -- Fires when a player enters the zone
 					print(player.Name .. ' entered!')
 					store:dispatch(playerEnteredRoom(player, roomId))
+
+					api:clientPlayBackgroundSound(player, 'Scary_bg')
 				end)
 				zone.playerRemoving:Connect(function(player) -- Fires when a player exits the zone
 					print(player.Name .. ' left!')
 					store:dispatch(removePlayerFromRoom(player, roomId))
+
+					api:clientPlayBackgroundSound(player, 'Desert_Sands')
 				end)
-				logger:w('Creating init loop!!')
-				-- zone:initLoop() -- Initiates loop (default 0.5) which enables the events to work
+				logger:w('Creating init loop!')
+				zone:initLoop() -- Initiates loop (default 0.5) which enables the events to work
 			else
 				logger:w('Rooms folder is missing ' .. roomId .. ' object!!')
 			end
@@ -433,7 +437,7 @@ return function(context)
 
 	local collectedByPlayer = {}
 
-	TagItemOnce.create(nil, 'CoinBrick', function(player, hit, part)
+	TagItem.create(nil, 'CoinBrick', function(player, hit, part)
 		if part:FindFirstChild('itemId') then
 			logger:d('Player got coin with value: ' .. part.itemId.Value)
 
@@ -478,6 +482,17 @@ return function(context)
 			end
 		else
 			logger:w('No itemId Value for coin part')
+		end
+	end)
+
+	TagItem.create(nil, 'SoundBrick', function(player, hit, part)
+		if part:FindFirstChild('itemId') then
+			logger:d('Player played sound value: ' .. part.itemId.Value)
+
+			api:clientPlaySound(player, part.itemId.Value)
+		else
+			logger:w('Player played random sound')
+			api:clientPlaySound(player, 'Coin_Collect')
 		end
 	end)
 

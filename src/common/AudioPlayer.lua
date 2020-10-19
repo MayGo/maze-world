@@ -21,7 +21,26 @@ AudioPlayer.preloadAudio = function(assetArray)
 	end)
 end
 
+local currentBackground
 -- Function to play an audio asset
+AudioPlayer.playBackgroundAudio = function(assetName)
+	if currentBackground then
+		currentBackground:Stop()
+	end
+
+	currentBackground = game.Workspace:FindFirstChild(assetName)
+	if not currentBackground then
+		warn('Could not find audio asset: ' .. assetName)
+		return
+	end
+	if not currentBackground.IsLoaded then
+		currentBackground.Loaded:wait()
+	end
+
+	currentBackground.Looped = true
+	currentBackground:Play()
+end
+
 AudioPlayer.playAudio = function(assetName)
 	local audio = game.Workspace:FindFirstChild(assetName)
 	if not audio then
