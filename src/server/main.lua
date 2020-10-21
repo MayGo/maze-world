@@ -44,6 +44,8 @@ local GameDatastore = require(Modules.src.GameDatastore)
 local GamePasses = require(Modules.src.GamePasses)
 local GhostAbility = require(Modules.src.GhostAbility)
 local RoomManager = require(Modules.src.RoomManager)
+local FallTriggerManager = require(Modules.src.FallTriggerManager)
+local SoundTriggerManager = require(Modules.src.SoundTriggerManager)
 
 GhostAbility:initCollisionGroup()
 RoomManager:initCollisionGroups()
@@ -485,16 +487,23 @@ return function(context)
 		end
 	end)
 
-	TagItem.create(nil, 'SoundBrick', function(player, hit, part)
-		if part:FindFirstChild('itemId') then
-			logger:d('Player played sound value: ' .. part.itemId.Value)
-
-			api:clientPlaySound(player, part.itemId.Value)
-		else
-			logger:w('Player played random sound')
-			api:clientPlaySound(player, 'Coin_Collect')
+	local soundTriggerWaitFor = 10
+	TagItem.create(nil, 'SoundTriggerBrick', function(player, hit, part)
+		function playSound(soundName, triggerPart)
+			api:clientPlaySound(player, soundName, triggerPart)
 		end
+		SoundTriggerManager:makeSound(part, soundTriggerWaitFor, playSound)
 	end)
+
+	local fallStuffWaitFor = 10
+	TagItem.create(
+		nil,
+		'FallTriggerBrick',
+		function(player, hit, part)
+			FallTriggerManager:fallStuff(part, fallStuffWaitFor)
+		end,
+		nil
+	)
 
 	TagItem.create(nil, 'CollectableBrick', function(player, hit, part)
 		if part.itemId then

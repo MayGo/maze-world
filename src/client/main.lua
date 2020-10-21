@@ -104,10 +104,11 @@ return function(context)
 		end)
 	end
 
-	local clientPlaySound = function(soundName)
-		logger:d('clientPlaySound.' .. soundName)
-		AudioPlayer.playAudio(soundName)
+	local clientPlaySound = function(soundName, triggerPart)
+		logger:d('clientPlaySound.' .. soundName, triggerPart)
+		AudioPlayer.playAudio(soundName, triggerPart)
 	end
+
 	local clientPlayBackgroundSound = function(soundName)
 		logger:d('clientPlayBackgroundSound.' .. soundName)
 

@@ -11,7 +11,7 @@ local bricks = {}
 local isTouchingPlayer = {}
 local isUntouchingPlayer = {}
 
-function TagItem.create(roomId, tagName, touchedFn, untouchedFn)
+function TagItem.create(roomId, tagName, touchedFn, untouchedFn, waitFor)
 	local addedSignal = CollectionService:GetInstanceAddedSignal(tagName)
 	local removedSignal = CollectionService:GetInstanceRemovedSignal(tagName)
 
@@ -21,9 +21,11 @@ function TagItem.create(roomId, tagName, touchedFn, untouchedFn)
 				local player = PlayerUtils:getPlayer(hit)
 				if player then
 					if not isTouchingPlayer[player] then
-						touchedFn(player, hit, part)
 						isTouchingPlayer[player] = true
-						wait(1)
+						touchedFn(player, hit, part)
+
+						wait(waitFor and waitFor or 1)
+
 						isTouchingPlayer[player] = false
 					end
 				end
@@ -45,8 +47,8 @@ function TagItem.create(roomId, tagName, touchedFn, untouchedFn)
 
 					if not isStillTouching and not isUntouchingPlayer[player] then
 						if untouchedFn then
-							untouchedFn(player)
 							isUntouchingPlayer[player] = true
+							untouchedFn(player)
 							wait(1)
 							isUntouchingPlayer[player] = false
 						end

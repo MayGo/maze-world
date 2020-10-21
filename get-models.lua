@@ -5,7 +5,8 @@ local gamePlace = remodel.readPlaceFile('./raw-assets/game-place.rbxlx')
 local modelDir = './models'
 remodel.createDirAll(modelDir)
 
-local folders = { 'Money', 'Pets', 'Prefabs', 'Walls', 'Collectables', 'Misc', 'Trails' }
+local folders =
+	{ 'Money', 'Pets', 'Prefabs', 'Walls', 'Collectables', 'Misc', 'Trails', 'FallItems' }
 
 for _, folder in ipairs(folders) do
 	for _, model in ipairs(gameModels.Workspace[folder]:GetChildren()) do

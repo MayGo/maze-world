@@ -41,11 +41,22 @@ AudioPlayer.playBackgroundAudio = function(assetName)
 	currentBackground:Play()
 end
 
-AudioPlayer.playAudio = function(assetName)
+AudioPlayer.playAudio = function(assetName, part)
 	local audio = game.Workspace:FindFirstChild(assetName)
+
+	if not audio and part then
+		audio = part:FindFirstChild(assetName)
+	end
+
 	if not audio then
 		warn('Could not find audio asset: ' .. assetName)
 		return
+	end
+
+	if part then
+		audio.Parent = part
+		audio.EmitterSize = 10
+		audio.MaxDistance = 100
 	end
 	if not audio.IsLoaded then
 		audio.Loaded:wait()

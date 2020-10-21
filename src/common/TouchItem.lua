@@ -13,8 +13,8 @@ function TouchItem.create(roomPart, touchedFn, untouchedFn)
 			local player = PlayerUtils:getPlayerFromHuman(hit)
 			if player then
 				if not isTouchingPlayer[player] then
-					touchedFn(player)
 					isTouchingPlayer[player] = true
+					touchedFn(player)
 					wait(1)
 					isTouchingPlayer[player] = false
 				end
@@ -38,8 +38,8 @@ function TouchItem.create(roomPart, touchedFn, untouchedFn)
 
 				if not isStillTouching and not isUntouchingPlayer[player] then
 					if untouchedFn then
-						untouchedFn(player)
 						isUntouchingPlayer[player] = true
+						untouchedFn(player)
 						wait(1)
 						isUntouchingPlayer[player] = false
 					end

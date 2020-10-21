@@ -37,7 +37,12 @@ return {
 	fromServer = {
 		initialStoreState = { arguments = Typer.args({ 'state', Typer.any() }) },
 		clientStartGhosting = { arguments = Typer.args() },
-		clientPlaySound = { arguments = Typer.args({ 'soundName', Typer.type('string') }) },
+		clientPlaySound = {
+			arguments = Typer.args(
+				{ 'soundName', Typer.type('string') },
+				{ 'triggerPart', Typer.any() }
+			),
+		},
 		clientPlayBackgroundSound = {
 			arguments = Typer.args({ 'soundName', Typer.type('string') }),
 		},

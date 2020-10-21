@@ -28,3 +28,6 @@
 [submodule "modules/HDAdmin"]
 	path = modules/HDAdmin
 	url = https://github.com/1ForeverHD/HDAdmin
+[submodule "modules/knit"]
+	path = modules/knit
+	url = https://github.com/Sleitnick/Knit

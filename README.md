@@ -45,6 +45,7 @@ You can select from easy, medium or hard maze to play. All mazes are dynamically
 -   [Rojo](https://github.com/rojo-rbx/rojo)
 -   [GameAnalytics](https://gameanalytics.com/docs/item/roblox-sdk)
 -   Algoritm for maze generation taken from https://github.com/shironecko/LuaMaze
+-   https://github.com/Sleitnick/Knit/blob/b1321acc92660b0dda59a724c54825973656338e/docs/util.md
 
 # Game functionality
 

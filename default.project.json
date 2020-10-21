@@ -148,6 +148,9 @@
                 },
                 "ZonePlus": {
                     "$path": "modules/HDAdmin/Projects/Zone+/src"
+                },
+                "Knit": {
+                    "$path": "modules/knit/src/Knit"
                 }
             },
             "HotReloadServer": {
