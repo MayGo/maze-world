@@ -12,6 +12,8 @@ local ZoneService = require(ZonePlus.ZoneService)
 
 local equipPlayer = require(Modules.src.thunks.equipPlayer)
 local clientSlotsCount = require(Modules.src.actions.toClient.clientSlotsCount)
+local clientStartGame = require(Modules.src.actions.toClient.clientStartGame)
+local clientReset = require(Modules.src.actions.toClient.clientReset)
 local GlobalConfig = require(Modules.src.GlobalConfig)
 
 -- The Rodux DevTools aren't available yet! Check the README for more details.
@@ -409,18 +411,30 @@ return function(context)
 				local zone = ZoneService:createZone('Zone' .. room.modelName, roomPlaceholder)
 
 				zone.playerAdded:Connect(function(player) -- Fires when a player enters the zone
-					print(player.Name .. ' entered!')
+					logger:w(player.Name .. ' entered!')
 					store:dispatch(playerEnteredRoom(player, roomId))
 
-					api:clientPlayBackgroundSound(player, 'Scary_bg')
-				end)
-				zone.playerRemoving:Connect(function(player) -- Fires when a player exits the zone
-					print(player.Name .. ' left!')
-					store:dispatch(removePlayerFromRoom(player, roomId))
+					if room.name == 'HorrorMaze' then
+						store:dispatch(clientStartGame(player, roomId))
+						logger:d(
+							'No pets allowed in HorrorMaze. Player ' .. player.Name .. ' unequipped all'
+						)
 
-					api:clientPlayBackgroundSound(player, 'Desert_Sands')
+						GameDatastore:unsetAllEquippedPet(player)
+						api:clientPlayBackgroundSound(player, 'Scary_bg')
+					end
 				end)
-				logger:w('Creating init loop!')
+
+				zone.playerRemoving:Connect(function(player) -- Fires when a player exits the zone
+					logger:w(player.Name .. ' left!')
+					store:dispatch(removePlayerFromRoom(player, roomId))
+					if room.name == 'HorrorMaze' then
+						store:dispatch(clientReset(player))
+
+						api:clientPlayBackgroundSound(player, 'Desert_Sands')
+					end
+				end)
+
 				zone:initLoop() -- Initiates loop (default 0.5) which enables the events to work
 			else
 				logger:w('Rooms folder is missing ' .. roomId .. ' object!!')

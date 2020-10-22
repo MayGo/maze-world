@@ -234,8 +234,8 @@ local RoomObjects = {
 		},
 	},
 	['10000666'] = {
-		name = 'ScaryMaze',
-		modelName = 'ScaryMaze',
+		name = 'HorrorMaze',
+		modelName = 'HorrorMaze',
 		config = {
 			noTimer = true,
 			prizeCoins = 20000000,

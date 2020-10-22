@@ -82,6 +82,7 @@ function Room:render()
 	local roomId = self.props.roomId
 	local startTime = self.props.startTime
 	local mostPlayed = self.props.mostPlayed
+	local config = self.props.config
 
 	if not self.waitingPlaceholder and not self.playingPlaceholder and not self.timerPlaceholder then
 		logger:d('Not rendering room')
@@ -105,7 +106,7 @@ function Room:render()
 	if self.playingPlaceholder then
 		local waitingTable = createElement(SurfaceBillboard, {
 			item = self.playingPlaceholder,
-			title = 'Waiting',
+			title = config.noTimer and 'Inside of maze' or 'Waiting',
 			[Roact.Children] = createElement(DynamicTable, {
 				items = self.props.playersWaiting,
 				rowComponent = NameValueTableRow,

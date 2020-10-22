@@ -13,8 +13,6 @@ local UICorner = require(clientSrc.Components.common.UICorner)
 
 local RoundButton = require(clientSrc.Components.common.RoundButton)
 local Frame = require(clientSrc.Components.common.Frame)
-local UIPadding = require(clientSrc.Components.common.UIPadding)
-local TextLabel = require(clientSrc.Components.common.TextLabel)
 
 local getApiFromComponent = require(clientSrc.getApiFromComponent)
 
@@ -36,10 +34,8 @@ end
 
 function InventoryAndShopButtons:render()
 	local props = self.props
-	local playerSlotsCount = props.playerSlotsCount
 	local isPlaying = props.isPlaying
 	local inventory = props.inventory
-	local equippedItems = self.props.equippedItems
 
 	if isPlaying then return end
 

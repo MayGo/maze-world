@@ -14,6 +14,7 @@ local AudioPlayer = require(Modules.src.AudioPlayer)
 AudioPlayer.preloadAudio({
 --Lucid_Dream = 1837103530,
 	Scary_bg = 1838699126,
+	Darkness_bg = 265292123,
 	Desert_Sands = 1848350335,
 	Simple_Click = 3061551819,
 	Notification = 2296072875,
