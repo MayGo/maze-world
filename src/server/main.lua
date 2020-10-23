@@ -48,6 +48,7 @@ local GhostAbility = require(Modules.src.GhostAbility)
 local RoomManager = require(Modules.src.RoomManager)
 local FallTriggerManager = require(Modules.src.FallTriggerManager)
 local SoundTriggerManager = require(Modules.src.SoundTriggerManager)
+local LogicTriggerManager = require(Modules.src.LogicTriggerManager)
 
 GhostAbility:initCollisionGroup()
 RoomManager:initCollisionGroups()
@@ -506,6 +507,7 @@ return function(context)
 		function playSound(soundName, triggerPart)
 			api:clientPlaySound(player, soundName, triggerPart)
 		end
+
 		SoundTriggerManager:makeSound(part, soundTriggerWaitFor, playSound)
 	end)
 
@@ -515,6 +517,19 @@ return function(context)
 		'FallTriggerBrick',
 		function(player, hit, part)
 			FallTriggerManager:fallStuff(part, fallStuffWaitFor)
+		end,
+		nil
+	)
+
+	TagItem.create(
+		nil,
+		'LogicTriggerBrick',
+		function(player, hit, part)
+			function playSound(soundName, triggerPart)
+				api:clientPlaySound(player, soundName, triggerPart)
+			end
+
+			LogicTriggerManager:trigger(part, player, playSound, store)
 		end,
 		nil
 	)

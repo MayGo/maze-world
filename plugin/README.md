@@ -1,10 +1,12 @@
 ## ![Maze Generator](https://github.com/MayGo/maze-world/raw/master/raw-assets/brand/logo.png 'Maze World')
 
-This is a Roblox plugin where you can generate maze with configurable size and materials
+This is a Roblox plugin where you can generate maze with configurable size, materials and options. It will be generated to selected part or workspace if nothing is selected. You can even rotate object and maze is generated at a angle.
 
 ## Screenshots
 
-![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-generator.png 'Maze World')
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-generator-controls.png 'Maze World')
+
+![Maze World](https://github.com/MayGo/maze-world/raw/master/screenshots/maze-generator-result.png 'Maze World')
 
 # Build plugin
 

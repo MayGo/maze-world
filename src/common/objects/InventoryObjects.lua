@@ -238,7 +238,7 @@ local RoomObjects = {
 		modelName = 'HorrorMaze',
 		config = {
 			noTimer = true,
-			prizeCoins = 20000000,
+			prizeCoins = 25000,
 		},
 	},
 }

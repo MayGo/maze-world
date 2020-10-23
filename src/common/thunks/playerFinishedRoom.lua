@@ -4,8 +4,9 @@ local logger = require(Modules.src.utils.Logger)
 
 local addPlayerFinishToRoom = require(Modules.src.actions.rooms.addPlayerFinishToRoom)
 local clientFinishGame = require(Modules.src.actions.toClient.clientFinishGame)
+local clientSendNotification = require(Modules.src.actions.toClient.clientSendNotification)
 local M = require(Modules.M)
-
+local assets = require(Modules.src.assets)
 local Transporter = require(Modules.src.Transporter)
 local Leaderboards = require(Modules.src.Leaderboards)
 local GameDatastore = require(Modules.src.GameDatastore)
@@ -57,6 +58,13 @@ local function playerFinishedRoom(player, roomId)
 			store:dispatch(clientFinishGame(player, roomId, os.time(), coins))
 
 			GameDatastore:incrementCoins(player, coins)
+			store:dispatch(
+				clientSendNotification(
+					player,
+					'You won ' .. coins .. ' coins',
+					assets.money['coins-pile']
+				)
+			)
 			Leaderboards:updateMostPlayed(player)
 			Leaderboards:updateMostPlayed(player, roomId)
 		end

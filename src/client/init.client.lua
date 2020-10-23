@@ -19,6 +19,7 @@ AudioPlayer.preloadAudio({
 	Simple_Click = 3061551819,
 	Notification = 2296072875,
 	Finish = 5105488525,
+	Evil_Laugh = 4515583231,
 	Coin_Collect = 930700226,
 	Effect_Mouse = 1329112776,
 	Effect_Scream1 = 932049501,

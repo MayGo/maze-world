@@ -1,0 +1,1 @@
+-- Disable Humanoids health regenerating
