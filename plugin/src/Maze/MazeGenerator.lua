@@ -154,13 +154,11 @@ end
 function AddRandomParts(pos, cframe, folder)
 	local times = M.range(1, 5)
 
-	local fromGround = Vector3.new(0, 2.5, 0)
-
-	AddCoinPart(pos + fromGround, cframe, folder)
+	AddCoinPart(pos, cframe, folder)
 	M.map(times, function()
 		local willAdd = math.random(1, 10)
 		if willAdd == 1 then
-			AddRandomPart(pos + fromGround, cframe, folder)
+			AddRandomPart(pos, cframe, folder)
 		end
 	end)
 end
@@ -304,7 +302,7 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 		DrawStart(pos + Vector3.new(2, 6, 2) + offset, cframe, folder)
 
 		local finisWidth = blockWidth - 2
-		local finishOffset = Vector3.new(finisWidth / 2, 0, finisWidth / 2)
+		local finishOffset = Vector3.new(finisWidth / 2, 1, finisWidth / 2)
 		local farCorner = Vector3.new(maze_width - finisWidth, 0, maze_height - finisWidth)
 		DrawFinish(pos + farCorner + finishOffset, cframe, folder)
 	end
@@ -352,7 +350,8 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 			end
 
 			if settings.addRandomModels then
-				AddRandomParts(Vector3.new(pos_x, pos.Y, pos_z), cframe, folder)
+				local p = Vector3.new(pos_x, 0.4, pos_z)
+				AddRandomParts(pos + p, cframe, folder)
 			end
 		end
 	end

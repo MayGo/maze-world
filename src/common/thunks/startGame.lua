@@ -41,9 +41,25 @@ local function startGame(roomId)
 			return
 		end
 
-		MazeGenerator:generate(mapObj, room.config.width, room.config.height)
+		local location = mapObj:FindFirstChild('LocationPart')
 
-		local finishPlaceholder = mapObj:findFirstChild('FinishPlaceholder', true)
+		local settings = {
+			width = room.config.width,
+			height = room.config.height,
+			wallMaterial = Enum.Material.Grass,
+			groundMaterial = Enum.Material.Sand,
+			onlyBlocks = false,
+			addRandomModels = true,
+			addStartAndFinish = true,
+			addKillBlocks = true,
+			addCeiling = false,
+			partThickness = 5,
+			location = location,
+		}
+
+		MazeGenerator:generate(settings)
+
+		local finishPlaceholder = location:findFirstChild('FinishPlaceholder', true)
 		if finishPlaceholder then
 			local finishedPlayers = {}
 
