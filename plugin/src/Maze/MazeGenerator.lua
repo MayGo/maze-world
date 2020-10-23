@@ -74,13 +74,11 @@ function dummyPart(position, folder)
 	newBlock.Parent = folder
 end
 
-local areaHalfWidth = (blockWidth - 5) / 2
-local neg = M.range(5, areaHalfWidth)
-local posr = M.range(-5, -areaHalfWidth)
-local arr = M.append(neg, posr)
-
-function randomPos()
-	-- we are taking out center values
+function randomPos(settings)
+	local areaHalfWidth = blockWidth / 2 - settings.partThickness
+	local neg = M.range(2, areaHalfWidth)
+	local posr = M.range(-2, -areaHalfWidth)
+	local arr = M.append(neg, posr)
 
 	local p = M.sample(arr)
 
@@ -91,12 +89,12 @@ function randomRotation(position)
 	return CFrame.new(position) * CFrame.fromOrientation(0, math.random(1, 360), 0)
 end
 
-function AddRandomPart(pos, cframe, folder)
+function AddRandomPart(pos, cframe, folder, settings)
 	local parts = Misc:GetChildren()
 	local randomPart = parts[math.random(1, #parts)]
 	local newBlock = randomPart:Clone()
 
-	local randomPosition = Vector3.new(randomPos(), 0, randomPos())
+	local randomPosition = Vector3.new(randomPos(settings), 0, randomPos(settings))
 
 	local partSize
 	if newBlock:IsA('BasePart') then
@@ -122,7 +120,7 @@ function AddRandomPart(pos, cframe, folder)
 	newBlock.Parent = folder
 end
 
-function AddCoinPart(pos, cframe, folder)
+function AddCoinPart(pos, cframe, folder, settings)
 	local parts = Money:GetChildren()
 	local randomPart = parts[math.random(1, #parts)]
 	local newBlock = randomPart:Clone()
@@ -151,14 +149,14 @@ function AddCoinPart(pos, cframe, folder)
 	newBlock.Parent = folder
 end
 
-function AddRandomParts(pos, cframe, folder)
+function AddRandomParts(pos, cframe, folder, settings)
 	local times = M.range(1, 5)
 
-	AddCoinPart(pos, cframe, folder)
+	AddCoinPart(pos, cframe, folder, settings)
 	M.map(times, function()
 		local willAdd = math.random(1, 10)
 		if willAdd == 1 then
-			AddRandomPart(pos, cframe, folder)
+			AddRandomPart(pos, cframe, folder, settings)
 		end
 	end)
 end
@@ -351,7 +349,7 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 
 			if settings.addRandomModels then
 				local p = Vector3.new(pos_x, 0.4, pos_z)
-				AddRandomParts(pos + p, cframe, folder)
+				AddRandomParts(pos + p, cframe, folder, settings)
 			end
 		end
 	end

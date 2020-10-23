@@ -43,7 +43,7 @@ local function startGame(roomId)
 
 		local location = mapObj:FindFirstChild('LocationPart')
 
-		local settings = {
+		local defaultSettings = {
 			width = room.config.width,
 			height = room.config.height,
 			wallMaterial = Enum.Material.Grass,
@@ -53,11 +53,25 @@ local function startGame(roomId)
 			addStartAndFinish = true,
 			addKillBlocks = true,
 			addCeiling = false,
-			partThickness = 5,
+			partThickness = 3,
 			location = location,
 		}
 
-		MazeGenerator:generate(settings)
+		local darkSettings = {
+			width = room.config.width,
+			height = room.config.height,
+			wallMaterial = Enum.Material.Basalt,
+			groundMaterial = Enum.Material.Mud,
+			onlyBlocks = false,
+			addRandomModels = true,
+			addStartAndFinish = true,
+			addKillBlocks = false,
+			addCeiling = true,
+			partThickness = 3,
+			location = location,
+		}
+
+		MazeGenerator:generate(darkSettings)
 
 		local finishPlaceholder = location:findFirstChild('FinishPlaceholder', true)
 		if finishPlaceholder then
