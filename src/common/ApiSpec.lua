@@ -29,6 +29,12 @@ return {
 		dropItem = { arguments = Typer.args({ 'itemId', Typer.type('string') }) },
 		buyItem = { arguments = Typer.args({ 'productId', Typer.type('string') }) },
 		equipItem = { arguments = Typer.args({ 'productId', Typer.type('string') }) },
+		roomVote = {
+			arguments = Typer.args(
+				{ 'roomId', Typer.type('string') },
+				{ 'vote', Typer.type('string') }
+			),
+		},
 		startGhosting = { arguments = Typer.args() },
 		stopGhosting = { arguments = Typer.args() },
 		unequipItem = { arguments = Typer.args({ 'productId', Typer.type('string') }) },

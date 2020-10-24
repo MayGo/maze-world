@@ -71,9 +71,19 @@ local function startGame(roomId)
 			location = location,
 		}
 
-		MazeGenerator:generate(darkSettings)
+		local initialVotes = {
+			nil_1 = 'Dark',
+			nil_2 = 'Light',
+		}
+		local playerVotes = M.extend({}, room.playerVotes, initialVotes)
+		local votes = M.countBy(playerVotes, function(vote)
+			return vote
+		end)
+
+		MazeGenerator:generate(votes.Dark > votes.Light and darkSettings or defaultSettings)
 
 		local finishPlaceholder = location:findFirstChild('FinishPlaceholder', true)
+
 		if finishPlaceholder then
 			local finishedPlayers = {}
 

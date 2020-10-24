@@ -31,6 +31,7 @@ local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
 local startRoomGameLoop = require(Modules.src.thunks.startRoomGameLoop)
 local startInfiniteGame = require(Modules.src.thunks.startInfiniteGame)
 local removePlayerFromRoom = require(Modules.src.actions.rooms.removePlayerFromRoom)
+local addVoteToRoom = require(Modules.src.actions.rooms.addVoteToRoom)
 local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItemsToPlayerInventory)
 local removeItemFromPlayerInventory =
 	require(Modules.src.actions.inventory.removeItemFromPlayerInventory)
@@ -337,6 +338,18 @@ return function(context)
 
 			GameDatastore:setEquippedPet(player, product.id)
 		end,
+		roomVote = function(player, roomId, vote)
+			logger:d('Player ' .. player.Name .. ' voted in room ' .. roomId, vote)
+
+			local items = store:getState().rooms
+			local room = items[roomId]
+			if not room then
+				logger:w('No room', roomId)
+				return
+			end
+			store:dispatch(addVoteToRoom(player, roomId, vote))
+			api:clientPlaySound(player, 'Simple_Click')
+		end,
 		unequipItem = function(player, productId)
 			logger:d('Player ' .. player.Name .. ' unequipped item ' .. productId)
 
@@ -412,7 +425,7 @@ return function(context)
 				local zone = ZoneService:createZone('Zone' .. room.modelName, roomPlaceholder)
 
 				zone.playerAdded:Connect(function(player) -- Fires when a player enters the zone
-					logger:w(player.Name .. ' entered!')
+					logger:w(player.Name .. ' entered room ' .. tostring(roomId))
 					store:dispatch(playerEnteredRoom(player, roomId))
 
 					if room.name == 'HorrorMaze' then
@@ -427,7 +440,7 @@ return function(context)
 				end)
 
 				zone.playerRemoving:Connect(function(player) -- Fires when a player exits the zone
-					logger:w(player.Name .. ' left!')
+					logger:d(player.Name .. ' left room ' .. tostring(roomId))
 					store:dispatch(removePlayerFromRoom(player, roomId))
 					if room.name == 'HorrorMaze' then
 						store:dispatch(clientReset(player))

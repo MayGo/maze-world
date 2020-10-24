@@ -5,7 +5,10 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
 local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
+local Maid = require(Modules.Knit.Util.Maid)
 
+local TouchItem = require(Modules.src.TouchItem)
+local M = require(Modules.M)
 local Roact = require(Modules.Roact)
 local RoactRodux = require(Modules.RoactRodux)
 
@@ -16,6 +19,7 @@ local RoomLockScreen = require(clientSrc.Components.RoomLockScreen)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableRow)
 local NameValueTableRow = require(clientSrc.Components.NameValueTableRow)
+local TextLabel = require(clientSrc.Components.common.TextLabel)
 
 local createElement = Roact.createElement
 
@@ -25,10 +29,18 @@ local Place = game.Workspace:WaitForChild('Place')
 local RoomsFolder = Place:findFirstChild('Rooms')
 
 function Room:init()
+	self.maid = Maid.new()
 	self.api = getApiFromComponent(self)
 	local roomId = self.props.roomId
 	logger:d('Init room: ' .. roomId)
 end
+
+function Room:willUnmount()
+	self.maid:Destroy()
+end
+
+local activeColor = Color3.fromRGB(9, 255, 0)
+local notActiveColor = Color3.fromRGB(255, 255, 255)
 
 function Room:didMount()
 	self.running = true
@@ -37,7 +49,9 @@ function Room:didMount()
 	-- We are using StreamingEnabled, so all rooms are not loaded all the time
 	spawn(function()
 		local modelName = self.props.modelName
+		local roomId = self.props.roomId
 		local config = self.props.config
+
 		if not RoomsFolder then
 			logger:w('Rooms Folder does not exists!')
 			return
@@ -53,9 +67,34 @@ function Room:didMount()
 		self.waitingPlaceholder = roomObj.placeholders:WaitForChild('WaitingPlaceholder', math.huge)
 
 		if config.noTimer then
-			logger:d('No TimerPlaceholder needed for ' .. modelName)
+			logger:d('No TimerPlaceholder needed for ' .. modelName) -- Fires when a player enters the zone -- Fires when a player exits the zone
 		else
 			self.timerPlaceholder = roomObj.placeholders:WaitForChild('TimerPlaceholder', math.huge)
+
+			local votingPlaceholders =
+				roomObj.placeholders:WaitForChild('VotingPlaceholders', math.huge)
+			local votingBooths = votingPlaceholders:GetChildren()
+
+			self.votingPlaceholders = {}
+			self.votingTouchPart = {}
+
+			for _, votingBooth in ipairs(votingBooths) do
+				local boothName = votingBooth.BoothName.Value
+				local touchPart = votingBooth:WaitForChild('VoteTouch')
+
+				self.votingPlaceholders[boothName] = votingBooth:WaitForChild('ScreenPlaceholder')
+				self.votingTouchPart[boothName] = touchPart
+
+				self.maid[boothName] = TouchItem.create(touchPart, function()
+					logger:w('Entered voting ' .. boothName)
+
+					self.api:roomVote(roomId, boothName)
+
+					self:setState(function()
+						return { selectedBooth = boothName }
+					end)
+				end)
+			end
 		end
 
 		self:setState(function(state)
@@ -83,10 +122,40 @@ function Room:render()
 	local startTime = self.props.startTime
 	local mostPlayed = self.props.mostPlayed
 	local config = self.props.config
+	local playerVotes = self.props.playerVotes
+	local selectedBooth = self.state.selectedBooth
 
 	if not self.waitingPlaceholder and not self.playingPlaceholder and not self.timerPlaceholder then
 		logger:d('Not rendering room')
 		return
+	end
+
+	local votes = M.countBy(playerVotes, function(vote)
+		return vote
+	end)
+
+	if self.votingPlaceholders then
+		for boothName, votingPlaceholder in pairs(self.votingPlaceholders) do
+			self.votingTouchPart[boothName].Color =
+				boothName == selectedBooth and activeColor or notActiveColor
+
+			children['voting_' .. boothName] = createElement(SurfaceBillboard, {
+				item = votingPlaceholder,
+				title = boothName,
+				[Roact.Children] = createElement(TextLabel, {
+					Text = votes[boothName] and votes[boothName] or 0,
+					Position = UDim2.new(0, 0, 0, 0),
+					Size = UDim2.new(1, 0, 1, 0),
+					TextSize = 36,
+					TextXAlignment = Enum.TextXAlignment.Center,
+					TextYAlignment = Enum.TextYAlignment.Center,
+					LayoutOrder = 2,
+					TextColor3 = Color3.fromRGB(255, 255, 255),
+				}),
+			})
+		end
+	else
+		logger:d('No votingPlaceholders')
 	end
 
 	if self.waitingPlaceholder then
@@ -180,6 +249,7 @@ Room = RoactRodux.connect(function(state, props)
 		modelName = room.modelName,
 		playersWaiting = room.playersWaiting,
 		playersPlaying = room.playersPlaying,
+		playerVotes = room.playerVotes,
 		countDownTime = room.countDownTime,
 		config = room.config,
 	}

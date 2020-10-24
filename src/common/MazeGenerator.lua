@@ -300,7 +300,7 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 		DrawStart(pos + Vector3.new(2, 6, 2) + offset, cframe, folder)
 
 		local finisWidth = blockWidth - 2
-		local finishOffset = Vector3.new(finisWidth / 2, 1, finisWidth / 2)
+		local finishOffset = Vector3.new(finisWidth / 2, 2, finisWidth / 2)
 		local farCorner = Vector3.new(maze_width - finisWidth, 0, maze_height - finisWidth)
 		DrawFinish(pos + farCorner + finishOffset, cframe, folder)
 	end

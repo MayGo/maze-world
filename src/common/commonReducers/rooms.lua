@@ -11,9 +11,13 @@ local GlobalConfig = require(Modules.src.GlobalConfig)
 local M = require(Modules.M)
 
 
+
+
 local roomInitial={
  
     playersWaiting = {},
+    playerVotes = {},
+
     playersPlaying = {
         --[[  Player1 = {
             id = "1",
@@ -79,6 +83,18 @@ local function rooms(state, action)
             return Dict.join(state, {[roomId] = newRoom})
         end
         return state
+    elseif  action.type == "addVoteToRoom" then
+        local roomId = action.roomId
+        local vote = action.vote
+        local playerVotes = state[roomId].playerVotes
+        
+        logger:d("Adding player vote "..tostring(action.playerId).." to room: "..roomId )
+        local newVotes = Dict.join(playerVotes, {
+            [action.playerId] = vote
+        })
+        local newRoom = Dict.join(state[roomId], {playerVotes = newVotes})
+
+        return Dict.join(state, {[roomId] = newRoom})
     elseif  action.type == "addPlayerToRoom" then
         local roomId = action.roomId
         local playersWaiting = state[roomId].playersWaiting
@@ -153,7 +169,8 @@ local function rooms(state, action)
             startTime = action.startTime,
             endTime = None,
             playersWaiting = {},
-        
+
+            playerVotes={},
             playersPlaying = playersStarting
         })
 
@@ -171,6 +188,7 @@ local function rooms(state, action)
         local newRoom = Dict.join(state[roomId], {
             endTime = None,
             startTime = None,
+
             playersPlaying={}
         })
 
