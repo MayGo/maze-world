@@ -208,12 +208,12 @@ function DrawBlock(pos, cframe, folder, vertical, settings)
 	end
 end
 
-function DrawFloor(pos, cframe, folder, width, height, settings)
+function DrawPart(pos, cframe, folder, width, height, settings, name, material)
 	local floor = Instance.new('Part')
 
-	floor.Size = Vector3.new(width, 1, height)
+	floor.Size = Vector3.new(width, settings.ceilingFloorThickness, height)
 
-	floor.Name = floorPartName
+	floor.Name = name
 	floor.CanCollide = true
 	floor.Anchored = true
 
@@ -225,31 +225,18 @@ function DrawFloor(pos, cframe, folder, width, height, settings)
 		floor.Parent = folder
 		floor.Transparency = 1
 		floor.CanCollide = false
-		partToTerrain(floor, settings.groundMaterial)
+		partToTerrain(floor, material)
 	else
 		floor.Parent = folder
 	end
 end
 
+function DrawFloor(pos, cframe, folder, width, height, settings)
+	DrawPart(pos, cframe, folder, width, height, settings, floorPartName, settings.groundMaterial)
+end
+
 function DrawCeiling(pos, cframe, folder, width, height, settings)
-	local floor = Instance.new('Part')
-
-	floor.Size = Vector3.new(width, 1, height)
-
-	floor.Name = 'Ceiling'
-	floor.CanCollide = true
-	floor.Anchored = true
-	floor.CFrame = CFrame.new(pos + getCenterVector(width, height))
-	floor.CFrame = getCorrectCframe(cframe, floor.CFrame)
-
-	if not settings.onlyBlocks then
-		floor.Parent = folder
-		floor.Transparency = 1
-		floor.CanCollide = false
-		partToTerrain(floor, settings.wallMaterial)
-	else
-		floor.Parent = folder
-	end
+	DrawPart(pos, cframe, folder, width, height, settings, 'Ceiling', settings.wallMaterial)
 end
 
 function DrawStart(pos, cframe, folder)
@@ -282,11 +269,18 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 		warn('Floor or Ceiling part is over max size:' .. tostring(maxPartSize))
 	end
 
-	DrawFloor(pos, cframe, folder, maze_width, maze_height, settings)
+	DrawFloor(
+		pos + Vector3.new(0, -settings.ceilingFloorThickness / 2, 0),
+		cframe,
+		folder,
+		maze_width,
+		maze_height,
+		settings
+	)
 
 	if settings.addCeiling then
 		DrawCeiling(
-			pos + Vector3.new(0, blockHeight, 0),
+			pos + Vector3.new(0, blockHeight + settings.ceilingFloorThickness / 2, 0),
 			cframe,
 			folder,
 			maze_width,

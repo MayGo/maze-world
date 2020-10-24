@@ -54,6 +54,7 @@ local function startGame(roomId)
 			addKillBlocks = true,
 			addCeiling = false,
 			partThickness = 3,
+			ceilingFloorThickness = 1,
 			location = location,
 		}
 
@@ -67,7 +68,8 @@ local function startGame(roomId)
 			addStartAndFinish = true,
 			addKillBlocks = false,
 			addCeiling = true,
-			partThickness = 3,
+			partThickness = 5,
+			ceilingFloorThickness = 5,
 			location = location,
 		}
 

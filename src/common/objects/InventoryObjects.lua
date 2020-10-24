@@ -19,6 +19,7 @@ local OBJECT_TYPES = {
 local PET_TYPES = {
 	TRAIL = 'TRAIL',
 	SPEED = 'SPEED',
+	LIGHT = 'LIGHT',
 }
 
 local GamePassObjects = {
@@ -133,6 +134,51 @@ local PetObjects = {
 		isRotating = false,
 		ability = PET_TYPES.TRAIL,
 		trailModelName = 'RainbowTrail',
+	},
+	['30001'] = {
+		name = 'Light Pet 1',
+		price = 100,
+		modelName = 'Light Pet 1',
+		modelFolder = 'Pets',
+		cameraOffset = CFrame.new(1, 0.5, -2),
+		isRotating = false,
+		ability = PET_TYPES.LIGHT,
+	},
+	['30002'] = {
+		name = 'Light Pet 2',
+		price = 100,
+		modelName = 'Light Pet 2',
+		modelFolder = 'Pets',
+		cameraOffset = CFrame.new(1, 0.5, -2),
+		isRotating = false,
+		ability = PET_TYPES.LIGHT,
+	},
+	['30003'] = {
+		name = 'Light Pet 3',
+		price = 100,
+		modelName = 'Light Pet 3',
+		modelFolder = 'Pets',
+		cameraOffset = CFrame.new(1, 0.5, -2),
+		isRotating = false,
+		ability = PET_TYPES.LIGHT,
+	},
+	['30004'] = {
+		name = 'Light Pet 4',
+		price = 100,
+		modelName = 'Light Pet 4',
+		modelFolder = 'Pets',
+		cameraOffset = CFrame.new(1, 0.5, -2),
+		isRotating = false,
+		ability = PET_TYPES.LIGHT,
+	},
+	['30005'] = {
+		name = 'Light Pet 5',
+		price = 100,
+		modelName = 'Light Pet 5',
+		modelFolder = 'Pets',
+		cameraOffset = CFrame.new(1, 0.5, -2),
+		isRotating = false,
+		ability = PET_TYPES.LIGHT,
 	},
 }
 
