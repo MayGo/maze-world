@@ -11,9 +11,6 @@ local Prefabs = Models.Prefabs
 local Misc = Models.Misc
 local Money = Models.Money
 
-local blockHeight = 20
-local blockWidth = 25
-
 local floorPartName = 'FloorPart'
 
 function getCenterVector(width, height)
@@ -65,17 +62,8 @@ function partToRegion3(obj)
 	return Region3.new(minv, maxv)
 end
 
-function dummyPart(position, folder)
-	local newBlock = Instance.new('Part')
-
-	newBlock.Anchored = true
-	newBlock.Size = Vector3.new(0.5, blockHeight, 0.5)
-	newBlock.Position = position
-	newBlock.Parent = folder
-end
-
 function randomPos(settings)
-	local areaHalfWidth = blockWidth / 2 - settings.partThickness
+	local areaHalfWidth = settings.blockWidth / 2 - settings.partThickness
 	local neg = M.range(2, areaHalfWidth)
 	local posr = M.range(-2, -areaHalfWidth)
 	local arr = M.append(neg, posr)
@@ -103,9 +91,9 @@ function AddRandomPart(pos, cframe, folder, settings)
 		partSize = newBlock.PrimaryPart.Size
 	end
 
-	local halfX = blockWidth / 2 - partSize.X / 2
+	local halfX = settings.blockWidth / 2 - partSize.X / 2
 	local halfY = partSize.Y / 2
-	local halfZ = blockWidth / 2 - partSize.Z / 2
+	local halfZ = settings.blockWidth / 2 - partSize.Z / 2
 
 	local cf = randomRotation(pos + Vector3.new(halfX, halfY, halfZ) + randomPosition)
 
@@ -132,9 +120,9 @@ function AddCoinPart(pos, cframe, folder, settings)
 		partSize = newBlock.PrimaryPart.Size
 	end
 
-	local halfX = blockWidth / 2 - partSize.X / 2
+	local halfX = settings.blockWidth / 2 - partSize.X / 2
 	local halfY = partSize.Y / 2
-	local halfZ = blockWidth / 2 - partSize.Z / 2
+	local halfZ = settings.blockWidth / 2 - partSize.Z / 2
 
 	local cf = randomRotation(pos + Vector3.new(halfX, halfY, halfZ))
 
@@ -165,7 +153,7 @@ function MakeBlock(settings)
 	local newBlock = Instance.new('Part')
 
 	newBlock.Anchored = true
-	newBlock.Size = Vector3.new(settings.partThickness, blockHeight, blockWidth)
+	newBlock.Size = Vector3.new(settings.partThickness, settings.blockHeight, settings.blockWidth)
 
 	return newBlock
 end
@@ -201,8 +189,8 @@ function DrawBlock(pos, cframe, folder, vertical, settings)
 		-- make top walls not walkable, by killing
 		local killBlockName = 'Killbrick'
 		local killBlock = Prefabs[killBlockName]:Clone()
-		killBlock.Size = Vector3.new(3, 4, blockWidth)
-		killBlock.CFrame = newBlock.CFrame + Vector3.new(0, blockHeight - 7, 0)
+		killBlock.Size = Vector3.new(3, 4, settings.blockWidth)
+		killBlock.CFrame = newBlock.CFrame + Vector3.new(0, settings.blockHeight - 7, 0)
 		killBlock.Transparency = 1
 		killBlock.Parent = folder
 	end
@@ -258,13 +246,14 @@ function DrawFinish(pos, cframe, folder)
 end
 
 local function draw_maze(maze, folder, pos, cframe, settings)
-	local maze_width = blockWidth * #maze[1]
-	local maze_height = blockWidth * #maze
+	local maze_width = settings.blockWidth * #maze[1]
+	local maze_height = settings.blockWidth * #maze
 
 	warn('Positioning Maze: ', pos)
 	-- part can have max size 2048
 	local maxPartSize = 2048
 	warn('Size in studs:' .. tostring(maze_width) .. ', height:' .. tostring(maze_height))
+
 	if maxPartSize < maze_width or maxPartSize < maze_height then
 		warn('Floor or Ceiling part is over max size:' .. tostring(maxPartSize))
 	end
@@ -280,7 +269,7 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 
 	if settings.addCeiling then
 		DrawCeiling(
-			pos + Vector3.new(0, blockHeight + settings.ceilingFloorThickness / 2, 0),
+			pos + Vector3.new(0, settings.blockHeight + settings.ceilingFloorThickness / 2, 0),
 			cframe,
 			folder,
 			maze_width,
@@ -290,10 +279,10 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 	end
 
 	if settings.addStartAndFinish then
-		local offset = Vector3.new(blockWidth / 2, 0, blockWidth / 2)
+		local offset = Vector3.new(settings.blockWidth / 2, 0, settings.blockWidth / 2)
 		DrawStart(pos + Vector3.new(2, 6, 2) + offset, cframe, folder)
 
-		local finisWidth = blockWidth - 2
+		local finisWidth = settings.blockWidth - 2
 		local finishOffset = Vector3.new(finisWidth / 2, 2, finisWidth / 2)
 		local farCorner = Vector3.new(maze_width - finisWidth, 0, maze_height - finisWidth)
 		DrawFinish(pos + farCorner + finishOffset, cframe, folder)
@@ -316,8 +305,8 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 
 	for zi = 1, #maze do
 		for xi = 1, #maze[1] do
-			local pos_x = (blockWidth + blockDepth) * (xi - 1) + blockDepth
-			local pos_z = (blockWidth + blockDepth) * (zi - 1) + blockDepth
+			local pos_x = (settings.blockWidth + blockDepth) * (xi - 1) + blockDepth
+			local pos_z = (settings.blockWidth + blockDepth) * (zi - 1) + blockDepth
 
 			local cell = maze[zi][xi]
 
@@ -327,12 +316,12 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 			end
 
 			if not cell.east:IsOpened() then
-				local p = Vector3.new(pos_x + blockWidth, 0, pos_z)
+				local p = Vector3.new(pos_x + settings.blockWidth, 0, pos_z)
 				cachePart(pos + p, false)
 			end
 
 			if not cell.south:IsOpened() then
-				local p = Vector3.new(pos_x, 0, pos_z + blockWidth)
+				local p = Vector3.new(pos_x, 0, pos_z + settings.blockWidth)
 				cachePart(pos + p, true)
 			end
 
@@ -342,7 +331,7 @@ local function draw_maze(maze, folder, pos, cframe, settings)
 			end
 
 			if settings.addRandomModels then
-				local p = Vector3.new(pos_x, 0.4, pos_z)
+				local p = Vector3.new(pos_x, settings.ceilingFloorThickness / 2.5, pos_z)
 				AddRandomParts(pos + p, cframe, folder, settings)
 			end
 		end
@@ -369,7 +358,7 @@ function MazeGenerator:generate(settings)
 		local floor = mazeFolder:FindFirstChild(floorPartName)
 		workspace.Terrain:FillBlock(
 			floor.CFrame,
-			floor.Size + Vector3.new(10, blockHeight * 3, 10),
+			floor.Size + Vector3.new(10, settings.blockHeight * 3, 10),
 			Enum.Material.Air
 		)
 		mazeFolder:Destroy()

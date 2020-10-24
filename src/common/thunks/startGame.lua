@@ -56,6 +56,8 @@ local function startGame(roomId)
 			partThickness = 3,
 			ceilingFloorThickness = 1,
 			location = location,
+			blockHeight = 20,
+			blockWidth = 25,
 		}
 
 		local darkSettings = {
@@ -71,6 +73,8 @@ local function startGame(roomId)
 			partThickness = 5,
 			ceilingFloorThickness = 5,
 			location = location,
+			blockHeight = 25,
+			blockWidth = 30,
 		}
 
 		local initialVotes = {
