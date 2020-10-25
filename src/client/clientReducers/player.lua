@@ -12,14 +12,14 @@ local function player(state, action)
 	state = state or { isPlaying = false }
 
 	if action.type == 'clientFinishGame' then
-		logger:d('clientFinishGame:', action.playerId, LocalPlayer.UserId)
+		logger:d('clientFinishGame:', action.playerId, action.roomId)
 
 		AudioPlayer.playAudio('Finish')
 
 		return Dict.join(state, {
 			isPlaying = false,
 			roomId = None,
-			lastFinishedRoomId = state.roomId,
+			lastFinishedRoomId = action.roomId,
 			isFinishScreenOpen = true,
 		})
 	elseif action.type == 'clientStartGame' then
@@ -39,10 +39,8 @@ local function player(state, action)
 		logger:w('clientReset.')
 		return Dict.join(state, {
 			roomId = None,
-			lastFinishedRoomId = None,
 			isGhosting = false,
 			isPlaying = false,
-			isFinishScreenOpen = false,
 		})
 	elseif action.type == 'clientEquipped' then
 		return Dict.join(state, { equippedItems = action.itemIds })

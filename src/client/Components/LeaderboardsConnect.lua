@@ -34,9 +34,10 @@ function LeaderboardsConnect:render()
 		return
 	end
 
-	local visitorsPlaceholder = leaderboards.placeholders:WaitForChild('VisitorsPlaceholder')
-	local coinsPlaceholder = leaderboards.placeholders:WaitForChild('CoinsPlaceholder')
-	local playedPlaceholder = leaderboards.placeholders:WaitForChild('PlayedPlaceholder')
+	local visitorsPlaceholder =
+		leaderboards.placeholders:WaitForChild('VisitorsPlaceholder', math.huge)
+	local coinsPlaceholder = leaderboards.placeholders:WaitForChild('CoinsPlaceholder', math.huge)
+	local playedPlaceholder = leaderboards.placeholders:WaitForChild('PlayedPlaceholder', math.huge)
 
 	children['playedPlaceholder'] = createElement(SurfaceBillboard, {
 		item = playedPlaceholder,

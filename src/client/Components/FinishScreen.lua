@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Modules = ReplicatedStorage:WaitForChild('Modules')
--- local logger = require(Modules.src.utils.Logger)
+local logger = require(Modules.src.utils.Logger)
 local clientSrc = game:GetService('StarterPlayer'):WaitForChild('StarterPlayerScripts').clientSrc
 
 local Roact = require(Modules.Roact)
@@ -12,7 +12,9 @@ local UICorner = require(clientSrc.Components.common.UICorner)
 local RoundButton = require(clientSrc.Components.common.RoundButton)
 local DynamicTable = require(clientSrc.Components.common.DynamicTable)
 local TextListWithHeader = require(clientSrc.Components.common.TextListWithHeader)
+local TextLabel = require(clientSrc.Components.common.TextLabel)
 local PlayersPlayingTableRow = require(clientSrc.Components.PlayersPlayingTableRow)
+local M = require(Modules.M)
 
 local createElement = Roact.createElement
 
@@ -25,25 +27,57 @@ function FinishScreen:init()
 end
 
 function FinishScreen:render()
+	logger:w('asdsad', self.props)
+
+	local playersPlaying = self.props.playersPlaying
+	local noTimer = self.props.noTimer
+
+	local noPlayers = M.count(playersPlaying) == 0
+
 	if not self.props.isFinishScreenOpen or not self.state.open then
 		return nil
 	end
 
-	local title = 'FINISHERS'
+	if not noTimer and noPlayers then
+		return nil
+	end
 
-	local playersList = createElement(TextListWithHeader, {
-		title = title,
-		[Roact.Children] = createElement(DynamicTable, {
-			items = self.props.playersPlaying,
-			rowComponent = PlayersPlayingTableRow,
-			rowProps = {
+	local title
+	local playersList
+
+	if noTimer then
+		title = 'You Finished'
+		logger:w('finished')
+		playersList = createElement(TextListWithHeader, {
+			title = title,
+			[Roact.Children] = createElement(TextLabel, {
+				Text = 'Congratulations!!',
+				Position = UDim2.new(0, 0, 0, 0),
+				Size = UDim2.new(1, 0, 1, 0),
+				TextSize = 36,
+				TextXAlignment = Enum.TextXAlignment.Center,
+				TextYAlignment = Enum.TextYAlignment.Center,
+				LayoutOrder = 2,
 				TextColor3 = Color3.fromRGB(255, 255, 255),
-				ghostPlayerId = self.props.ghostPlayerId,
-				startTime = self.props.startTime,
-				endTime = self.props.endTime,
-			},
-		}),
-	})
+			}),
+		})
+	else
+		title = 'FINISHERS'
+
+		playersList = createElement(TextListWithHeader, {
+			title = title,
+			[Roact.Children] = createElement(DynamicTable, {
+				items = playersPlaying,
+				rowComponent = PlayersPlayingTableRow,
+				rowProps = {
+					TextColor3 = Color3.fromRGB(255, 255, 255),
+					ghostPlayerId = self.props.ghostPlayerId,
+					startTime = self.props.startTime,
+					endTime = self.props.endTime,
+				},
+			}),
+		})
+	end
 
 	function OnClick()
 		self:setState({ open = false })
@@ -86,6 +120,7 @@ end
 local FinishScreenConnected = RoactRodux.connect(function(state)
 	local roomId = state.player.lastFinishedRoomId
 	if roomId == nil then
+		logger:w('No lastFinishedRoomId')
 		return {}
 	end
 
@@ -97,6 +132,7 @@ local FinishScreenConnected = RoactRodux.connect(function(state)
 		endTime = room.endTime,
 		playersPlaying = room.playersPlaying,
 		countDownTime = room.countDownTime,
+		noTimer = room.config.noTimer,
 	}
 end)(FinishScreen)
 
