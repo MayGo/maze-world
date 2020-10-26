@@ -6,12 +6,16 @@ local PlayerUtils = require(Modules.src.utils.PlayerUtils)
 local TouchItem = {}
 local isTouchingPlayer = {}
 local isUntouchingPlayer = {}
+local Players = game:GetService('Players')
+
+local localPlayer = Players.LocalPlayer
 
 function TouchItem.create(roomPart, touchedFn, untouchedFn)
 	local function addTouchListeners(part)
 		local function onTouchStart(hit)
 			local player = PlayerUtils:getPlayerFromHuman(hit)
-			if player then
+			-- if TouchItem is runned in local script, then we check if trigger was localPlayer otherwise just player
+			if (player and player == localPlayer) or (player and not localPlayer) then
 				if not isTouchingPlayer[player] then
 					isTouchingPlayer[player] = true
 					touchedFn(player)

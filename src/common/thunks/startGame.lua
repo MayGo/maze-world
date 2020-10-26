@@ -89,7 +89,9 @@ local function startGame(roomId)
 		end)
 
 		local isDark = votes.Dark > votes.Light
-		MazeGenerator:generate(isDark and darkSettings or defaultSettings)
+
+		local settings = isDark and darkSettings or defaultSettings
+		MazeGenerator:generate(settings)
 
 		local playTime = isDark and room.config.playTime * 3 or room.config.playTime
 
@@ -174,6 +176,8 @@ local function startGame(roomId)
 			end
 
 			store:dispatch(setRoomEndTime(roomId, os.time()))
+
+			MazeGenerator:clean(settings)
 
 			store:dispatch(
 				setRoomCountDown(roomId, GlobalConfig.afterFinishWaitTime, 'Finished - Cooldown')

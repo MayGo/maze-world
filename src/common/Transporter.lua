@@ -38,7 +38,6 @@ function Transporter:transportPlayers(players, target)
 	for i, player in pairs(players) do
 		if player.Character then
 			-- Transporter:fadePlayerTo(player, 0, 1, 0.1) --fade out,
-			player:RequestStreamAroundAsync(target.Position)
 
 			local rootPart = player.Character.HumanoidRootPart
 			if rootPart then
@@ -68,6 +67,7 @@ function Transporter:teleportTo(player, target)
 		local rootPart = player.Character.HumanoidRootPart
 		if rootPart then
 			player:RequestStreamAroundAsync(target.Position)
+
 			rootPart.CFrame = ModelManager:onlyDirection(target.CFrame) + offset
 		end
 	else

@@ -193,6 +193,19 @@ function DrawBlock(pos, cframe, folder, vertical, settings)
 	end
 end
 
+function DrawDummyFloor(floor, folder, settings)
+	local floor2 = floor:Clone()
+	floor2.Size =
+		floor2.Size + Vector3.new(
+			settings.blockWidth * 3,
+			settings.blockHeight * 3,
+			settings.blockWidth * 3
+		)
+	floor2.Transparency = 0.9
+	floor2.Parent = folder
+	floor2.CanCollide = false
+end
+
 function DrawPart(pos, cframe, folder, width, height, settings, name, material)
 	local floor = Instance.new('Part')
 
@@ -339,6 +352,25 @@ local MazeGenerator = {}
 
 local mazeFolderName = 'Maze'
 
+function MazeGenerator:clean(settings)
+	warn('Clean maze from location:', settings.location)
+	local location = settings.location
+	local mazeFolder = location:FindFirstChild(mazeFolderName)
+
+	if mazeFolder then
+		local floor = mazeFolder:FindFirstChild(floorPartName)
+		floor.Size =
+			floor.Size + Vector3.new(
+				settings.blockWidth * 3,
+				settings.blockHeight * 5,
+				settings.blockWidth * 3
+			)
+
+		workspace.Terrain:FillBlock(floor.CFrame, floor.Size, Enum.Material.Air)
+		mazeFolder:Destroy()
+	end
+end
+
 function MazeGenerator:generate(settings)
 	local width = settings.width
 	local height = settings.height
@@ -349,19 +381,7 @@ function MazeGenerator:generate(settings)
 
 	recursive_backtracker(maze)
 
-	local mazeFolder = location:FindFirstChild(mazeFolderName)
-
-	if mazeFolder then
-		local floor = mazeFolder:FindFirstChild(floorPartName)
-		workspace.Terrain:FillBlock(
-			floor.CFrame,
-			floor.Size + Vector3.new(10, settings.blockHeight * 3, 10),
-			Enum.Material.Air
-		)
-		mazeFolder:Destroy()
-	end
-
-	mazeFolder = Instance.new('Folder')
+	local mazeFolder = Instance.new('Folder')
 	mazeFolder.Name = mazeFolderName
 	mazeFolder.Parent = location
 
