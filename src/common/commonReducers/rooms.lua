@@ -52,22 +52,31 @@ local function rooms(state, action)
 
         logger:d("Player died. Removing from rooms. Marking as DNF")
 
-        local roomId
+        local roomIdPlaying
+        local roomIdWaiting
+
 
         function FindPlayerFromRoom(room, rId)
             local playersPlaying = state[rId].playersPlaying
-            local existingPlayer = playersPlaying[action.playerId]
+            local playersWaiting = state[rId].playersWaiting
+            local isPlayingIn = playersPlaying[action.playerId]
+            local isWaitingIn = playersWaiting[action.playerId]
     
-            if existingPlayer and not existingPlayer.finishTime then
-                roomId = rId
+            if isPlayingIn and not isPlayingIn.finishTime then
+                roomIdPlaying = rId
+            end
+
+            if isWaitingIn then
+                roomIdWaiting = rId
             end
         end
 
          M.each(state, FindPlayerFromRoom)
 
-        if roomId then
-            local playersPlaying = state[roomId].playersPlaying
-            logger:d("Player " .. action.playerId .. " DNF" )
+         -- User can be in waiting or in playing
+        if roomIdPlaying then
+            local playersPlaying = state[roomIdPlaying].playersPlaying
+            logger:d("Player playing " .. action.playerId .. ", DNF" )
 
             local newPlayers = Dict.join(playersPlaying, {
                 [action.playerId] = {
@@ -78,10 +87,25 @@ local function rooms(state, action)
                 }
             })
 
-            local newRoom = Dict.join(state[roomId], {playersPlaying = newPlayers})
+            local newRoom = Dict.join(state[roomIdPlaying], {playersPlaying = newPlayers})
     
-            return Dict.join(state, {[roomId] = newRoom})
+            return Dict.join(state, {[roomIdPlaying] = newRoom})
         end
+
+        if roomIdWaiting then
+            local playersWaiting = state[roomIdWaiting].playersWaiting
+            logger:d("Player waiting " .. action.playerId .. ". Removing from list" )
+
+            local newPlayers = Dict.join(playersWaiting, {
+                [action.playerId] = None
+            })
+
+            local newRoom = Dict.join(state[roomIdWaiting], {playersWaiting = newPlayers})
+    
+            return Dict.join(state, {[roomIdWaiting] = newRoom})
+        end
+
+
         return state
     elseif  action.type == "addVoteToRoom" then
         local roomId = action.roomId
