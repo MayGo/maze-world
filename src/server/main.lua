@@ -31,6 +31,7 @@ local playerFinishedRoom = require(Modules.src.thunks.playerFinishedRoom)
 local startRoomGameLoop = require(Modules.src.thunks.startRoomGameLoop)
 local startInfiniteGame = require(Modules.src.thunks.startInfiniteGame)
 local removePlayerFromRoom = require(Modules.src.actions.rooms.removePlayerFromRoom)
+local playerDied = require(Modules.src.actions.rooms.playerDied)
 local addVoteToRoom = require(Modules.src.actions.rooms.addVoteToRoom)
 local addItemsToPlayerInventory = require(Modules.src.actions.inventory.addItemsToPlayerInventory)
 local removeItemFromPlayerInventory =
@@ -594,8 +595,9 @@ return function(context)
 	MarketplaceService.ProcessReceipt = DeveloperProducts.processReceipt
 
 	Players.PlayerRemoving:Connect(function(player)
-		logger:d(player.Name .. ' left the game!')
+		logger:d(player.Name .. ' left the game. Remove from rooms!')
 		local playerId = tostring(player.UserId)
+		store:dispatch(playerDied(player))
 		RoomManager:removePlayerCollisionGroup(playerId)
 	end)
 end
