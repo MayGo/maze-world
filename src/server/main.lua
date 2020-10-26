@@ -524,12 +524,19 @@ return function(context)
 		SoundTriggerManager:makeSound(part, soundTriggerWaitFor, playSound)
 	end)
 
+	local fallStuffRunner = {}
 	local fallStuffWaitFor = 10
 	TagItem.create(
 		nil,
 		'FallTriggerBrick',
 		function(player, hit, part)
-			FallTriggerManager:fallStuff(part, fallStuffWaitFor)
+			if not fallStuffRunner[part] then
+				fallStuffRunner[part] = true
+				spawn(function()
+					FallTriggerManager:fallStuff(part, fallStuffWaitFor)
+					fallStuffRunner[part] = false
+				end)
+			end
 		end,
 		nil
 	)

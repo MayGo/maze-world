@@ -44,23 +44,23 @@ end
 AudioPlayer.playAudio = function(assetName, part)
 	local audio = game.Workspace:FindFirstChild(assetName)
 
-	if not audio and part then
-		audio = part:FindFirstChild(assetName)
-	end
-
 	if not audio then
 		warn('Could not find audio asset: ' .. assetName)
 		return
 	end
 
 	if part then
-		audio.Parent = part
-		audio.EmitterSize = 10
-		audio.MaxDistance = 100
+		local partAudio = part:FindFirstChild(assetName)
+		if not partAudio then
+			-- clone so we can use cached sound in other parts also
+			partAudio = audio:Clone()
+			partAudio.Parent = part
+			partAudio.EmitterSize = 10
+			partAudio.MaxDistance = 100
+		end
+		audio = partAudio
 	end
-	if not audio.IsLoaded then
-		audio.Loaded:wait()
-	end
+
 	audio:Play()
 end
 

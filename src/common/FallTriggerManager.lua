@@ -57,9 +57,6 @@ function FallTriggerManager:fallStuff(triggerPart, waitFor)
 		maid:GiveTask(part)
 
 		generatedItems = generatedItems + 1
-		if generatedItems > maxItems / 1.5 then
-			wait(math.random(1, 100) / 10000)
-		end
 	end
 
 	wait(waitFor)

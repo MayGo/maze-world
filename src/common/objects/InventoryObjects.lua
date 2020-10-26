@@ -146,7 +146,7 @@ local PetObjects = {
 	},
 	['30002'] = {
 		name = 'Light Pet 2',
-		price = 100,
+		price = 1000,
 		modelName = 'Light Pet 2',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -155,7 +155,7 @@ local PetObjects = {
 	},
 	['30003'] = {
 		name = 'Light Pet 3',
-		price = 100,
+		price = 9000,
 		modelName = 'Light Pet 3',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -164,7 +164,7 @@ local PetObjects = {
 	},
 	['30004'] = {
 		name = 'Light Pet 4',
-		price = 100,
+		price = 30000,
 		modelName = 'Light Pet 4',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),
@@ -173,7 +173,7 @@ local PetObjects = {
 	},
 	['30005'] = {
 		name = 'Light Pet 5',
-		price = 100,
+		price = 100000,
 		modelName = 'Light Pet 5',
 		modelFolder = 'Pets',
 		cameraOffset = CFrame.new(1, 0.5, -2),

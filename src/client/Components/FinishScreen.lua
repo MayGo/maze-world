@@ -27,8 +27,6 @@ function FinishScreen:init()
 end
 
 function FinishScreen:render()
-	logger:w('asdsad', self.props)
-
 	local playersPlaying = self.props.playersPlaying
 	local noTimer = self.props.noTimer
 
@@ -120,7 +118,6 @@ end
 local FinishScreenConnected = RoactRodux.connect(function(state)
 	local roomId = state.player.lastFinishedRoomId
 	if roomId == nil then
-		logger:w('No lastFinishedRoomId')
 		return {}
 	end
 

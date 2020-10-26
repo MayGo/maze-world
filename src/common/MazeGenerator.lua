@@ -78,7 +78,7 @@ function randomRotation(position)
 end
 
 function AddRandomPart(pos, cframe, folder, settings)
-	local parts = Misc:GetChildren()
+	local parts = Misc[settings.randomStuffFolder]:GetChildren()
 	local randomPart = parts[math.random(1, #parts)]
 	local newBlock = randomPart:Clone()
 
@@ -138,15 +138,12 @@ function AddCoinPart(pos, cframe, folder, settings)
 end
 
 function AddRandomParts(pos, cframe, folder, settings)
-	local times = M.range(1, 5)
-
 	AddCoinPart(pos, cframe, folder, settings)
-	M.map(times, function()
-		local willAdd = math.random(1, 10)
-		if willAdd == 1 then
-			AddRandomPart(pos, cframe, folder, settings)
-		end
-	end)
+
+	local willAdd = math.random(1, 2)
+	if willAdd == 1 then
+		AddRandomPart(pos, cframe, folder, settings)
+	end
 end
 
 function MakeBlock(settings)

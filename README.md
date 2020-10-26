@@ -147,3 +147,9 @@ Tools installed using cargo. See each repo Readme for details.
 -   [RBX lua plugin](https://marketplace.visualstudio.com/items?itemName=AmaranthineCodices.vscode-rbxlua)
 
 There is nice tutorial in medium also: [Roblox Development in Visual Studio Code](https://medium.com/@OverHash/roblox-development-in-visual-studio-code-b3010c3d0181)
+
+# Editing/ Fixing data in Datastore
+
+-   Use Datastore Editor plugin. Play game in Studio
+-   https://devforum.roblox.com/t/how-to-use-datastore2-data-store-caching-and-data-loss-prevention/136317/287
+-   eg datastore key DATA/612741472

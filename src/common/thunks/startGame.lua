@@ -58,6 +58,7 @@ local function startGame(roomId)
 			location = location,
 			blockHeight = 20,
 			blockWidth = 25,
+			randomStuffFolder = 'Light',
 		}
 
 		local darkSettings = {
@@ -75,6 +76,7 @@ local function startGame(roomId)
 			location = location,
 			blockHeight = 25,
 			blockWidth = 30,
+			randomStuffFolder = 'Dark',
 		}
 
 		local initialVotes = {
@@ -86,7 +88,10 @@ local function startGame(roomId)
 			return vote
 		end)
 
-		MazeGenerator:generate(votes.Dark > votes.Light and darkSettings or defaultSettings)
+		local isDark = votes.Dark > votes.Light
+		MazeGenerator:generate(isDark and darkSettings or defaultSettings)
+
+		local playTime = isDark and room.config.playTime * 3 or room.config.playTime
 
 		local finishPlaceholder = location:findFirstChild('FinishPlaceholder', true)
 
@@ -134,9 +139,9 @@ local function startGame(roomId)
 
 		spawn(function()
 			local gameEndedEvent = Instance.new('BindableEvent')
-			store:dispatch(setRoomCountDown(roomId, room.config.playTime, 'Find exit', 'Wait'))
+			store:dispatch(setRoomCountDown(roomId, playTime, 'Find exit', 'Wait'))
 
-			delay(room.config.playTime, function()
+			delay(playTime, function()
 				gameEndedEvent:Fire(true)
 			end)
 

@@ -141,7 +141,7 @@
             <string name="Name">ParticleEmitter</string>
             <Vector3 name="Acceleration">
               <X>0</X>
-              <Y>-1.5</Y>
+              <Y>-15.5</Y>
               <Z>0</Z>
             </Vector3>
             <BinaryString name="AttributesSerialize">

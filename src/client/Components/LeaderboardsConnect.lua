@@ -59,6 +59,7 @@ function LeaderboardsConnect:render()
 		}),
 	})
 
+	logger:w('self.props.mostCoins', self.props.mostCoins)
 	children['coinsPlaceholder'] = createElement(SurfaceBillboard, {
 		item = coinsPlaceholder,
 		title = 'Top Coins',
