@@ -82,6 +82,7 @@ function ScrollingFrame:render()
 	if props.Layout == 'Table' then
 		local Layout = createElement('UITableLayout', {
 			FillDirection = props.LayoutDirection,
+			FillEmptySpaceColumns= true,
 			Padding = props.Padding,
 			HorizontalAlignment = props.HorizontalAlignment,
 			VerticalAlignment = props.VerticalAlignment,
