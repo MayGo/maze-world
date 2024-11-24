@@ -20,8 +20,8 @@
         "Lighting": {
             "$className": "Lighting",
             "$properties": {
-                "Ambient":[0,0,0],
-				"OutdoorAmbient":[0.5,0.5,0.5],
+                "Ambient": [0, 0, 0],
+                "OutdoorAmbient": [0.5, 0.5, 0.5],
                 "GlobalShadows": true,
                 "Technology": "ShadowMap",
                 "ShadowSoftness": 0.5,
@@ -34,7 +34,6 @@
                 "$properties": {
                     "Enabled": false,
                     "Intensity": 0.400000006,
-                    "Name": "Bloom",
                     "Size": 24,
                     "Threshold": 0.800000012
                 }
@@ -43,7 +42,6 @@
                 "$className": "BlurEffect",
                 "$properties": {
                     "Enabled": false,
-                    "Name": "Blur",
                     "Size": 3
                 }
             },
@@ -51,7 +49,6 @@
                 "$className": "ColorCorrectionEffect",
                 "$properties": {
                     "Enabled": true,
-                    "Name": "ColorCorrection",
                     "Brightness": 0.119999997,
                     "Contrast": 0.200000003,
                     "Saturation": 0.600000024
@@ -61,7 +58,6 @@
                 "$className": "SunRaysEffect",
                 "$properties": {
                     "Enabled": true,
-                    "Name": "SunRays",
                     "Intensity": 0.0579999983,
                     "Spread": 0.463
                 }
@@ -73,7 +69,7 @@
                 "$className": "StarterCharacterScripts",
                 "$ignoreUnknownInstances": true,
                 "$path": "src/StarterCharacterScripts"
-              },
+            },
             "StarterPlayerScripts": {
                 "$className": "StarterPlayerScripts",
                 "$ignoreUnknownInstances": true,
